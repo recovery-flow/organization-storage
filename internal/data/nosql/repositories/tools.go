@@ -2,7 +2,6 @@ package repositories
 
 import "go.mongodb.org/mongo-driver/bson"
 
-// Вспомогательные функции
 func copyFilters(filters bson.M) bson.M {
 	newFilters := bson.M{}
 	for k, v := range filters {

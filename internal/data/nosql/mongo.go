@@ -10,6 +10,6 @@ type Repo struct {
 
 func NewRepositoryNoSql(uri, dbName string) (*Repo, error) {
 	return &Repo{
-		Organization: _
+		Organization:
 	}, nil
 }
