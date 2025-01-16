@@ -1,0 +1,339 @@
+openapi: 3.0.0
+info:
+  description: SSO REST API for Cifra app
+  title: Cifra SSO REST API
+  version: 0.0.1
+servers:
+- url: /
+paths:
+  /test:
+    post:
+      operationId: test
+      responses:
+        "201":
+          description: Created
+      summary: Test
+components:
+  schemas:
+    Employee:
+      properties:
+        data:
+          $ref: '#/components/schemas/Employee_data'
+      required:
+      - data
+      type: object
+    EmployeeCreate:
+      properties:
+        data:
+          $ref: '#/components/schemas/EmployeeCreate_data'
+      required:
+      - data
+      type: object
+    EmployeeUpdate:
+      properties:
+        data:
+          $ref: '#/components/schemas/EmployeeUpdate_data'
+      required:
+      - data
+      type: object
+    ComplicatedStatus:
+      properties:
+        state:
+          description: Current compliance state of the organization
+          enum:
+          - active
+          - suspended
+          - inactive
+          type: string
+        marks:
+          items:
+            $ref: '#/components/schemas/ComplicatedStatus_marks_inner'
+          type: array
+        from:
+          description: Date from which the compliance state is effective
+          format: date-time
+          type: string
+      required:
+      - from
+      - marks
+      - state
+      type: object
+    Links:
+      properties:
+        twitter:
+          description: Twitter profile link
+          format: uri
+          type: string
+        instagram:
+          description: Instagram profile link
+          format: uri
+          type: string
+        facebook:
+          description: Facebook profile link
+          format: uri
+          type: string
+        tiktok:
+          description: TikTok profile link
+          format: uri
+          type: string
+        linkedin:
+          description: LinkedIn profile link
+          format: uri
+          type: string
+        telegram:
+          description: Telegram profile link
+          format: uri
+          type: string
+        discord:
+          description: Discord profile link
+          format: uri
+          type: string
+      required:
+      - discord
+      - facebook
+      - instagram
+      - linkedin
+      - telegram
+      - tiktok
+      - twitter
+      type: object
+    Organization:
+      properties:
+        data:
+          $ref: '#/components/schemas/Organization_data'
+        included:
+          items:
+            $ref: ./spec/components/schemas/Employee.yaml
+          type: array
+      required:
+      - data
+      type: object
+    OrganizationCreate:
+      properties:
+        data:
+          $ref: '#/components/schemas/OrganizationCreate_data'
+      required:
+      - data
+      type: object
+    OrganizationUpdate:
+      properties:
+        data:
+          $ref: '#/components/schemas/OrganizationUpdate_data'
+      required:
+      - data
+      type: object
+    Employee_data_attributes:
+      properties:
+        name:
+          description: name of employee
+          type: string
+        desc:
+          description: Description
+          type: string
+        role:
+          description: User role
+          type: string
+        created_at:
+          description: User created at
+          example: 2021-01-01T00:00:00Z
+          format: date-time
+          type: string
+      required:
+      - created_at
+      - desc
+      - name
+      - role
+      type: object
+    Employee_data:
+      properties:
+        id:
+          description: user id
+          type: string
+        type:
+          enum:
+          - employee
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Employee_data_attributes'
+      required:
+      - attributes
+      - id
+      - type
+      type: object
+    EmployeeCreate_data_attributes:
+      properties:
+        org_id:
+          description: Organization ID
+          type: string
+        user_id:
+          description: User ID
+          type: string
+        name:
+          description: name of employee
+          type: string
+        desc:
+          description: Description
+          type: string
+        role:
+          description: User role
+          type: string
+      required:
+      - desc
+      - name
+      - org_id
+      - role
+      - user_id
+      type: object
+    EmployeeCreate_data:
+      properties:
+        type:
+          enum:
+          - employee_create
+          type: string
+        attributes:
+          $ref: '#/components/schemas/EmployeeCreate_data_attributes'
+      required:
+      - attributes
+      - type
+      type: object
+    EmployeeUpdate_data_attributes:
+      properties:
+        org_id:
+          description: Organization id
+          type: string
+        user_id:
+          description: User id
+          type: string
+        name:
+          description: name of employee
+          type: string
+        desc:
+          description: Description
+          type: string
+        role:
+          description: User role
+          type: string
+      required:
+      - org_id
+      - user_id
+      type: object
+    EmployeeUpdate_data:
+      properties:
+        id:
+          description: user Id
+          type: string
+        type:
+          enum:
+          - employee_update
+          type: string
+        attributes:
+          $ref: '#/components/schemas/EmployeeUpdate_data_attributes'
+      required:
+      - attributes
+      - type
+      type: object
+    ComplicatedStatus_marks_inner:
+      properties:
+        timestamp:
+          description: Timestamp of the mark
+          format: date-time
+          type: string
+        reason:
+          description: Reason for the compliance mark
+          type: string
+      required:
+      - reason
+      - timestamp
+      type: object
+    Organization_data_attributes:
+      properties:
+        name:
+          description: Team name
+          type: string
+        logo:
+          description: link to photo
+          type: string
+        desc:
+          description: Team description
+          type: string
+        sort:
+          description: Type of Organization
+          type: string
+        links:
+          $ref: ./spec/components/schemas/Links.yaml
+        complicated_status:
+          $ref: ./spec/components/schemas/ComplicatedStatus.yaml
+        created_at:
+          description: Team creation timestamp
+          format: date-time
+          type: string
+      required:
+      - complicated_status
+      - created_at
+      - desc
+      - links
+      - logo
+      - name
+      - sort
+      type: object
+    Organization_data:
+      properties:
+        id:
+          description: organization id
+          type: string
+        type:
+          enum:
+          - organization
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Organization_data_attributes'
+      required:
+      - attributes
+      - id
+      - type
+      type: object
+    OrganizationCreate_data_attributes:
+      properties:
+        name:
+          description: Team name
+          type: string
+        desc:
+          description: Team description
+          type: string
+        sort:
+          description: Type of Organization
+          type: string
+      required:
+      - desc
+      - logo
+      - name
+      - sort
+      type: object
+    OrganizationCreate_data:
+      properties:
+        type:
+          enum:
+          - organization_create
+          type: string
+        attributes:
+          $ref: '#/components/schemas/OrganizationCreate_data_attributes'
+      required:
+      - attributes
+      - type
+      type: object
+    OrganizationUpdate_data:
+      properties:
+        id:
+          description: organization id
+          type: string
+        type:
+          enum:
+          - organization
+          type: string
+        attributes:
+          $ref: '#/components/schemas/OrganizationCreate_data_attributes'
+      required:
+      - attributes
+      - id
+      - type
+      type: object

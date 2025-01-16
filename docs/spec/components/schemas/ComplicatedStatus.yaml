@@ -1,0 +1,32 @@
+type: object
+required:
+  - state
+  - marks
+  - from
+properties:
+  state:
+    type: string
+    description: "Current compliance state of the organization"
+    enum:
+      - active
+      - suspended
+      - inactive
+  marks:
+    type: array
+    items:
+      type: object
+      required:
+        - timestamp
+        - reason
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: "Timestamp of the mark"
+        reason:
+          type: string
+          description: "Reason for the compliance mark"
+  from:
+    type: string
+    format: date-time
+    description: "Date from which the compliance state is effective"

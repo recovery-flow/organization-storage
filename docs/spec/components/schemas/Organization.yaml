@@ -22,13 +22,15 @@ properties:
           - logo
           - desc
           - sort
+          - links
+          - complicated_status
           - created_at
         properties:
           name:
             type: string
             description: "Team name"
           logo:
-            type: logo
+            type: string
             description: "link to photo"
           desc:
             type: string
@@ -36,7 +38,15 @@ properties:
           sort:
             type: string
             description: "Type of Organization"
+          links:
+            $ref: "./Links.yaml"
+          complicated_status:
+            $ref: "./ComplicatedStatus.yaml"
           created_at:
             type: string
             format: date-time
             description: "Team creation timestamp"
+  included:
+    type: array
+    items:
+      $ref: "Employee.yaml"
