@@ -9,9 +9,9 @@ import (
 type Organization struct {
 	ID        primitive.ObjectID `bson:"_id" json:"id"`
 	Name      string             `bson:"name" json:"name"`
-	Avatar    string             `bson:"avatar" json:"avatar"`
+	Logo      string             `bson:"logo" json:"logo"`
 	Desc      string             `bson:"desc" json:"desc"`
-	Type      OrgType            `bson:"type" json:"type"`
+	Sort      SortOfOrg          `bson:"sort" json:"sort"`
 	Employees []Employee         `bson:"employees" json:"employees"`
 	Status    *Status            `bson:"complianceStatus,omitempty" json:"complianceStatus,omitempty"`
 	Links     *Links             `bson:"links,omitempty" json:"links,omitempty"`
@@ -19,20 +19,20 @@ type Organization struct {
 	UpdatedAt *time.Time `bson:"updated_at" json:"updated_at"`
 }
 
-type OrgType string
+type SortOfOrg string
 
 const (
-	FoundationType OrgType = "foundation"
-	CompanyType    OrgType = "company"
-	Corporation    OrgType = "corporation"
+	FoundationSort  SortOfOrg = "foundation"
+	CompanySort     SortOfOrg = "company"
+	CorporationSort SortOfOrg = "corporation"
 )
 
 type Links struct {
-	Twitter   string `json:"twitter"`
-	Instagram string `json:"instagram"`
-	Facebook  string `json:"facebook"`
-	TikTok    string `json:"tiktok"`
-	Linkedin  string `json:"linkedin"`
-	Telegram  string `json:"telegram"`
-	Discord   string `json:"discord"`
+	Twitter   *string `json:"twitter"`
+	Instagram *string `json:"instagram"`
+	Facebook  *string `json:"facebook"`
+	TikTok    *string `json:"tiktok"`
+	Linkedin  *string `json:"linkedin"`
+	Telegram  *string `json:"telegram"`
+	Discord   *string `json:"discord"`
 }

@@ -1,0 +1,36 @@
+type: object
+required:
+  - data
+properties:
+  data:
+    required:
+      - type
+      - attributes
+    properties:
+      id:
+        type: string
+        description: "user Id"
+      type:
+        type: string
+        enum: [ employee_update ]
+      attributes:
+        type: object
+        required:
+          - org_id
+          - user_id
+        properties:
+          org_id:
+            type: string
+            description: "Organization id"
+          user_id:
+            type: string
+            description: "User id"
+          name:
+            type: string
+            description: "name of employee"
+          desc:
+            type: string
+            description: "Description"
+          role:
+            type: string
+            description: "User role"

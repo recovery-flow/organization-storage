@@ -1,0 +1,37 @@
+type: object
+required:
+  - data
+properties:
+  data:
+    type: object
+    required:
+      - id
+      - type
+      - attributes
+    properties:
+      id:
+        type: string
+        description: "organization id"
+      type:
+        type: string
+        enum: [ organization ]
+      attributes:
+        type: object
+        required:
+          - name
+          - logo
+          - desc
+          - sort
+        properties:
+          name:
+            type: string
+            description: "Team name"
+          logo:
+            type: logo
+            description: "link to photo"
+          desc:
+            type: string
+            description: "Team description"
+          sort:
+            type: string
+            description: "Type of Organization"

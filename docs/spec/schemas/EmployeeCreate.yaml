@@ -1,0 +1,36 @@
+type: object
+required:
+  - data
+properties:
+  data:
+    required:
+      - type
+      - attributes
+    properties:
+      type:
+        type: string
+        enum: [ employee_create ]
+      attributes:
+        type: object
+        required:
+          - org_id
+          - user_id
+          - name
+          - desc
+          - role
+        properties:
+          org_id:
+            type: string
+            description: "Organization ID"
+          user_id:
+            type: string
+            description: "User ID"
+          name:
+            type: string
+            description: "name of employee"
+          desc:
+            type: string
+            description: "Description"
+          role:
+            type: string
+            description: "User role"

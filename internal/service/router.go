@@ -27,14 +27,16 @@ func Run(ctx context.Context) {
 			r.Route("/private", func(r chi.Router) {
 				r.Use(authMW)
 				r.Route("/organization", func(r chi.Router) {
+					r.Post("/", nil) // create org
+
 					r.Route("/{organization_id}", func(r chi.Router) {
-						r.Patch("/update", nil)
+						r.Patch("/update", nil) // update organization
 
 						r.Route("/employee", func(r chi.Router) {
-							r.Post("/add", nil)
+							r.Post("/add", nil) // add employee
 
 							r.Route("/{employee_id}", func(r chi.Router) {
-								r.Patch("/update", nil)
+								r.Patch("/update", nil) // update employee
 							})
 						})
 					})
@@ -44,11 +46,11 @@ func Run(ctx context.Context) {
 			r.Route("/public", func(r chi.Router) {
 				r.Route("/organization", func(r chi.Router) {
 					r.Route("/{organization_id}", func(r chi.Router) {
-						r.Patch("/", nil)
+						r.Patch("/", nil) // info org
 
 						r.Route("/employee", func(r chi.Router) {
-							r.Patch("/", nil)
-							r.Route("/{employee_id}", nil)
+							r.Patch("/", nil)              // info employees
+							r.Route("/{employee_id}", nil) // info about one employee
 						})
 					})
 				})

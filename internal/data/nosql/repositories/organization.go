@@ -23,10 +23,11 @@ type Organization interface {
 	Get(ctx context.Context) (*models.Organization, error)
 
 	FilterById(id primitive.ObjectID) Organization
-	FilterByType(typeOp models.OrgType) Organization
+	FilterByType(typeOp models.SortOfOrg) Organization
 
 	Employees() (Employees, error)
 	Status() (Status, error)
+	Links() (Links, error)
 
 	UpdateOne(ctx context.Context, fields map[string]any) (*models.Organization, error)
 
@@ -137,7 +138,7 @@ func (o *organization) FilterById(id primitive.ObjectID) Organization {
 	return o
 }
 
-func (o *organization) FilterByType(typeOp models.OrgType) Organization {
+func (o *organization) FilterByType(typeOp models.SortOfOrg) Organization {
 	o.filters["type"] = typeOp
 	return o
 }
@@ -171,6 +172,19 @@ func (o *organization) Status() (Status, error) {
 		sort:       bson.D{},
 		limit:      0,
 		skip:       0,
+	}, nil
+}
+
+func (o *organization) Links() (Links, error) {
+	if o.filters == nil || o.filters["_id"] == nil {
+		return nil, fmt.Errorf("no filters found")
+	}
+
+	return &status{
+		client:     o.client,
+		database:   o.database,
+		collection: o.collection,
+		filters:    o.filters,
 	}, nil
 }
 

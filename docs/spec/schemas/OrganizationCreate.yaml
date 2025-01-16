@@ -1,0 +1,33 @@
+type: object
+required:
+  - data
+properties:
+  data:
+    type: object
+    required:
+      - type
+      - attributes
+    properties:
+      type:
+        type: string
+        enum: [ organization_create ]
+      attributes:
+        type: object
+        required:
+          - name
+          - logo
+          - desc
+          - sort
+        properties:
+          name:
+            type: string
+            description: "Team name"
+          logo:
+            type: logo
+            description: "link to photo"
+          desc:
+            type: string
+            description: "Team description"
+          sort:
+            type: string
+            description: "Type of Organization"
