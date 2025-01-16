@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/cloudinary/cloudinary-go/v2"
 	"github.com/recovery-flow/cifra-rabbit"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql"
 	"github.com/recovery-flow/tokens"

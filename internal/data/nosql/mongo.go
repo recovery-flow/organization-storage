@@ -9,7 +9,11 @@ type Repo struct {
 }
 
 func NewRepositoryNoSql(uri, dbName string) (*Repo, error) {
+	orgRepo, err := repositories.NewOrganization(uri, dbName, "organizations")
+	if err != nil {
+		return nil, err
+	}
 	return &Repo{
-		Organization:
+		Organization: orgRepo,
 	}, nil
 }

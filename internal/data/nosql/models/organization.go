@@ -13,10 +13,10 @@ type Organization struct {
 	Desc      string             `bson:"desc" json:"desc"`
 	Type      OrgType            `bson:"type" json:"type"`
 	Employees []Employee         `bson:"employees" json:"employees"`
-	Status    Status             `bson:"complianceStatus,omitempty" json:"complianceStatus,omitempty"`
-	Links     Links              `bson:"links" json:"links"`
+	Status    *Status            `bson:"complianceStatus,omitempty" json:"complianceStatus,omitempty"`
+	Links     *Links             `bson:"links,omitempty" json:"links,omitempty"`
 
-	UpdatedAt time.Time `bson:"updated_at" json:"updated_at"`
+	UpdatedAt *time.Time `bson:"updated_at" json:"updated_at"`
 }
 
 type OrgType string

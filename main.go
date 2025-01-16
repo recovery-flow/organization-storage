@@ -1,6 +1,10 @@
 package main
 
-import "os"
+import (
+	"os"
+
+	"github.com/recovery-flow/organization-storage/internal/cli"
+)
 
 func main() {
 	if !cli.Run(os.Args) {

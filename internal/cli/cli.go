@@ -50,10 +50,6 @@ func Run(args []string) bool {
 	switch cmd {
 	case serviceCmd.FullCommand():
 		runServices(ctx, &wg)
-	case migrateUpCmd.FullCommand():
-		err = MigrateUp(ctx)
-	case migrateDownCmd.FullCommand():
-		err = MigrateDown(ctx)
 	default:
 		logger.Errorf("unknown command %s", cmd)
 		return false
