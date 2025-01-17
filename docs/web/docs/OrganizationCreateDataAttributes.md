@@ -7,12 +7,15 @@ Name | Type | Description | Notes
 **Name** | **string** | Team name | 
 **Desc** | **string** | Team description | 
 **Sort** | **string** | Type of Organization | 
+**Country** | **string** | Country of registration | 
+**Owner** | [**OrganizationCreateDataAttributesOwner**](OrganizationCreateDataAttributesOwner.md) |  | 
+**City** | Pointer to **string** | City of HQ | [optional] 
 
 ## Methods
 
 ### NewOrganizationCreateDataAttributes
 
-`func NewOrganizationCreateDataAttributes(name string, desc string, sort string, ) *OrganizationCreateDataAttributes`
+`func NewOrganizationCreateDataAttributes(name string, desc string, sort string, country string, owner OrganizationCreateDataAttributesOwner, ) *OrganizationCreateDataAttributes`
 
 NewOrganizationCreateDataAttributes instantiates a new OrganizationCreateDataAttributes object
 This constructor will assign default values to properties that have it defined,
@@ -86,6 +89,71 @@ and a boolean to check if the value has been set.
 
 SetSort sets Sort field to given value.
 
+
+### GetCountry
+
+`func (o *OrganizationCreateDataAttributes) GetCountry() string`
+
+GetCountry returns the Country field if non-nil, zero value otherwise.
+
+### GetCountryOk
+
+`func (o *OrganizationCreateDataAttributes) GetCountryOk() (*string, bool)`
+
+GetCountryOk returns a tuple with the Country field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCountry
+
+`func (o *OrganizationCreateDataAttributes) SetCountry(v string)`
+
+SetCountry sets Country field to given value.
+
+
+### GetOwner
+
+`func (o *OrganizationCreateDataAttributes) GetOwner() OrganizationCreateDataAttributesOwner`
+
+GetOwner returns the Owner field if non-nil, zero value otherwise.
+
+### GetOwnerOk
+
+`func (o *OrganizationCreateDataAttributes) GetOwnerOk() (*OrganizationCreateDataAttributesOwner, bool)`
+
+GetOwnerOk returns a tuple with the Owner field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOwner
+
+`func (o *OrganizationCreateDataAttributes) SetOwner(v OrganizationCreateDataAttributesOwner)`
+
+SetOwner sets Owner field to given value.
+
+
+### GetCity
+
+`func (o *OrganizationCreateDataAttributes) GetCity() string`
+
+GetCity returns the City field if non-nil, zero value otherwise.
+
+### GetCityOk
+
+`func (o *OrganizationCreateDataAttributes) GetCityOk() (*string, bool)`
+
+GetCityOk returns a tuple with the City field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCity
+
+`func (o *OrganizationCreateDataAttributes) SetCity(v string)`
+
+SetCity sets City field to given value.
+
+### HasCity
+
+`func (o *OrganizationCreateDataAttributes) HasCity() bool`
+
+HasCity returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -14,17 +14,16 @@ properties:
         description: "organization id"
       type:
         type: string
-        enum: [ organization ]
+        enum: [organization]
       attributes:
         type: object
         required:
           - name
           - logo
+          - verified
           - desc
           - sort
-          - verified
-          - links
-          - complicated_status
+          - country
           - created_at
         properties:
           name:
@@ -32,20 +31,26 @@ properties:
             description: "Team name"
           logo:
             type: string
-            description: "link to photo"
+            description: "Link to photo"
+          verified:
+            type: string
+            description: "Verified status"
           desc:
             type: string
             description: "Team description"
           sort:
             type: string
             description: "Type of Organization"
-          verified:
+          country:
             type: string
-            description: "verified status"
+            description: "Country of registration"
+          city:
+            type: string
+            description: "City of HQ"
           links:
-            $ref: "./Links.yaml"
+            $ref: '../schemas/Links.yaml'
           complicated_status:
-            $ref: "./ComplicatedStatus.yaml"
+            $ref: "../schemas/ComplicatedStatus.yaml"
           created_at:
             type: string
             format: date-time
@@ -53,4 +58,4 @@ properties:
   included:
     type: array
     items:
-      $ref: "Employee.yaml"
+      $ref: "./Employee.yaml"  # Убедитесь, что путь корректный

@@ -17,11 +17,11 @@ import (
 	"fmt"
 )
 
-// checks if the EmployeeDataAttributes type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &EmployeeDataAttributes{}
+// checks if the OrganizationCreateDataAttributesOwner type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OrganizationCreateDataAttributesOwner{}
 
-// EmployeeDataAttributes struct for EmployeeDataAttributes
-type EmployeeDataAttributes struct {
+// OrganizationCreateDataAttributesOwner struct for OrganizationCreateDataAttributesOwner
+type OrganizationCreateDataAttributesOwner struct {
 	// first name of employee
 	FirstName string `json:"first_name"`
 	// second name of employee
@@ -33,46 +33,40 @@ type EmployeeDataAttributes struct {
 	// position in the company
 	Position string `json:"position"`
 	// verified status
-	Verified string `json:"verified"`
+	Verified *string `json:"verified,omitempty"`
 	// Description
 	Desc string `json:"desc"`
-	// User role
-	Role string `json:"role"`
-	// User updated at
-	UpdatedAt *string `json:"updated_at,omitempty"`
 	// User created at
 	CreatedAt time.Time `json:"created_at"`
 }
 
-type _EmployeeDataAttributes EmployeeDataAttributes
+type _OrganizationCreateDataAttributesOwner OrganizationCreateDataAttributesOwner
 
-// NewEmployeeDataAttributes instantiates a new EmployeeDataAttributes object
+// NewOrganizationCreateDataAttributesOwner instantiates a new OrganizationCreateDataAttributesOwner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEmployeeDataAttributes(firstName string, secondName string, displayName string, position string, verified string, desc string, role string, createdAt time.Time) *EmployeeDataAttributes {
-	this := EmployeeDataAttributes{}
+func NewOrganizationCreateDataAttributesOwner(firstName string, secondName string, displayName string, position string, desc string, createdAt time.Time) *OrganizationCreateDataAttributesOwner {
+	this := OrganizationCreateDataAttributesOwner{}
 	this.FirstName = firstName
 	this.SecondName = secondName
 	this.DisplayName = displayName
 	this.Position = position
-	this.Verified = verified
 	this.Desc = desc
-	this.Role = role
 	this.CreatedAt = createdAt
 	return &this
 }
 
-// NewEmployeeDataAttributesWithDefaults instantiates a new EmployeeDataAttributes object
+// NewOrganizationCreateDataAttributesOwnerWithDefaults instantiates a new OrganizationCreateDataAttributesOwner object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewEmployeeDataAttributesWithDefaults() *EmployeeDataAttributes {
-	this := EmployeeDataAttributes{}
+func NewOrganizationCreateDataAttributesOwnerWithDefaults() *OrganizationCreateDataAttributesOwner {
+	this := OrganizationCreateDataAttributesOwner{}
 	return &this
 }
 
 // GetFirstName returns the FirstName field value
-func (o *EmployeeDataAttributes) GetFirstName() string {
+func (o *OrganizationCreateDataAttributesOwner) GetFirstName() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -83,7 +77,7 @@ func (o *EmployeeDataAttributes) GetFirstName() string {
 
 // GetFirstNameOk returns a tuple with the FirstName field value
 // and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetFirstNameOk() (*string, bool) {
+func (o *OrganizationCreateDataAttributesOwner) GetFirstNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -91,12 +85,12 @@ func (o *EmployeeDataAttributes) GetFirstNameOk() (*string, bool) {
 }
 
 // SetFirstName sets field value
-func (o *EmployeeDataAttributes) SetFirstName(v string) {
+func (o *OrganizationCreateDataAttributesOwner) SetFirstName(v string) {
 	o.FirstName = v
 }
 
 // GetSecondName returns the SecondName field value
-func (o *EmployeeDataAttributes) GetSecondName() string {
+func (o *OrganizationCreateDataAttributesOwner) GetSecondName() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -107,7 +101,7 @@ func (o *EmployeeDataAttributes) GetSecondName() string {
 
 // GetSecondNameOk returns a tuple with the SecondName field value
 // and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetSecondNameOk() (*string, bool) {
+func (o *OrganizationCreateDataAttributesOwner) GetSecondNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -115,12 +109,12 @@ func (o *EmployeeDataAttributes) GetSecondNameOk() (*string, bool) {
 }
 
 // SetSecondName sets field value
-func (o *EmployeeDataAttributes) SetSecondName(v string) {
+func (o *OrganizationCreateDataAttributesOwner) SetSecondName(v string) {
 	o.SecondName = v
 }
 
 // GetThirdName returns the ThirdName field value if set, zero value otherwise.
-func (o *EmployeeDataAttributes) GetThirdName() string {
+func (o *OrganizationCreateDataAttributesOwner) GetThirdName() string {
 	if o == nil || IsNil(o.ThirdName) {
 		var ret string
 		return ret
@@ -130,7 +124,7 @@ func (o *EmployeeDataAttributes) GetThirdName() string {
 
 // GetThirdNameOk returns a tuple with the ThirdName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetThirdNameOk() (*string, bool) {
+func (o *OrganizationCreateDataAttributesOwner) GetThirdNameOk() (*string, bool) {
 	if o == nil || IsNil(o.ThirdName) {
 		return nil, false
 	}
@@ -138,7 +132,7 @@ func (o *EmployeeDataAttributes) GetThirdNameOk() (*string, bool) {
 }
 
 // HasThirdName returns a boolean if a field has been set.
-func (o *EmployeeDataAttributes) HasThirdName() bool {
+func (o *OrganizationCreateDataAttributesOwner) HasThirdName() bool {
 	if o != nil && !IsNil(o.ThirdName) {
 		return true
 	}
@@ -147,12 +141,12 @@ func (o *EmployeeDataAttributes) HasThirdName() bool {
 }
 
 // SetThirdName gets a reference to the given string and assigns it to the ThirdName field.
-func (o *EmployeeDataAttributes) SetThirdName(v string) {
+func (o *OrganizationCreateDataAttributesOwner) SetThirdName(v string) {
 	o.ThirdName = &v
 }
 
 // GetDisplayName returns the DisplayName field value
-func (o *EmployeeDataAttributes) GetDisplayName() string {
+func (o *OrganizationCreateDataAttributesOwner) GetDisplayName() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -163,7 +157,7 @@ func (o *EmployeeDataAttributes) GetDisplayName() string {
 
 // GetDisplayNameOk returns a tuple with the DisplayName field value
 // and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetDisplayNameOk() (*string, bool) {
+func (o *OrganizationCreateDataAttributesOwner) GetDisplayNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -171,12 +165,12 @@ func (o *EmployeeDataAttributes) GetDisplayNameOk() (*string, bool) {
 }
 
 // SetDisplayName sets field value
-func (o *EmployeeDataAttributes) SetDisplayName(v string) {
+func (o *OrganizationCreateDataAttributesOwner) SetDisplayName(v string) {
 	o.DisplayName = v
 }
 
 // GetPosition returns the Position field value
-func (o *EmployeeDataAttributes) GetPosition() string {
+func (o *OrganizationCreateDataAttributesOwner) GetPosition() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -187,7 +181,7 @@ func (o *EmployeeDataAttributes) GetPosition() string {
 
 // GetPositionOk returns a tuple with the Position field value
 // and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetPositionOk() (*string, bool) {
+func (o *OrganizationCreateDataAttributesOwner) GetPositionOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -195,36 +189,44 @@ func (o *EmployeeDataAttributes) GetPositionOk() (*string, bool) {
 }
 
 // SetPosition sets field value
-func (o *EmployeeDataAttributes) SetPosition(v string) {
+func (o *OrganizationCreateDataAttributesOwner) SetPosition(v string) {
 	o.Position = v
 }
 
-// GetVerified returns the Verified field value
-func (o *EmployeeDataAttributes) GetVerified() string {
-	if o == nil {
+// GetVerified returns the Verified field value if set, zero value otherwise.
+func (o *OrganizationCreateDataAttributesOwner) GetVerified() string {
+	if o == nil || IsNil(o.Verified) {
 		var ret string
 		return ret
 	}
-
-	return o.Verified
+	return *o.Verified
 }
 
-// GetVerifiedOk returns a tuple with the Verified field value
+// GetVerifiedOk returns a tuple with the Verified field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetVerifiedOk() (*string, bool) {
-	if o == nil {
+func (o *OrganizationCreateDataAttributesOwner) GetVerifiedOk() (*string, bool) {
+	if o == nil || IsNil(o.Verified) {
 		return nil, false
 	}
-	return &o.Verified, true
+	return o.Verified, true
 }
 
-// SetVerified sets field value
-func (o *EmployeeDataAttributes) SetVerified(v string) {
-	o.Verified = v
+// HasVerified returns a boolean if a field has been set.
+func (o *OrganizationCreateDataAttributesOwner) HasVerified() bool {
+	if o != nil && !IsNil(o.Verified) {
+		return true
+	}
+
+	return false
+}
+
+// SetVerified gets a reference to the given string and assigns it to the Verified field.
+func (o *OrganizationCreateDataAttributesOwner) SetVerified(v string) {
+	o.Verified = &v
 }
 
 // GetDesc returns the Desc field value
-func (o *EmployeeDataAttributes) GetDesc() string {
+func (o *OrganizationCreateDataAttributesOwner) GetDesc() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -235,7 +237,7 @@ func (o *EmployeeDataAttributes) GetDesc() string {
 
 // GetDescOk returns a tuple with the Desc field value
 // and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetDescOk() (*string, bool) {
+func (o *OrganizationCreateDataAttributesOwner) GetDescOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -243,68 +245,12 @@ func (o *EmployeeDataAttributes) GetDescOk() (*string, bool) {
 }
 
 // SetDesc sets field value
-func (o *EmployeeDataAttributes) SetDesc(v string) {
+func (o *OrganizationCreateDataAttributesOwner) SetDesc(v string) {
 	o.Desc = v
 }
 
-// GetRole returns the Role field value
-func (o *EmployeeDataAttributes) GetRole() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Role
-}
-
-// GetRoleOk returns a tuple with the Role field value
-// and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetRoleOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Role, true
-}
-
-// SetRole sets field value
-func (o *EmployeeDataAttributes) SetRole(v string) {
-	o.Role = v
-}
-
-// GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *EmployeeDataAttributes) GetUpdatedAt() string {
-	if o == nil || IsNil(o.UpdatedAt) {
-		var ret string
-		return ret
-	}
-	return *o.UpdatedAt
-}
-
-// GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetUpdatedAtOk() (*string, bool) {
-	if o == nil || IsNil(o.UpdatedAt) {
-		return nil, false
-	}
-	return o.UpdatedAt, true
-}
-
-// HasUpdatedAt returns a boolean if a field has been set.
-func (o *EmployeeDataAttributes) HasUpdatedAt() bool {
-	if o != nil && !IsNil(o.UpdatedAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
-func (o *EmployeeDataAttributes) SetUpdatedAt(v string) {
-	o.UpdatedAt = &v
-}
-
 // GetCreatedAt returns the CreatedAt field value
-func (o *EmployeeDataAttributes) GetCreatedAt() time.Time {
+func (o *OrganizationCreateDataAttributesOwner) GetCreatedAt() time.Time {
 	if o == nil {
 		var ret time.Time
 		return ret
@@ -315,7 +261,7 @@ func (o *EmployeeDataAttributes) GetCreatedAt() time.Time {
 
 // GetCreatedAtOk returns a tuple with the CreatedAt field value
 // and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetCreatedAtOk() (*time.Time, bool) {
+func (o *OrganizationCreateDataAttributesOwner) GetCreatedAtOk() (*time.Time, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -323,11 +269,11 @@ func (o *EmployeeDataAttributes) GetCreatedAtOk() (*time.Time, bool) {
 }
 
 // SetCreatedAt sets field value
-func (o *EmployeeDataAttributes) SetCreatedAt(v time.Time) {
+func (o *OrganizationCreateDataAttributesOwner) SetCreatedAt(v time.Time) {
 	o.CreatedAt = v
 }
 
-func (o EmployeeDataAttributes) MarshalJSON() ([]byte, error) {
+func (o OrganizationCreateDataAttributesOwner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -335,7 +281,7 @@ func (o EmployeeDataAttributes) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o EmployeeDataAttributes) ToMap() (map[string]interface{}, error) {
+func (o OrganizationCreateDataAttributesOwner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["first_name"] = o.FirstName
 	toSerialize["second_name"] = o.SecondName
@@ -344,17 +290,15 @@ func (o EmployeeDataAttributes) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["display_name"] = o.DisplayName
 	toSerialize["position"] = o.Position
-	toSerialize["verified"] = o.Verified
-	toSerialize["desc"] = o.Desc
-	toSerialize["role"] = o.Role
-	if !IsNil(o.UpdatedAt) {
-		toSerialize["updated_at"] = o.UpdatedAt
+	if !IsNil(o.Verified) {
+		toSerialize["verified"] = o.Verified
 	}
+	toSerialize["desc"] = o.Desc
 	toSerialize["created_at"] = o.CreatedAt
 	return toSerialize, nil
 }
 
-func (o *EmployeeDataAttributes) UnmarshalJSON(data []byte) (err error) {
+func (o *OrganizationCreateDataAttributesOwner) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -363,9 +307,7 @@ func (o *EmployeeDataAttributes) UnmarshalJSON(data []byte) (err error) {
 		"second_name",
 		"display_name",
 		"position",
-		"verified",
 		"desc",
-		"role",
 		"created_at",
 	}
 
@@ -383,53 +325,53 @@ func (o *EmployeeDataAttributes) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varEmployeeDataAttributes := _EmployeeDataAttributes{}
+	varOrganizationCreateDataAttributesOwner := _OrganizationCreateDataAttributesOwner{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varEmployeeDataAttributes)
+	err = decoder.Decode(&varOrganizationCreateDataAttributesOwner)
 
 	if err != nil {
 		return err
 	}
 
-	*o = EmployeeDataAttributes(varEmployeeDataAttributes)
+	*o = OrganizationCreateDataAttributesOwner(varOrganizationCreateDataAttributesOwner)
 
 	return err
 }
 
-type NullableEmployeeDataAttributes struct {
-	value *EmployeeDataAttributes
+type NullableOrganizationCreateDataAttributesOwner struct {
+	value *OrganizationCreateDataAttributesOwner
 	isSet bool
 }
 
-func (v NullableEmployeeDataAttributes) Get() *EmployeeDataAttributes {
+func (v NullableOrganizationCreateDataAttributesOwner) Get() *OrganizationCreateDataAttributesOwner {
 	return v.value
 }
 
-func (v *NullableEmployeeDataAttributes) Set(val *EmployeeDataAttributes) {
+func (v *NullableOrganizationCreateDataAttributesOwner) Set(val *OrganizationCreateDataAttributesOwner) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableEmployeeDataAttributes) IsSet() bool {
+func (v NullableOrganizationCreateDataAttributesOwner) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableEmployeeDataAttributes) Unset() {
+func (v *NullableOrganizationCreateDataAttributesOwner) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableEmployeeDataAttributes(val *EmployeeDataAttributes) *NullableEmployeeDataAttributes {
-	return &NullableEmployeeDataAttributes{value: val, isSet: true}
+func NewNullableOrganizationCreateDataAttributesOwner(val *OrganizationCreateDataAttributesOwner) *NullableOrganizationCreateDataAttributesOwner {
+	return &NullableOrganizationCreateDataAttributesOwner{value: val, isSet: true}
 }
 
-func (v NullableEmployeeDataAttributes) MarshalJSON() ([]byte, error) {
+func (v NullableOrganizationCreateDataAttributesOwner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableEmployeeDataAttributes) UnmarshalJSON(src []byte) error {
+func (v *NullableOrganizationCreateDataAttributesOwner) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

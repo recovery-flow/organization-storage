@@ -5,18 +5,21 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Team name | 
-**Logo** | **string** | link to photo | 
+**Logo** | **string** | Link to photo | 
+**Verified** | **string** | Verified status | 
 **Desc** | **string** | Team description | 
 **Sort** | **string** | Type of Organization | 
-**Links** | [**Object**](Object.md) |  | 
-**ComplicatedStatus** | [**Object**](Object.md) |  | 
+**Country** | **string** | Country of registration | 
+**City** | Pointer to **string** | City of HQ | [optional] 
+**Links** | Pointer to [**Object**](Object.md) |  | [optional] 
+**ComplicatedStatus** | Pointer to [**Object**](Object.md) |  | [optional] 
 **CreatedAt** | **time.Time** | Team creation timestamp | 
 
 ## Methods
 
 ### NewOrganizationDataAttributes
 
-`func NewOrganizationDataAttributes(name string, logo string, desc string, sort string, links Object, complicatedStatus Object, createdAt time.Time, ) *OrganizationDataAttributes`
+`func NewOrganizationDataAttributes(name string, logo string, verified string, desc string, sort string, country string, createdAt time.Time, ) *OrganizationDataAttributes`
 
 NewOrganizationDataAttributes instantiates a new OrganizationDataAttributes object
 This constructor will assign default values to properties that have it defined,
@@ -71,6 +74,26 @@ and a boolean to check if the value has been set.
 SetLogo sets Logo field to given value.
 
 
+### GetVerified
+
+`func (o *OrganizationDataAttributes) GetVerified() string`
+
+GetVerified returns the Verified field if non-nil, zero value otherwise.
+
+### GetVerifiedOk
+
+`func (o *OrganizationDataAttributes) GetVerifiedOk() (*string, bool)`
+
+GetVerifiedOk returns a tuple with the Verified field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVerified
+
+`func (o *OrganizationDataAttributes) SetVerified(v string)`
+
+SetVerified sets Verified field to given value.
+
+
 ### GetDesc
 
 `func (o *OrganizationDataAttributes) GetDesc() string`
@@ -111,6 +134,51 @@ and a boolean to check if the value has been set.
 SetSort sets Sort field to given value.
 
 
+### GetCountry
+
+`func (o *OrganizationDataAttributes) GetCountry() string`
+
+GetCountry returns the Country field if non-nil, zero value otherwise.
+
+### GetCountryOk
+
+`func (o *OrganizationDataAttributes) GetCountryOk() (*string, bool)`
+
+GetCountryOk returns a tuple with the Country field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCountry
+
+`func (o *OrganizationDataAttributes) SetCountry(v string)`
+
+SetCountry sets Country field to given value.
+
+
+### GetCity
+
+`func (o *OrganizationDataAttributes) GetCity() string`
+
+GetCity returns the City field if non-nil, zero value otherwise.
+
+### GetCityOk
+
+`func (o *OrganizationDataAttributes) GetCityOk() (*string, bool)`
+
+GetCityOk returns a tuple with the City field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCity
+
+`func (o *OrganizationDataAttributes) SetCity(v string)`
+
+SetCity sets City field to given value.
+
+### HasCity
+
+`func (o *OrganizationDataAttributes) HasCity() bool`
+
+HasCity returns a boolean if a field has been set.
+
 ### GetLinks
 
 `func (o *OrganizationDataAttributes) GetLinks() Object`
@@ -130,6 +198,11 @@ and a boolean to check if the value has been set.
 
 SetLinks sets Links field to given value.
 
+### HasLinks
+
+`func (o *OrganizationDataAttributes) HasLinks() bool`
+
+HasLinks returns a boolean if a field has been set.
 
 ### GetComplicatedStatus
 
@@ -150,6 +223,11 @@ and a boolean to check if the value has been set.
 
 SetComplicatedStatus sets ComplicatedStatus field to given value.
 
+### HasComplicatedStatus
+
+`func (o *OrganizationDataAttributes) HasComplicatedStatus() bool`
+
+HasComplicatedStatus returns a boolean if a field has been set.
 
 ### GetCreatedAt
 

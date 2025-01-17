@@ -5,14 +5,14 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **State** | **string** | Current compliance state of the organization | 
-**Marks** | [**[]ComplicatedStatusMarksInner**](ComplicatedStatusMarksInner.md) |  | 
+**Stamp** | **[]string** |  | 
 **From** | **time.Time** | Date from which the compliance state is effective | 
 
 ## Methods
 
 ### NewComplicatedStatus
 
-`func NewComplicatedStatus(state string, marks []ComplicatedStatusMarksInner, from time.Time, ) *ComplicatedStatus`
+`func NewComplicatedStatus(state string, stamp []string, from time.Time, ) *ComplicatedStatus`
 
 NewComplicatedStatus instantiates a new ComplicatedStatus object
 This constructor will assign default values to properties that have it defined,
@@ -47,24 +47,24 @@ and a boolean to check if the value has been set.
 SetState sets State field to given value.
 
 
-### GetMarks
+### GetStamp
 
-`func (o *ComplicatedStatus) GetMarks() []ComplicatedStatusMarksInner`
+`func (o *ComplicatedStatus) GetStamp() []string`
 
-GetMarks returns the Marks field if non-nil, zero value otherwise.
+GetStamp returns the Stamp field if non-nil, zero value otherwise.
 
-### GetMarksOk
+### GetStampOk
 
-`func (o *ComplicatedStatus) GetMarksOk() (*[]ComplicatedStatusMarksInner, bool)`
+`func (o *ComplicatedStatus) GetStampOk() (*[]string, bool)`
 
-GetMarksOk returns a tuple with the Marks field if it's non-nil, zero value otherwise
+GetStampOk returns a tuple with the Stamp field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetMarks
+### SetStamp
 
-`func (o *ComplicatedStatus) SetMarks(v []ComplicatedStatusMarksInner)`
+`func (o *ComplicatedStatus) SetStamp(v []string)`
 
-SetMarks sets Marks field to given value.
+SetStamp sets Stamp field to given value.
 
 
 ### GetFrom

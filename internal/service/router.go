@@ -30,7 +30,11 @@ func Run(ctx context.Context) {
 					r.Post("/", nil) // create org
 
 					r.Route("/{organization_id}", func(r chi.Router) {
-						r.Patch("/update", nil) // update organization
+						r.Route("/update", func(r chi.Router) {
+							r.Patch("/", nil) // update organization
+							r.Patch("/photo", nil)
+							r.Patch("/link", nil)
+						})
 
 						r.Route("/employee", func(r chi.Router) {
 							r.Post("/add", nil) // add employee

@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
-  description: SSO REST API for Cifra app
-  title: Cifra SSO REST API
-  version: 0.0.1
+  description: example
+  title: test
+  version: 0.0.0
 servers:
 - url: /
 paths:
@@ -45,9 +45,11 @@ components:
           - suspended
           - inactive
           type: string
-        marks:
+        stamp:
+          format: string
           items:
-            $ref: '#/components/schemas/ComplicatedStatus_marks_inner'
+            description: TODO default missing array inner type to string
+            type: string
           type: array
         from:
           description: Date from which the compliance state is effective
@@ -55,7 +57,7 @@ components:
           type: string
       required:
       - from
-      - marks
+      - stamp
       - state
       type: object
     Links:
@@ -148,6 +150,11 @@ components:
         role:
           description: User role
           type: string
+        updated_at:
+          description: User updated at
+          example: 2021-01-01T00:00:00Z
+          format: data-time
+          type: string
         created_at:
           description: User created at
           example: 2021-01-01T00:00:00Z
@@ -161,7 +168,6 @@ components:
       - position
       - role
       - second_name
-      - third_name
       - verified
       type: object
     Employee_data:
@@ -280,32 +286,28 @@ components:
       - attributes
       - type
       type: object
-    ComplicatedStatus_marks_inner:
-      properties:
-        timestamp:
-          description: Timestamp of the mark
-          format: date-time
-          type: string
-        reason:
-          description: Reason for the compliance mark
-          type: string
-      required:
-      - reason
-      - timestamp
-      type: object
     Organization_data_attributes:
       properties:
         name:
           description: Team name
           type: string
         logo:
-          description: link to photo
+          description: Link to photo
+          type: string
+        verified:
+          description: Verified status
           type: string
         desc:
           description: Team description
           type: string
         sort:
           description: Type of Organization
+          type: string
+        country:
+          description: Country of registration
+          type: string
+        city:
+          description: City of HQ
           type: string
         links:
           $ref: ./spec/components/schemas/Links.yaml
@@ -316,13 +318,13 @@ components:
           format: date-time
           type: string
       required:
-      - complicated_status
+      - country
       - created_at
       - desc
-      - links
       - logo
       - name
       - sort
+      - verified
       type: object
     Organization_data:
       properties:
@@ -340,6 +342,42 @@ components:
       - id
       - type
       type: object
+    OrganizationCreate_data_attributes_owner:
+      properties:
+        first_name:
+          description: first name of employee
+          type: string
+        second_name:
+          description: second name of employee
+          type: string
+        third_name:
+          description: third name of employee
+          type: string
+        display_name:
+          description: name of employee
+          type: string
+        position:
+          description: position in the company
+          type: string
+        verified:
+          description: verified status
+          type: string
+        desc:
+          description: Description
+          type: string
+        created_at:
+          description: User created at
+          example: 2021-01-01T00:00:00Z
+          format: date-time
+          type: string
+      required:
+      - created_at
+      - desc
+      - display_name
+      - first_name
+      - position
+      - second_name
+      type: object
     OrganizationCreate_data_attributes:
       properties:
         name:
@@ -351,10 +389,19 @@ components:
         sort:
           description: Type of Organization
           type: string
+        country:
+          description: Country of registration
+          type: string
+        owner:
+          $ref: '#/components/schemas/OrganizationCreate_data_attributes_owner'
+        city:
+          description: City of HQ
+          type: string
       required:
+      - country
       - desc
-      - logo
       - name
+      - owner
       - sort
       type: object
     OrganizationCreate_data:
@@ -369,6 +416,24 @@ components:
       - attributes
       - type
       type: object
+    OrganizationUpdate_data_attributes:
+      properties:
+        name:
+          description: Team name
+          type: string
+        desc:
+          description: Team description
+          type: string
+        sort:
+          description: Type of Organization
+          type: string
+        country:
+          description: Country of registration
+          type: string
+        city:
+          description: City of HQ
+          type: string
+      type: object
     OrganizationUpdate_data:
       properties:
         id:
@@ -379,7 +444,7 @@ components:
           - organization
           type: string
         attributes:
-          $ref: '#/components/schemas/OrganizationCreate_data_attributes'
+          $ref: '#/components/schemas/OrganizationUpdate_data_attributes'
       required:
       - attributes
       - id

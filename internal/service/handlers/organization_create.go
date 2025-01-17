@@ -1,0 +1,79 @@
+package handlers
+
+import (
+	"net/http"
+
+	"github.com/google/uuid"
+	"github.com/recovery-flow/comtools/cifractx"
+	"github.com/recovery-flow/comtools/httpkit"
+	"github.com/recovery-flow/comtools/httpkit/problems"
+	"github.com/recovery-flow/organization-storage/internal/config"
+	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
+	"github.com/recovery-flow/organization-storage/internal/service/requests"
+	"github.com/recovery-flow/roles"
+	"github.com/recovery-flow/tokens"
+	"github.com/sirupsen/logrus"
+)
+
+func OrganizationCreate(w http.ResponseWriter, r *http.Request) {
+	server, err := cifractx.GetValue[*config.Service](r.Context(), config.SERVER)
+	if err != nil {
+		logrus.Errorf("Failed to retrieve service configuration: %v", err)
+		httpkit.RenderErr(w, problems.InternalError("Failed to retrieve service configuration"))
+		return
+	}
+	log := server.Logger
+
+	req, err := requests.NewOrganizationCreate(r)
+	if err != nil {
+		log.Info("Failed to parse request: ", err)
+		httpkit.RenderErr(w, problems.BadRequest(err)...)
+		return
+	}
+
+	name := req.Data.Attributes.Name
+	desc := req.Data.Attributes.Desc
+	sort := req.Data.Attributes.Sort
+	city := req.Data.Attributes.City
+	country := req.Data.Attributes.Country
+	owner := req.Data.Attributes.Owner
+
+	userID, ok := r.Context().Value(tokens.UserIDKey).(uuid.UUID)
+	if !ok {
+		server.Logger.Warn("UserID not found in context")
+		httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
+		return
+	}
+
+	ownerEmp := models.Employee{
+		UserID:      userID,
+		FirstName:   owner.FirstName,
+		SecondName:  owner.SecondName,
+		ThirdName:   owner.ThirdName,
+		DisplayName: owner.DisplayName,
+		Position:    owner.Position,
+		Desc:        owner.Desc,
+		Verified:    false,
+		Role:        roles.RoleOrgOwner,
+	}
+
+	Organization := models.Organization{
+		Name:      name,
+		Verified:  false,
+		Desc:      desc,
+		Country:   country,
+		City:      city,
+		Sort:      models.SortOfOrg(sort),
+		Employees: []models.Employee{ownerEmp},
+	}
+
+	res, err := server.MongoDB.Organization.Insert(r.Context(), Organization)
+	if err != nil {
+		log.WithError(err).Error("Failed to insert organization")
+		httpkit.RenderErr(w, problems.InternalError("Failed to insert organization"))
+		return
+	}
+
+	log.Infof("Organization created: %v by %s", res.ID, userID)
+
+}

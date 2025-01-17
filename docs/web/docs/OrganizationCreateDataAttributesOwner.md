@@ -1,4 +1,4 @@
-# EmployeeDataAttributes
+# OrganizationCreateDataAttributesOwner
 
 ## Properties
 
@@ -9,237 +9,195 @@ Name | Type | Description | Notes
 **ThirdName** | Pointer to **string** | third name of employee | [optional] 
 **DisplayName** | **string** | name of employee | 
 **Position** | **string** | position in the company | 
-**Verified** | **string** | verified status | 
+**Verified** | Pointer to **string** | verified status | [optional] 
 **Desc** | **string** | Description | 
-**Role** | **string** | User role | 
-**UpdatedAt** | Pointer to **string** | User updated at | [optional] 
 **CreatedAt** | **time.Time** | User created at | 
 
 ## Methods
 
-### NewEmployeeDataAttributes
+### NewOrganizationCreateDataAttributesOwner
 
-`func NewEmployeeDataAttributes(firstName string, secondName string, displayName string, position string, verified string, desc string, role string, createdAt time.Time, ) *EmployeeDataAttributes`
+`func NewOrganizationCreateDataAttributesOwner(firstName string, secondName string, displayName string, position string, desc string, createdAt time.Time, ) *OrganizationCreateDataAttributesOwner`
 
-NewEmployeeDataAttributes instantiates a new EmployeeDataAttributes object
+NewOrganizationCreateDataAttributesOwner instantiates a new OrganizationCreateDataAttributesOwner object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewEmployeeDataAttributesWithDefaults
+### NewOrganizationCreateDataAttributesOwnerWithDefaults
 
-`func NewEmployeeDataAttributesWithDefaults() *EmployeeDataAttributes`
+`func NewOrganizationCreateDataAttributesOwnerWithDefaults() *OrganizationCreateDataAttributesOwner`
 
-NewEmployeeDataAttributesWithDefaults instantiates a new EmployeeDataAttributes object
+NewOrganizationCreateDataAttributesOwnerWithDefaults instantiates a new OrganizationCreateDataAttributesOwner object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetFirstName
 
-`func (o *EmployeeDataAttributes) GetFirstName() string`
+`func (o *OrganizationCreateDataAttributesOwner) GetFirstName() string`
 
 GetFirstName returns the FirstName field if non-nil, zero value otherwise.
 
 ### GetFirstNameOk
 
-`func (o *EmployeeDataAttributes) GetFirstNameOk() (*string, bool)`
+`func (o *OrganizationCreateDataAttributesOwner) GetFirstNameOk() (*string, bool)`
 
 GetFirstNameOk returns a tuple with the FirstName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetFirstName
 
-`func (o *EmployeeDataAttributes) SetFirstName(v string)`
+`func (o *OrganizationCreateDataAttributesOwner) SetFirstName(v string)`
 
 SetFirstName sets FirstName field to given value.
 
 
 ### GetSecondName
 
-`func (o *EmployeeDataAttributes) GetSecondName() string`
+`func (o *OrganizationCreateDataAttributesOwner) GetSecondName() string`
 
 GetSecondName returns the SecondName field if non-nil, zero value otherwise.
 
 ### GetSecondNameOk
 
-`func (o *EmployeeDataAttributes) GetSecondNameOk() (*string, bool)`
+`func (o *OrganizationCreateDataAttributesOwner) GetSecondNameOk() (*string, bool)`
 
 GetSecondNameOk returns a tuple with the SecondName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSecondName
 
-`func (o *EmployeeDataAttributes) SetSecondName(v string)`
+`func (o *OrganizationCreateDataAttributesOwner) SetSecondName(v string)`
 
 SetSecondName sets SecondName field to given value.
 
 
 ### GetThirdName
 
-`func (o *EmployeeDataAttributes) GetThirdName() string`
+`func (o *OrganizationCreateDataAttributesOwner) GetThirdName() string`
 
 GetThirdName returns the ThirdName field if non-nil, zero value otherwise.
 
 ### GetThirdNameOk
 
-`func (o *EmployeeDataAttributes) GetThirdNameOk() (*string, bool)`
+`func (o *OrganizationCreateDataAttributesOwner) GetThirdNameOk() (*string, bool)`
 
 GetThirdNameOk returns a tuple with the ThirdName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetThirdName
 
-`func (o *EmployeeDataAttributes) SetThirdName(v string)`
+`func (o *OrganizationCreateDataAttributesOwner) SetThirdName(v string)`
 
 SetThirdName sets ThirdName field to given value.
 
 ### HasThirdName
 
-`func (o *EmployeeDataAttributes) HasThirdName() bool`
+`func (o *OrganizationCreateDataAttributesOwner) HasThirdName() bool`
 
 HasThirdName returns a boolean if a field has been set.
 
 ### GetDisplayName
 
-`func (o *EmployeeDataAttributes) GetDisplayName() string`
+`func (o *OrganizationCreateDataAttributesOwner) GetDisplayName() string`
 
 GetDisplayName returns the DisplayName field if non-nil, zero value otherwise.
 
 ### GetDisplayNameOk
 
-`func (o *EmployeeDataAttributes) GetDisplayNameOk() (*string, bool)`
+`func (o *OrganizationCreateDataAttributesOwner) GetDisplayNameOk() (*string, bool)`
 
 GetDisplayNameOk returns a tuple with the DisplayName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDisplayName
 
-`func (o *EmployeeDataAttributes) SetDisplayName(v string)`
+`func (o *OrganizationCreateDataAttributesOwner) SetDisplayName(v string)`
 
 SetDisplayName sets DisplayName field to given value.
 
 
 ### GetPosition
 
-`func (o *EmployeeDataAttributes) GetPosition() string`
+`func (o *OrganizationCreateDataAttributesOwner) GetPosition() string`
 
 GetPosition returns the Position field if non-nil, zero value otherwise.
 
 ### GetPositionOk
 
-`func (o *EmployeeDataAttributes) GetPositionOk() (*string, bool)`
+`func (o *OrganizationCreateDataAttributesOwner) GetPositionOk() (*string, bool)`
 
 GetPositionOk returns a tuple with the Position field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetPosition
 
-`func (o *EmployeeDataAttributes) SetPosition(v string)`
+`func (o *OrganizationCreateDataAttributesOwner) SetPosition(v string)`
 
 SetPosition sets Position field to given value.
 
 
 ### GetVerified
 
-`func (o *EmployeeDataAttributes) GetVerified() string`
+`func (o *OrganizationCreateDataAttributesOwner) GetVerified() string`
 
 GetVerified returns the Verified field if non-nil, zero value otherwise.
 
 ### GetVerifiedOk
 
-`func (o *EmployeeDataAttributes) GetVerifiedOk() (*string, bool)`
+`func (o *OrganizationCreateDataAttributesOwner) GetVerifiedOk() (*string, bool)`
 
 GetVerifiedOk returns a tuple with the Verified field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetVerified
 
-`func (o *EmployeeDataAttributes) SetVerified(v string)`
+`func (o *OrganizationCreateDataAttributesOwner) SetVerified(v string)`
 
 SetVerified sets Verified field to given value.
 
+### HasVerified
+
+`func (o *OrganizationCreateDataAttributesOwner) HasVerified() bool`
+
+HasVerified returns a boolean if a field has been set.
 
 ### GetDesc
 
-`func (o *EmployeeDataAttributes) GetDesc() string`
+`func (o *OrganizationCreateDataAttributesOwner) GetDesc() string`
 
 GetDesc returns the Desc field if non-nil, zero value otherwise.
 
 ### GetDescOk
 
-`func (o *EmployeeDataAttributes) GetDescOk() (*string, bool)`
+`func (o *OrganizationCreateDataAttributesOwner) GetDescOk() (*string, bool)`
 
 GetDescOk returns a tuple with the Desc field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetDesc
 
-`func (o *EmployeeDataAttributes) SetDesc(v string)`
+`func (o *OrganizationCreateDataAttributesOwner) SetDesc(v string)`
 
 SetDesc sets Desc field to given value.
 
 
-### GetRole
-
-`func (o *EmployeeDataAttributes) GetRole() string`
-
-GetRole returns the Role field if non-nil, zero value otherwise.
-
-### GetRoleOk
-
-`func (o *EmployeeDataAttributes) GetRoleOk() (*string, bool)`
-
-GetRoleOk returns a tuple with the Role field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetRole
-
-`func (o *EmployeeDataAttributes) SetRole(v string)`
-
-SetRole sets Role field to given value.
-
-
-### GetUpdatedAt
-
-`func (o *EmployeeDataAttributes) GetUpdatedAt() string`
-
-GetUpdatedAt returns the UpdatedAt field if non-nil, zero value otherwise.
-
-### GetUpdatedAtOk
-
-`func (o *EmployeeDataAttributes) GetUpdatedAtOk() (*string, bool)`
-
-GetUpdatedAtOk returns a tuple with the UpdatedAt field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUpdatedAt
-
-`func (o *EmployeeDataAttributes) SetUpdatedAt(v string)`
-
-SetUpdatedAt sets UpdatedAt field to given value.
-
-### HasUpdatedAt
-
-`func (o *EmployeeDataAttributes) HasUpdatedAt() bool`
-
-HasUpdatedAt returns a boolean if a field has been set.
-
 ### GetCreatedAt
 
-`func (o *EmployeeDataAttributes) GetCreatedAt() time.Time`
+`func (o *OrganizationCreateDataAttributesOwner) GetCreatedAt() time.Time`
 
 GetCreatedAt returns the CreatedAt field if non-nil, zero value otherwise.
 
 ### GetCreatedAtOk
 
-`func (o *EmployeeDataAttributes) GetCreatedAtOk() (*time.Time, bool)`
+`func (o *OrganizationCreateDataAttributesOwner) GetCreatedAtOk() (*time.Time, bool)`
 
 GetCreatedAtOk returns a tuple with the CreatedAt field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetCreatedAt
 
-`func (o *EmployeeDataAttributes) SetCreatedAt(v time.Time)`
+`func (o *OrganizationCreateDataAttributesOwner) SetCreatedAt(v time.Time)`
 
 SetCreatedAt sets CreatedAt field to given value.
 

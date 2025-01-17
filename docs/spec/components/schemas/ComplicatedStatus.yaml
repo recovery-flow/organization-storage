@@ -1,7 +1,7 @@
 type: object
 required:
   - state
-  - marks
+  - stamp
   - from
 properties:
   state:
@@ -11,21 +11,9 @@ properties:
       - active
       - suspended
       - inactive
-  marks:
+  stamp:
     type: array
-    items:
-      type: object
-      required:
-        - timestamp
-        - reason
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-          description: "Timestamp of the mark"
-        reason:
-          type: string
-          description: "Reason for the compliance mark"
+    format: string
   from:
     type: string
     format: date-time
