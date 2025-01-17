@@ -17,14 +17,34 @@ properties:
       attributes:
         type: object
         required:
-          - name
+          - first_name
+          - second_name
+          - third_name
+          - display_name
+          - position
+          - verified
           - desc
           - role
           - created_at
         properties:
-          name:
+          first_name:
+            type: string
+            description: "first name of employee"
+          second_name:
+            type: string
+            description: "second name of employee"
+          third_name:
+            type: string
+            description: "third name of employee"
+          display_name:
             type: string
             description: "name of employee"
+          position:
+            type: string
+            description: "position in the company"
+          verified:
+            type: string
+            description: "verified status"
           desc:
             type: string
             description: "Description"

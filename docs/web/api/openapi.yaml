@@ -124,8 +124,23 @@ components:
       type: object
     Employee_data_attributes:
       properties:
-        name:
+        first_name:
+          description: first name of employee
+          type: string
+        second_name:
+          description: second name of employee
+          type: string
+        third_name:
+          description: third name of employee
+          type: string
+        display_name:
           description: name of employee
+          type: string
+        position:
+          description: position in the company
+          type: string
+        verified:
+          description: verified status
           type: string
         desc:
           description: Description
@@ -141,8 +156,13 @@ components:
       required:
       - created_at
       - desc
-      - name
+      - display_name
+      - first_name
+      - position
       - role
+      - second_name
+      - third_name
+      - verified
       type: object
     Employee_data:
       properties:
@@ -168,8 +188,20 @@ components:
         user_id:
           description: User ID
           type: string
-        name:
+        first_name:
+          description: first name of employee
+          type: string
+        second_name:
+          description: second name of employee
+          type: string
+        third_name:
+          description: third name of employee
+          type: string
+        display_name:
           description: name of employee
+          type: string
+        position:
+          description: position in the company
           type: string
         desc:
           description: Description
@@ -179,9 +211,13 @@ components:
           type: string
       required:
       - desc
-      - name
+      - display_name
+      - first_name
       - org_id
+      - position
       - role
+      - second_name
+      - third_name
       - user_id
       type: object
     EmployeeCreate_data:
@@ -204,8 +240,20 @@ components:
         user_id:
           description: User id
           type: string
-        name:
+        first_name:
+          description: first name of employee
+          type: string
+        second_name:
+          description: second name of employee
+          type: string
+        third_name:
+          description: third name of employee
+          type: string
+        display_name:
           description: name of employee
+          type: string
+        position:
+          description: position in the company
           type: string
         desc:
           description: Description

@@ -15,7 +15,11 @@ properties:
         required:
           - org_id
           - user_id
-          - name
+          - first_name
+          - second_name
+          - third_name
+          - display_name
+          - position
           - desc
           - role
         properties:
@@ -25,9 +29,21 @@ properties:
           user_id:
             type: string
             description: "User ID"
-          name:
+          first_name:
+            type: string
+            description: "first name of employee"
+          second_name:
+            type: string
+            description: "second name of employee"
+          third_name:
+            type: string
+            description: "third name of employee"
+          display_name:
             type: string
             description: "name of employee"
+          position:
+            type: string
+            description: "position in the company"
           desc:
             type: string
             description: "Description"

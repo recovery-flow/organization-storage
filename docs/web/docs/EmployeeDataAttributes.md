@@ -4,7 +4,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | name of employee | 
+**FirstName** | **string** | first name of employee | 
+**SecondName** | **string** | second name of employee | 
+**ThirdName** | **string** | third name of employee | 
+**DisplayName** | **string** | name of employee | 
+**Position** | **string** | position in the company | 
+**Verified** | **string** | verified status | 
 **Desc** | **string** | Description | 
 **Role** | **string** | User role | 
 **CreatedAt** | **time.Time** | User created at | 
@@ -13,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewEmployeeDataAttributes
 
-`func NewEmployeeDataAttributes(name string, desc string, role string, createdAt time.Time, ) *EmployeeDataAttributes`
+`func NewEmployeeDataAttributes(firstName string, secondName string, thirdName string, displayName string, position string, verified string, desc string, role string, createdAt time.Time, ) *EmployeeDataAttributes`
 
 NewEmployeeDataAttributes instantiates a new EmployeeDataAttributes object
 This constructor will assign default values to properties that have it defined,
@@ -28,24 +33,124 @@ NewEmployeeDataAttributesWithDefaults instantiates a new EmployeeDataAttributes 
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetName
+### GetFirstName
 
-`func (o *EmployeeDataAttributes) GetName() string`
+`func (o *EmployeeDataAttributes) GetFirstName() string`
 
-GetName returns the Name field if non-nil, zero value otherwise.
+GetFirstName returns the FirstName field if non-nil, zero value otherwise.
 
-### GetNameOk
+### GetFirstNameOk
 
-`func (o *EmployeeDataAttributes) GetNameOk() (*string, bool)`
+`func (o *EmployeeDataAttributes) GetFirstNameOk() (*string, bool)`
 
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+GetFirstNameOk returns a tuple with the FirstName field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetName
+### SetFirstName
 
-`func (o *EmployeeDataAttributes) SetName(v string)`
+`func (o *EmployeeDataAttributes) SetFirstName(v string)`
 
-SetName sets Name field to given value.
+SetFirstName sets FirstName field to given value.
+
+
+### GetSecondName
+
+`func (o *EmployeeDataAttributes) GetSecondName() string`
+
+GetSecondName returns the SecondName field if non-nil, zero value otherwise.
+
+### GetSecondNameOk
+
+`func (o *EmployeeDataAttributes) GetSecondNameOk() (*string, bool)`
+
+GetSecondNameOk returns a tuple with the SecondName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSecondName
+
+`func (o *EmployeeDataAttributes) SetSecondName(v string)`
+
+SetSecondName sets SecondName field to given value.
+
+
+### GetThirdName
+
+`func (o *EmployeeDataAttributes) GetThirdName() string`
+
+GetThirdName returns the ThirdName field if non-nil, zero value otherwise.
+
+### GetThirdNameOk
+
+`func (o *EmployeeDataAttributes) GetThirdNameOk() (*string, bool)`
+
+GetThirdNameOk returns a tuple with the ThirdName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetThirdName
+
+`func (o *EmployeeDataAttributes) SetThirdName(v string)`
+
+SetThirdName sets ThirdName field to given value.
+
+
+### GetDisplayName
+
+`func (o *EmployeeDataAttributes) GetDisplayName() string`
+
+GetDisplayName returns the DisplayName field if non-nil, zero value otherwise.
+
+### GetDisplayNameOk
+
+`func (o *EmployeeDataAttributes) GetDisplayNameOk() (*string, bool)`
+
+GetDisplayNameOk returns a tuple with the DisplayName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDisplayName
+
+`func (o *EmployeeDataAttributes) SetDisplayName(v string)`
+
+SetDisplayName sets DisplayName field to given value.
+
+
+### GetPosition
+
+`func (o *EmployeeDataAttributes) GetPosition() string`
+
+GetPosition returns the Position field if non-nil, zero value otherwise.
+
+### GetPositionOk
+
+`func (o *EmployeeDataAttributes) GetPositionOk() (*string, bool)`
+
+GetPositionOk returns a tuple with the Position field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPosition
+
+`func (o *EmployeeDataAttributes) SetPosition(v string)`
+
+SetPosition sets Position field to given value.
+
+
+### GetVerified
+
+`func (o *EmployeeDataAttributes) GetVerified() string`
+
+GetVerified returns the Verified field if non-nil, zero value otherwise.
+
+### GetVerifiedOk
+
+`func (o *EmployeeDataAttributes) GetVerifiedOk() (*string, bool)`
+
+GetVerifiedOk returns a tuple with the Verified field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVerified
+
+`func (o *EmployeeDataAttributes) SetVerified(v string)`
+
+SetVerified sets Verified field to given value.
 
 
 ### GetDesc

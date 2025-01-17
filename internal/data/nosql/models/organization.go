@@ -10,6 +10,7 @@ type Organization struct {
 	ID        primitive.ObjectID `bson:"_id" json:"id"`
 	Name      string             `bson:"name" json:"name"`
 	Logo      string             `bson:"logo" json:"logo"`
+	Verified  bool               `bson:"verified" json:"verified"`
 	Desc      string             `bson:"desc" json:"desc"`
 	Sort      SortOfOrg          `bson:"sort" json:"sort"`
 	Employees []Employee         `bson:"employees" json:"employees"`

@@ -25,8 +25,16 @@ type EmployeeUpdateDataAttributes struct {
 	OrgId string `json:"org_id"`
 	// User id
 	UserId string `json:"user_id"`
+	// first name of employee
+	FirstName *string `json:"first_name,omitempty"`
+	// second name of employee
+	SecondName *string `json:"second_name,omitempty"`
+	// third name of employee
+	ThirdName *string `json:"third_name,omitempty"`
 	// name of employee
-	Name *string `json:"name,omitempty"`
+	DisplayName *string `json:"display_name,omitempty"`
+	// position in the company
+	Position *string `json:"position,omitempty"`
 	// Description
 	Desc *string `json:"desc,omitempty"`
 	// User role
@@ -102,36 +110,164 @@ func (o *EmployeeUpdateDataAttributes) SetUserId(v string) {
 	o.UserId = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
-func (o *EmployeeUpdateDataAttributes) GetName() string {
-	if o == nil || IsNil(o.Name) {
+// GetFirstName returns the FirstName field value if set, zero value otherwise.
+func (o *EmployeeUpdateDataAttributes) GetFirstName() string {
+	if o == nil || IsNil(o.FirstName) {
 		var ret string
 		return ret
 	}
-	return *o.Name
+	return *o.FirstName
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetFirstNameOk returns a tuple with the FirstName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EmployeeUpdateDataAttributes) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+func (o *EmployeeUpdateDataAttributes) GetFirstNameOk() (*string, bool) {
+	if o == nil || IsNil(o.FirstName) {
 		return nil, false
 	}
-	return o.Name, true
+	return o.FirstName, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *EmployeeUpdateDataAttributes) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
+// HasFirstName returns a boolean if a field has been set.
+func (o *EmployeeUpdateDataAttributes) HasFirstName() bool {
+	if o != nil && !IsNil(o.FirstName) {
 		return true
 	}
 
 	return false
 }
 
-// SetName gets a reference to the given string and assigns it to the Name field.
-func (o *EmployeeUpdateDataAttributes) SetName(v string) {
-	o.Name = &v
+// SetFirstName gets a reference to the given string and assigns it to the FirstName field.
+func (o *EmployeeUpdateDataAttributes) SetFirstName(v string) {
+	o.FirstName = &v
+}
+
+// GetSecondName returns the SecondName field value if set, zero value otherwise.
+func (o *EmployeeUpdateDataAttributes) GetSecondName() string {
+	if o == nil || IsNil(o.SecondName) {
+		var ret string
+		return ret
+	}
+	return *o.SecondName
+}
+
+// GetSecondNameOk returns a tuple with the SecondName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EmployeeUpdateDataAttributes) GetSecondNameOk() (*string, bool) {
+	if o == nil || IsNil(o.SecondName) {
+		return nil, false
+	}
+	return o.SecondName, true
+}
+
+// HasSecondName returns a boolean if a field has been set.
+func (o *EmployeeUpdateDataAttributes) HasSecondName() bool {
+	if o != nil && !IsNil(o.SecondName) {
+		return true
+	}
+
+	return false
+}
+
+// SetSecondName gets a reference to the given string and assigns it to the SecondName field.
+func (o *EmployeeUpdateDataAttributes) SetSecondName(v string) {
+	o.SecondName = &v
+}
+
+// GetThirdName returns the ThirdName field value if set, zero value otherwise.
+func (o *EmployeeUpdateDataAttributes) GetThirdName() string {
+	if o == nil || IsNil(o.ThirdName) {
+		var ret string
+		return ret
+	}
+	return *o.ThirdName
+}
+
+// GetThirdNameOk returns a tuple with the ThirdName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EmployeeUpdateDataAttributes) GetThirdNameOk() (*string, bool) {
+	if o == nil || IsNil(o.ThirdName) {
+		return nil, false
+	}
+	return o.ThirdName, true
+}
+
+// HasThirdName returns a boolean if a field has been set.
+func (o *EmployeeUpdateDataAttributes) HasThirdName() bool {
+	if o != nil && !IsNil(o.ThirdName) {
+		return true
+	}
+
+	return false
+}
+
+// SetThirdName gets a reference to the given string and assigns it to the ThirdName field.
+func (o *EmployeeUpdateDataAttributes) SetThirdName(v string) {
+	o.ThirdName = &v
+}
+
+// GetDisplayName returns the DisplayName field value if set, zero value otherwise.
+func (o *EmployeeUpdateDataAttributes) GetDisplayName() string {
+	if o == nil || IsNil(o.DisplayName) {
+		var ret string
+		return ret
+	}
+	return *o.DisplayName
+}
+
+// GetDisplayNameOk returns a tuple with the DisplayName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EmployeeUpdateDataAttributes) GetDisplayNameOk() (*string, bool) {
+	if o == nil || IsNil(o.DisplayName) {
+		return nil, false
+	}
+	return o.DisplayName, true
+}
+
+// HasDisplayName returns a boolean if a field has been set.
+func (o *EmployeeUpdateDataAttributes) HasDisplayName() bool {
+	if o != nil && !IsNil(o.DisplayName) {
+		return true
+	}
+
+	return false
+}
+
+// SetDisplayName gets a reference to the given string and assigns it to the DisplayName field.
+func (o *EmployeeUpdateDataAttributes) SetDisplayName(v string) {
+	o.DisplayName = &v
+}
+
+// GetPosition returns the Position field value if set, zero value otherwise.
+func (o *EmployeeUpdateDataAttributes) GetPosition() string {
+	if o == nil || IsNil(o.Position) {
+		var ret string
+		return ret
+	}
+	return *o.Position
+}
+
+// GetPositionOk returns a tuple with the Position field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *EmployeeUpdateDataAttributes) GetPositionOk() (*string, bool) {
+	if o == nil || IsNil(o.Position) {
+		return nil, false
+	}
+	return o.Position, true
+}
+
+// HasPosition returns a boolean if a field has been set.
+func (o *EmployeeUpdateDataAttributes) HasPosition() bool {
+	if o != nil && !IsNil(o.Position) {
+		return true
+	}
+
+	return false
+}
+
+// SetPosition gets a reference to the given string and assigns it to the Position field.
+func (o *EmployeeUpdateDataAttributes) SetPosition(v string) {
+	o.Position = &v
 }
 
 // GetDesc returns the Desc field value if set, zero value otherwise.
@@ -210,8 +346,20 @@ func (o EmployeeUpdateDataAttributes) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["org_id"] = o.OrgId
 	toSerialize["user_id"] = o.UserId
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
+	if !IsNil(o.FirstName) {
+		toSerialize["first_name"] = o.FirstName
+	}
+	if !IsNil(o.SecondName) {
+		toSerialize["second_name"] = o.SecondName
+	}
+	if !IsNil(o.ThirdName) {
+		toSerialize["third_name"] = o.ThirdName
+	}
+	if !IsNil(o.DisplayName) {
+		toSerialize["display_name"] = o.DisplayName
+	}
+	if !IsNil(o.Position) {
+		toSerialize["position"] = o.Position
 	}
 	if !IsNil(o.Desc) {
 		toSerialize["desc"] = o.Desc

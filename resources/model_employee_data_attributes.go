@@ -22,8 +22,18 @@ var _ MappedNullable = &EmployeeDataAttributes{}
 
 // EmployeeDataAttributes struct for EmployeeDataAttributes
 type EmployeeDataAttributes struct {
+	// first name of employee
+	FirstName string `json:"first_name"`
+	// second name of employee
+	SecondName string `json:"second_name"`
+	// third name of employee
+	ThirdName string `json:"third_name"`
 	// name of employee
-	Name string `json:"name"`
+	DisplayName string `json:"display_name"`
+	// position in the company
+	Position string `json:"position"`
+	// verified status
+	Verified string `json:"verified"`
 	// Description
 	Desc string `json:"desc"`
 	// User role
@@ -38,9 +48,14 @@ type _EmployeeDataAttributes EmployeeDataAttributes
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEmployeeDataAttributes(name string, desc string, role string, createdAt time.Time) *EmployeeDataAttributes {
+func NewEmployeeDataAttributes(firstName string, secondName string, thirdName string, displayName string, position string, verified string, desc string, role string, createdAt time.Time) *EmployeeDataAttributes {
 	this := EmployeeDataAttributes{}
-	this.Name = name
+	this.FirstName = firstName
+	this.SecondName = secondName
+	this.ThirdName = thirdName
+	this.DisplayName = displayName
+	this.Position = position
+	this.Verified = verified
 	this.Desc = desc
 	this.Role = role
 	this.CreatedAt = createdAt
@@ -55,28 +70,148 @@ func NewEmployeeDataAttributesWithDefaults() *EmployeeDataAttributes {
 	return &this
 }
 
-// GetName returns the Name field value
-func (o *EmployeeDataAttributes) GetName() string {
+// GetFirstName returns the FirstName field value
+func (o *EmployeeDataAttributes) GetFirstName() string {
 	if o == nil {
 		var ret string
 		return ret
 	}
 
-	return o.Name
+	return o.FirstName
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetFirstNameOk returns a tuple with the FirstName field value
 // and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetNameOk() (*string, bool) {
+func (o *EmployeeDataAttributes) GetFirstNameOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Name, true
+	return &o.FirstName, true
 }
 
-// SetName sets field value
-func (o *EmployeeDataAttributes) SetName(v string) {
-	o.Name = v
+// SetFirstName sets field value
+func (o *EmployeeDataAttributes) SetFirstName(v string) {
+	o.FirstName = v
+}
+
+// GetSecondName returns the SecondName field value
+func (o *EmployeeDataAttributes) GetSecondName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.SecondName
+}
+
+// GetSecondNameOk returns a tuple with the SecondName field value
+// and a boolean to check if the value has been set.
+func (o *EmployeeDataAttributes) GetSecondNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.SecondName, true
+}
+
+// SetSecondName sets field value
+func (o *EmployeeDataAttributes) SetSecondName(v string) {
+	o.SecondName = v
+}
+
+// GetThirdName returns the ThirdName field value
+func (o *EmployeeDataAttributes) GetThirdName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.ThirdName
+}
+
+// GetThirdNameOk returns a tuple with the ThirdName field value
+// and a boolean to check if the value has been set.
+func (o *EmployeeDataAttributes) GetThirdNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.ThirdName, true
+}
+
+// SetThirdName sets field value
+func (o *EmployeeDataAttributes) SetThirdName(v string) {
+	o.ThirdName = v
+}
+
+// GetDisplayName returns the DisplayName field value
+func (o *EmployeeDataAttributes) GetDisplayName() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.DisplayName
+}
+
+// GetDisplayNameOk returns a tuple with the DisplayName field value
+// and a boolean to check if the value has been set.
+func (o *EmployeeDataAttributes) GetDisplayNameOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.DisplayName, true
+}
+
+// SetDisplayName sets field value
+func (o *EmployeeDataAttributes) SetDisplayName(v string) {
+	o.DisplayName = v
+}
+
+// GetPosition returns the Position field value
+func (o *EmployeeDataAttributes) GetPosition() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Position
+}
+
+// GetPositionOk returns a tuple with the Position field value
+// and a boolean to check if the value has been set.
+func (o *EmployeeDataAttributes) GetPositionOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Position, true
+}
+
+// SetPosition sets field value
+func (o *EmployeeDataAttributes) SetPosition(v string) {
+	o.Position = v
+}
+
+// GetVerified returns the Verified field value
+func (o *EmployeeDataAttributes) GetVerified() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Verified
+}
+
+// GetVerifiedOk returns a tuple with the Verified field value
+// and a boolean to check if the value has been set.
+func (o *EmployeeDataAttributes) GetVerifiedOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Verified, true
+}
+
+// SetVerified sets field value
+func (o *EmployeeDataAttributes) SetVerified(v string) {
+	o.Verified = v
 }
 
 // GetDesc returns the Desc field value
@@ -161,7 +296,12 @@ func (o EmployeeDataAttributes) MarshalJSON() ([]byte, error) {
 
 func (o EmployeeDataAttributes) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
+	toSerialize["first_name"] = o.FirstName
+	toSerialize["second_name"] = o.SecondName
+	toSerialize["third_name"] = o.ThirdName
+	toSerialize["display_name"] = o.DisplayName
+	toSerialize["position"] = o.Position
+	toSerialize["verified"] = o.Verified
 	toSerialize["desc"] = o.Desc
 	toSerialize["role"] = o.Role
 	toSerialize["created_at"] = o.CreatedAt
@@ -173,7 +313,12 @@ func (o *EmployeeDataAttributes) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"name",
+		"first_name",
+		"second_name",
+		"third_name",
+		"display_name",
+		"position",
+		"verified",
 		"desc",
 		"role",
 		"created_at",
