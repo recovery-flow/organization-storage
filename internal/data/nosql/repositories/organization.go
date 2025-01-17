@@ -25,9 +25,9 @@ type Organization interface {
 	FilterById(id primitive.ObjectID) Organization
 	FilterByType(typeOp models.SortOfOrg) Organization
 
-	Employees() (Employees, error)
-	Status() (Status, error)
-	Links() (Links, error)
+	Employees() Employees
+	Status() Status
+	Links() Links
 
 	UpdateOne(ctx context.Context, fields map[string]any) (*models.Organization, error)
 
@@ -143,11 +143,7 @@ func (o *organization) FilterByType(typeOp models.SortOfOrg) Organization {
 	return o
 }
 
-func (o *organization) Employees() (Employees, error) {
-	if o.filters == nil || o.filters["_id"] == nil {
-		return nil, fmt.Errorf("no filters found")
-	}
-
+func (o *organization) Employees() Employees {
 	return &employees{
 		client:     o.client,
 		database:   o.database,
@@ -156,14 +152,10 @@ func (o *organization) Employees() (Employees, error) {
 		sort:       bson.D{},
 		limit:      0,
 		skip:       0,
-	}, nil
+	}
 }
 
-func (o *organization) Status() (Status, error) {
-	if o.filters == nil || o.filters["_id"] == nil {
-		return nil, fmt.Errorf("no filters found")
-	}
-
+func (o *organization) Status() Status {
 	return &status{
 		client:     o.client,
 		database:   o.database,
@@ -172,20 +164,16 @@ func (o *organization) Status() (Status, error) {
 		sort:       bson.D{},
 		limit:      0,
 		skip:       0,
-	}, nil
+	}
 }
 
-func (o *organization) Links() (Links, error) {
-	if o.filters == nil || o.filters["_id"] == nil {
-		return nil, fmt.Errorf("no filters found")
-	}
-
-	return &status{
+func (o *organization) Links() Links {
+	return &links{
 		client:     o.client,
 		database:   o.database,
 		collection: o.collection,
 		filters:    o.filters,
-	}, nil
+	}
 }
 
 func (o *organization) UpdateOne(ctx context.Context, fields map[string]any) (*models.Organization, error) {

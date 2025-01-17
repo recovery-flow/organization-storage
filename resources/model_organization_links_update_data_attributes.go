@@ -14,11 +14,11 @@ import (
 	"encoding/json"
 )
 
-// checks if the Links type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &Links{}
+// checks if the OrganizationLinksUpdateDataAttributes type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &OrganizationLinksUpdateDataAttributes{}
 
-// Links struct for Links
-type Links struct {
+// OrganizationLinksUpdateDataAttributes struct for OrganizationLinksUpdateDataAttributes
+type OrganizationLinksUpdateDataAttributes struct {
 	// Twitter profile link
 	Twitter *string `json:"twitter,omitempty"`
 	// Instagram profile link
@@ -37,25 +37,25 @@ type Links struct {
 	Website *string `json:"website,omitempty"`
 }
 
-// NewLinks instantiates a new Links object
+// NewOrganizationLinksUpdateDataAttributes instantiates a new OrganizationLinksUpdateDataAttributes object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewLinks() *Links {
-	this := Links{}
+func NewOrganizationLinksUpdateDataAttributes() *OrganizationLinksUpdateDataAttributes {
+	this := OrganizationLinksUpdateDataAttributes{}
 	return &this
 }
 
-// NewLinksWithDefaults instantiates a new Links object
+// NewOrganizationLinksUpdateDataAttributesWithDefaults instantiates a new OrganizationLinksUpdateDataAttributes object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewLinksWithDefaults() *Links {
-	this := Links{}
+func NewOrganizationLinksUpdateDataAttributesWithDefaults() *OrganizationLinksUpdateDataAttributes {
+	this := OrganizationLinksUpdateDataAttributes{}
 	return &this
 }
 
 // GetTwitter returns the Twitter field value if set, zero value otherwise.
-func (o *Links) GetTwitter() string {
+func (o *OrganizationLinksUpdateDataAttributes) GetTwitter() string {
 	if o == nil || IsNil(o.Twitter) {
 		var ret string
 		return ret
@@ -65,7 +65,7 @@ func (o *Links) GetTwitter() string {
 
 // GetTwitterOk returns a tuple with the Twitter field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetTwitterOk() (*string, bool) {
+func (o *OrganizationLinksUpdateDataAttributes) GetTwitterOk() (*string, bool) {
 	if o == nil || IsNil(o.Twitter) {
 		return nil, false
 	}
@@ -73,7 +73,7 @@ func (o *Links) GetTwitterOk() (*string, bool) {
 }
 
 // HasTwitter returns a boolean if a field has been set.
-func (o *Links) HasTwitter() bool {
+func (o *OrganizationLinksUpdateDataAttributes) HasTwitter() bool {
 	if o != nil && !IsNil(o.Twitter) {
 		return true
 	}
@@ -82,12 +82,12 @@ func (o *Links) HasTwitter() bool {
 }
 
 // SetTwitter gets a reference to the given string and assigns it to the Twitter field.
-func (o *Links) SetTwitter(v string) {
+func (o *OrganizationLinksUpdateDataAttributes) SetTwitter(v string) {
 	o.Twitter = &v
 }
 
 // GetInstagram returns the Instagram field value if set, zero value otherwise.
-func (o *Links) GetInstagram() string {
+func (o *OrganizationLinksUpdateDataAttributes) GetInstagram() string {
 	if o == nil || IsNil(o.Instagram) {
 		var ret string
 		return ret
@@ -97,7 +97,7 @@ func (o *Links) GetInstagram() string {
 
 // GetInstagramOk returns a tuple with the Instagram field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetInstagramOk() (*string, bool) {
+func (o *OrganizationLinksUpdateDataAttributes) GetInstagramOk() (*string, bool) {
 	if o == nil || IsNil(o.Instagram) {
 		return nil, false
 	}
@@ -105,7 +105,7 @@ func (o *Links) GetInstagramOk() (*string, bool) {
 }
 
 // HasInstagram returns a boolean if a field has been set.
-func (o *Links) HasInstagram() bool {
+func (o *OrganizationLinksUpdateDataAttributes) HasInstagram() bool {
 	if o != nil && !IsNil(o.Instagram) {
 		return true
 	}
@@ -114,12 +114,12 @@ func (o *Links) HasInstagram() bool {
 }
 
 // SetInstagram gets a reference to the given string and assigns it to the Instagram field.
-func (o *Links) SetInstagram(v string) {
+func (o *OrganizationLinksUpdateDataAttributes) SetInstagram(v string) {
 	o.Instagram = &v
 }
 
 // GetFacebook returns the Facebook field value if set, zero value otherwise.
-func (o *Links) GetFacebook() string {
+func (o *OrganizationLinksUpdateDataAttributes) GetFacebook() string {
 	if o == nil || IsNil(o.Facebook) {
 		var ret string
 		return ret
@@ -129,7 +129,7 @@ func (o *Links) GetFacebook() string {
 
 // GetFacebookOk returns a tuple with the Facebook field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetFacebookOk() (*string, bool) {
+func (o *OrganizationLinksUpdateDataAttributes) GetFacebookOk() (*string, bool) {
 	if o == nil || IsNil(o.Facebook) {
 		return nil, false
 	}
@@ -137,7 +137,7 @@ func (o *Links) GetFacebookOk() (*string, bool) {
 }
 
 // HasFacebook returns a boolean if a field has been set.
-func (o *Links) HasFacebook() bool {
+func (o *OrganizationLinksUpdateDataAttributes) HasFacebook() bool {
 	if o != nil && !IsNil(o.Facebook) {
 		return true
 	}
@@ -146,12 +146,12 @@ func (o *Links) HasFacebook() bool {
 }
 
 // SetFacebook gets a reference to the given string and assigns it to the Facebook field.
-func (o *Links) SetFacebook(v string) {
+func (o *OrganizationLinksUpdateDataAttributes) SetFacebook(v string) {
 	o.Facebook = &v
 }
 
 // GetTiktok returns the Tiktok field value if set, zero value otherwise.
-func (o *Links) GetTiktok() string {
+func (o *OrganizationLinksUpdateDataAttributes) GetTiktok() string {
 	if o == nil || IsNil(o.Tiktok) {
 		var ret string
 		return ret
@@ -161,7 +161,7 @@ func (o *Links) GetTiktok() string {
 
 // GetTiktokOk returns a tuple with the Tiktok field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetTiktokOk() (*string, bool) {
+func (o *OrganizationLinksUpdateDataAttributes) GetTiktokOk() (*string, bool) {
 	if o == nil || IsNil(o.Tiktok) {
 		return nil, false
 	}
@@ -169,7 +169,7 @@ func (o *Links) GetTiktokOk() (*string, bool) {
 }
 
 // HasTiktok returns a boolean if a field has been set.
-func (o *Links) HasTiktok() bool {
+func (o *OrganizationLinksUpdateDataAttributes) HasTiktok() bool {
 	if o != nil && !IsNil(o.Tiktok) {
 		return true
 	}
@@ -178,12 +178,12 @@ func (o *Links) HasTiktok() bool {
 }
 
 // SetTiktok gets a reference to the given string and assigns it to the Tiktok field.
-func (o *Links) SetTiktok(v string) {
+func (o *OrganizationLinksUpdateDataAttributes) SetTiktok(v string) {
 	o.Tiktok = &v
 }
 
 // GetLinkedin returns the Linkedin field value if set, zero value otherwise.
-func (o *Links) GetLinkedin() string {
+func (o *OrganizationLinksUpdateDataAttributes) GetLinkedin() string {
 	if o == nil || IsNil(o.Linkedin) {
 		var ret string
 		return ret
@@ -193,7 +193,7 @@ func (o *Links) GetLinkedin() string {
 
 // GetLinkedinOk returns a tuple with the Linkedin field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetLinkedinOk() (*string, bool) {
+func (o *OrganizationLinksUpdateDataAttributes) GetLinkedinOk() (*string, bool) {
 	if o == nil || IsNil(o.Linkedin) {
 		return nil, false
 	}
@@ -201,7 +201,7 @@ func (o *Links) GetLinkedinOk() (*string, bool) {
 }
 
 // HasLinkedin returns a boolean if a field has been set.
-func (o *Links) HasLinkedin() bool {
+func (o *OrganizationLinksUpdateDataAttributes) HasLinkedin() bool {
 	if o != nil && !IsNil(o.Linkedin) {
 		return true
 	}
@@ -210,12 +210,12 @@ func (o *Links) HasLinkedin() bool {
 }
 
 // SetLinkedin gets a reference to the given string and assigns it to the Linkedin field.
-func (o *Links) SetLinkedin(v string) {
+func (o *OrganizationLinksUpdateDataAttributes) SetLinkedin(v string) {
 	o.Linkedin = &v
 }
 
 // GetTelegram returns the Telegram field value if set, zero value otherwise.
-func (o *Links) GetTelegram() string {
+func (o *OrganizationLinksUpdateDataAttributes) GetTelegram() string {
 	if o == nil || IsNil(o.Telegram) {
 		var ret string
 		return ret
@@ -225,7 +225,7 @@ func (o *Links) GetTelegram() string {
 
 // GetTelegramOk returns a tuple with the Telegram field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetTelegramOk() (*string, bool) {
+func (o *OrganizationLinksUpdateDataAttributes) GetTelegramOk() (*string, bool) {
 	if o == nil || IsNil(o.Telegram) {
 		return nil, false
 	}
@@ -233,7 +233,7 @@ func (o *Links) GetTelegramOk() (*string, bool) {
 }
 
 // HasTelegram returns a boolean if a field has been set.
-func (o *Links) HasTelegram() bool {
+func (o *OrganizationLinksUpdateDataAttributes) HasTelegram() bool {
 	if o != nil && !IsNil(o.Telegram) {
 		return true
 	}
@@ -242,12 +242,12 @@ func (o *Links) HasTelegram() bool {
 }
 
 // SetTelegram gets a reference to the given string and assigns it to the Telegram field.
-func (o *Links) SetTelegram(v string) {
+func (o *OrganizationLinksUpdateDataAttributes) SetTelegram(v string) {
 	o.Telegram = &v
 }
 
 // GetDiscord returns the Discord field value if set, zero value otherwise.
-func (o *Links) GetDiscord() string {
+func (o *OrganizationLinksUpdateDataAttributes) GetDiscord() string {
 	if o == nil || IsNil(o.Discord) {
 		var ret string
 		return ret
@@ -257,7 +257,7 @@ func (o *Links) GetDiscord() string {
 
 // GetDiscordOk returns a tuple with the Discord field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetDiscordOk() (*string, bool) {
+func (o *OrganizationLinksUpdateDataAttributes) GetDiscordOk() (*string, bool) {
 	if o == nil || IsNil(o.Discord) {
 		return nil, false
 	}
@@ -265,7 +265,7 @@ func (o *Links) GetDiscordOk() (*string, bool) {
 }
 
 // HasDiscord returns a boolean if a field has been set.
-func (o *Links) HasDiscord() bool {
+func (o *OrganizationLinksUpdateDataAttributes) HasDiscord() bool {
 	if o != nil && !IsNil(o.Discord) {
 		return true
 	}
@@ -274,12 +274,12 @@ func (o *Links) HasDiscord() bool {
 }
 
 // SetDiscord gets a reference to the given string and assigns it to the Discord field.
-func (o *Links) SetDiscord(v string) {
+func (o *OrganizationLinksUpdateDataAttributes) SetDiscord(v string) {
 	o.Discord = &v
 }
 
 // GetWebsite returns the Website field value if set, zero value otherwise.
-func (o *Links) GetWebsite() string {
+func (o *OrganizationLinksUpdateDataAttributes) GetWebsite() string {
 	if o == nil || IsNil(o.Website) {
 		var ret string
 		return ret
@@ -289,7 +289,7 @@ func (o *Links) GetWebsite() string {
 
 // GetWebsiteOk returns a tuple with the Website field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetWebsiteOk() (*string, bool) {
+func (o *OrganizationLinksUpdateDataAttributes) GetWebsiteOk() (*string, bool) {
 	if o == nil || IsNil(o.Website) {
 		return nil, false
 	}
@@ -297,7 +297,7 @@ func (o *Links) GetWebsiteOk() (*string, bool) {
 }
 
 // HasWebsite returns a boolean if a field has been set.
-func (o *Links) HasWebsite() bool {
+func (o *OrganizationLinksUpdateDataAttributes) HasWebsite() bool {
 	if o != nil && !IsNil(o.Website) {
 		return true
 	}
@@ -306,11 +306,11 @@ func (o *Links) HasWebsite() bool {
 }
 
 // SetWebsite gets a reference to the given string and assigns it to the Website field.
-func (o *Links) SetWebsite(v string) {
+func (o *OrganizationLinksUpdateDataAttributes) SetWebsite(v string) {
 	o.Website = &v
 }
 
-func (o Links) MarshalJSON() ([]byte, error) {
+func (o OrganizationLinksUpdateDataAttributes) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -318,7 +318,7 @@ func (o Links) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o Links) ToMap() (map[string]interface{}, error) {
+func (o OrganizationLinksUpdateDataAttributes) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Twitter) {
 		toSerialize["twitter"] = o.Twitter
@@ -347,38 +347,38 @@ func (o Links) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableLinks struct {
-	value *Links
+type NullableOrganizationLinksUpdateDataAttributes struct {
+	value *OrganizationLinksUpdateDataAttributes
 	isSet bool
 }
 
-func (v NullableLinks) Get() *Links {
+func (v NullableOrganizationLinksUpdateDataAttributes) Get() *OrganizationLinksUpdateDataAttributes {
 	return v.value
 }
 
-func (v *NullableLinks) Set(val *Links) {
+func (v *NullableOrganizationLinksUpdateDataAttributes) Set(val *OrganizationLinksUpdateDataAttributes) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableLinks) IsSet() bool {
+func (v NullableOrganizationLinksUpdateDataAttributes) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableLinks) Unset() {
+func (v *NullableOrganizationLinksUpdateDataAttributes) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableLinks(val *Links) *NullableLinks {
-	return &NullableLinks{value: val, isSet: true}
+func NewNullableOrganizationLinksUpdateDataAttributes(val *OrganizationLinksUpdateDataAttributes) *NullableOrganizationLinksUpdateDataAttributes {
+	return &NullableOrganizationLinksUpdateDataAttributes{value: val, isSet: true}
 }
 
-func (v NullableLinks) MarshalJSON() ([]byte, error) {
+func (v NullableOrganizationLinksUpdateDataAttributes) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableLinks) UnmarshalJSON(src []byte) error {
+func (v *NullableOrganizationLinksUpdateDataAttributes) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

@@ -1,12 +1,4 @@
 type: object
-required:
-  - twitter
-  - instagram
-  - facebook
-  - tiktok
-  - linkedin
-  - telegram
-  - discord
 properties:
   twitter:
     type: string
@@ -36,3 +28,7 @@ properties:
     type: string
     format: uri
     description: "Discord profile link"
+  website:
+    type: string
+    format: uri
+    description: "Companies website"

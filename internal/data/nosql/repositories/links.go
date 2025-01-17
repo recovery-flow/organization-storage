@@ -10,9 +10,8 @@ import (
 )
 
 type Links interface {
-	Get(ctx context.Context) (*Links, error)                        // Получить все ссылки
-	UpdateOne(ctx context.Context, updates map[string]string) error // Обновить ссылки
-	Delete(ctx context.Context, platform string) error              // Удалить (сбросить) ссылку для конкретной платформы
+	Get(ctx context.Context) (*models.Links, error)
+	UpdateOne(ctx context.Context, updates map[string]any) error
 }
 
 type links struct {
@@ -22,16 +21,8 @@ type links struct {
 	filters    bson.M
 }
 
-func (l *links) Insert(ctx context.Context, status models.Status) (*models.Status, error) {
-	_, err := l.collection.InsertOne(ctx, status)
-	if err != nil {
-		return nil, fmt.Errorf("failed to insert link: %w", err)
-	}
-	return &status, nil
-}
-
-func (l *links) Get(ctx context.Context) (*Links, error) {
-	var lnks Links
+func (l *links) Get(ctx context.Context) (*models.Links, error) {
+	var lnks models.Links
 	err := l.collection.FindOne(ctx, l.filters).Decode(&lnks)
 	if err != nil {
 		return nil, fmt.Errorf("failed to find links: %w", err)
@@ -39,7 +30,7 @@ func (l *links) Get(ctx context.Context) (*Links, error) {
 	return &lnks, nil
 }
 
-func (l *links) UpdateOne(ctx context.Context, fields map[string]string) error {
+func (l *links) UpdateOne(ctx context.Context, fields map[string]any) error {
 	if len(fields) == 0 {
 		return fmt.Errorf("no fields to update")
 	}

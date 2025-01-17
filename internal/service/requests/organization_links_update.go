@@ -9,7 +9,7 @@ import (
 	"github.com/recovery-flow/organization-storage/resources"
 )
 
-func NewOrganizationUpdate(r *http.Request) (req *resources.OrganizationUpdate, err error) {
+func NewOrganizationLinksUpdate(r *http.Request) (req *resources.OrganizationLinksUpdate, err error) {
 	if err = json.NewDecoder(r.Body).Decode(&req); err != nil {
 		err = jsonkit.NewDecodeError("body", err)
 		return
@@ -17,7 +17,7 @@ func NewOrganizationUpdate(r *http.Request) (req *resources.OrganizationUpdate, 
 
 	errs := validation.Errors{
 		"data/id":         validation.Validate(req.Data.Id, validation.Required),
-		"data/type":       validation.Validate(req.Data.Type, validation.Required, validation.In(resources.OrganizationLinksUpdateType)),
+		"data/type":       validation.Validate(req.Data.Type, validation.Required, validation.In(resources.OrganizationUpdateType)),
 		"data/attributes": validation.Validate(req.Data.Attributes, validation.Required),
 	}
 	return req, errs.Filter()

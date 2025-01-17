@@ -14,7 +14,7 @@ properties:
         description: "organization id"
       type:
         type: string
-        enum: [organization]
+        enum: [ organization ]
       attributes:
         type: object
         required:
@@ -48,9 +48,9 @@ properties:
             type: string
             description: "City of HQ"
           links:
-            $ref: '../schemas/Links.yaml'
+            $ref: "./Links.yaml"
           complicated_status:
-            $ref: "../schemas/ComplicatedStatus.yaml"
+            $ref: "./ComplicatedStatus.yaml"
           created_at:
             type: string
             format: date-time
@@ -58,4 +58,4 @@ properties:
   included:
     type: array
     items:
-      $ref: "./Employee.yaml"  # Убедитесь, что путь корректный
+      $ref: "./Employee.yaml"

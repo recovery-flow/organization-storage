@@ -11,7 +11,11 @@ paths:
       operationId: test
       responses:
         '201':
-          description: Created
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employee"
 
 components:
   schemas:
@@ -21,13 +25,15 @@ components:
       $ref: './spec/components/schemas/EmployeeCreate.yaml'
     EmployeeUpdate:
       $ref: './spec/components/schemas/EmployeeUpdate.yaml'
-    ComplicatedStatus:
-      $ref: './spec/components/schemas/ComplicatedStatus.yaml'
-    Links:
-      $ref: './spec/components/schemas/Links.yaml'
-    Organization:
-      $ref: './spec/components/schemas/Organization.yaml'
     OrganizationCreate:
       $ref: './spec/components/schemas/OrganizationCreate.yaml'
     OrganizationUpdate:
       $ref: './spec/components/schemas/OrganizationUpdate.yaml'
+    OrganizationLinksUpdate:
+      $ref: './spec/components/schemas/OrganizationLinksUpdate.yaml'
+    Links:
+      $ref: './spec/components/schemas/Links.yaml'
+    ComplicatedStatus:
+      $ref: './spec/components/schemas/ComplicatedStatus.yaml'
+    Organization:
+      $ref: './spec/components/schemas/Organization.yaml'

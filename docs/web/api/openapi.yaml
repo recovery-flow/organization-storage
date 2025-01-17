@@ -11,11 +11,30 @@ paths:
       operationId: test
       responses:
         "201":
-          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+          description: Ok
       summary: Test
 components:
   schemas:
     Employee:
+      example:
+        data:
+          attributes:
+            role: role
+            updated_at: 2021-01-01T00:00:00Z
+            verified: verified
+            second_name: second_name
+            created_at: 2021-01-01T00:00:00Z
+            third_name: third_name
+            position: position
+            display_name: display_name
+            first_name: first_name
+            desc: desc
+          id: id
+          type: employee
       properties:
         data:
           $ref: '#/components/schemas/Employee_data'
@@ -36,29 +55,26 @@ components:
       required:
       - data
       type: object
-    ComplicatedStatus:
+    OrganizationCreate:
       properties:
-        state:
-          description: Current compliance state of the organization
-          enum:
-          - active
-          - suspended
-          - inactive
-          type: string
-        stamp:
-          format: string
-          items:
-            description: TODO default missing array inner type to string
-            type: string
-          type: array
-        from:
-          description: Date from which the compliance state is effective
-          format: date-time
-          type: string
+        data:
+          $ref: '#/components/schemas/OrganizationCreate_data'
       required:
-      - from
-      - stamp
-      - state
+      - data
+      type: object
+    OrganizationUpdate:
+      properties:
+        data:
+          $ref: '#/components/schemas/OrganizationUpdate_data'
+      required:
+      - data
+      type: object
+    OrganizationLinksUpdate:
+      properties:
+        data:
+          $ref: '#/components/schemas/OrganizationLinksUpdate_data'
+      required:
+      - data
       type: object
     Links:
       properties:
@@ -90,14 +106,34 @@ components:
           description: Discord profile link
           format: uri
           type: string
+        website:
+          description: Companies website
+          format: uri
+          type: string
+      type: object
+    ComplicatedStatus:
+      properties:
+        state:
+          description: Current compliance state of the organization
+          enum:
+          - active
+          - suspended
+          - inactive
+          type: string
+        stamp:
+          format: string
+          items:
+            description: TODO default missing array inner type to string
+            type: string
+          type: array
+        from:
+          description: Date from which the compliance state is effective
+          format: date-time
+          type: string
       required:
-      - discord
-      - facebook
-      - instagram
-      - linkedin
-      - telegram
-      - tiktok
-      - twitter
+      - from
+      - stamp
+      - state
       type: object
     Organization:
       properties:
@@ -110,21 +146,18 @@ components:
       required:
       - data
       type: object
-    OrganizationCreate:
-      properties:
-        data:
-          $ref: '#/components/schemas/OrganizationCreate_data'
-      required:
-      - data
-      type: object
-    OrganizationUpdate:
-      properties:
-        data:
-          $ref: '#/components/schemas/OrganizationUpdate_data'
-      required:
-      - data
-      type: object
     Employee_data_attributes:
+      example:
+        role: role
+        updated_at: 2021-01-01T00:00:00Z
+        verified: verified
+        second_name: second_name
+        created_at: 2021-01-01T00:00:00Z
+        third_name: third_name
+        position: position
+        display_name: display_name
+        first_name: first_name
+        desc: desc
       properties:
         first_name:
           description: first name of employee
@@ -171,6 +204,20 @@ components:
       - verified
       type: object
     Employee_data:
+      example:
+        attributes:
+          role: role
+          updated_at: 2021-01-01T00:00:00Z
+          verified: verified
+          second_name: second_name
+          created_at: 2021-01-01T00:00:00Z
+          third_name: third_name
+          position: position
+          display_name: display_name
+          first_name: first_name
+          desc: desc
+        id: id
+        type: employee
       properties:
         id:
           description: user id
@@ -286,62 +333,6 @@ components:
       - attributes
       - type
       type: object
-    Organization_data_attributes:
-      properties:
-        name:
-          description: Team name
-          type: string
-        logo:
-          description: Link to photo
-          type: string
-        verified:
-          description: Verified status
-          type: string
-        desc:
-          description: Team description
-          type: string
-        sort:
-          description: Type of Organization
-          type: string
-        country:
-          description: Country of registration
-          type: string
-        city:
-          description: City of HQ
-          type: string
-        links:
-          $ref: ./spec/components/schemas/Links.yaml
-        complicated_status:
-          $ref: ./spec/components/schemas/ComplicatedStatus.yaml
-        created_at:
-          description: Team creation timestamp
-          format: date-time
-          type: string
-      required:
-      - country
-      - created_at
-      - desc
-      - logo
-      - name
-      - sort
-      - verified
-      type: object
-    Organization_data:
-      properties:
-        id:
-          description: organization id
-          type: string
-        type:
-          enum:
-          - organization
-          type: string
-        attributes:
-          $ref: '#/components/schemas/Organization_data_attributes'
-      required:
-      - attributes
-      - id
-      - type
-      type: object
     OrganizationCreate_data_attributes_owner:
       properties:
         first_name:
@@ -445,6 +436,113 @@ components:
           type: string
         attributes:
           $ref: '#/components/schemas/OrganizationUpdate_data_attributes'
+      required:
+      - attributes
+      - id
+      - type
+      type: object
+    OrganizationLinksUpdate_data_attributes:
+      properties:
+        twitter:
+          description: Twitter profile link
+          format: uri
+          type: string
+        instagram:
+          description: Instagram profile link
+          format: uri
+          type: string
+        facebook:
+          description: Facebook profile link
+          format: uri
+          type: string
+        tiktok:
+          description: TikTok profile link
+          format: uri
+          type: string
+        linkedin:
+          description: LinkedIn profile link
+          format: uri
+          type: string
+        telegram:
+          description: Telegram profile link
+          format: uri
+          type: string
+        discord:
+          description: Discord profile link
+          format: uri
+          type: string
+        website:
+          description: Companies website
+          format: uri
+          type: string
+      type: object
+    OrganizationLinksUpdate_data:
+      properties:
+        id:
+          description: Organization ID
+          type: string
+        type:
+          enum:
+          - organization_link_update
+          type: string
+        attributes:
+          $ref: '#/components/schemas/OrganizationLinksUpdate_data_attributes'
+      required:
+      - attributes
+      - id
+      - type
+      type: object
+    Organization_data_attributes:
+      properties:
+        name:
+          description: Team name
+          type: string
+        logo:
+          description: Link to photo
+          type: string
+        verified:
+          description: Verified status
+          type: string
+        desc:
+          description: Team description
+          type: string
+        sort:
+          description: Type of Organization
+          type: string
+        country:
+          description: Country of registration
+          type: string
+        city:
+          description: City of HQ
+          type: string
+        links:
+          $ref: ./spec/components/schemas/Links.yaml
+        complicated_status:
+          $ref: ./spec/components/schemas/ComplicatedStatus.yaml
+        created_at:
+          description: Team creation timestamp
+          format: date-time
+          type: string
+      required:
+      - country
+      - created_at
+      - desc
+      - logo
+      - name
+      - sort
+      - verified
+      type: object
+    Organization_data:
+      properties:
+        id:
+          description: organization id
+          type: string
+        type:
+          enum:
+          - organization
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Organization_data_attributes'
       required:
       - attributes
       - id

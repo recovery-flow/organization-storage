@@ -6,6 +6,7 @@ import (
 	"github.com/recovery-flow/comtools/cifractx"
 	"github.com/recovery-flow/comtools/httpkit"
 	"github.com/recovery-flow/organization-storage/internal/config"
+	"github.com/recovery-flow/organization-storage/internal/service/handlers"
 	"github.com/sirupsen/logrus"
 
 	"github.com/go-chi/chi/v5"
@@ -31,9 +32,9 @@ func Run(ctx context.Context) {
 
 					r.Route("/{organization_id}", func(r chi.Router) {
 						r.Route("/update", func(r chi.Router) {
-							r.Patch("/", nil) // update organization
-							r.Patch("/photo", nil)
-							r.Patch("/link", nil)
+							r.Patch("/", handlers.OrganizationUpdate) // update organization
+							r.Patch("/photo", handlers.OrganizationUploadLogo)
+							r.Patch("/link", handlers.OrganizationLinksUpdate)
 						})
 
 						r.Route("/employee", func(r chi.Router) {
@@ -50,7 +51,7 @@ func Run(ctx context.Context) {
 			r.Route("/public", func(r chi.Router) {
 				r.Route("/organization", func(r chi.Router) {
 					r.Route("/{organization_id}", func(r chi.Router) {
-						r.Patch("/", nil) // info org
+						r.Patch("/", handlers.OrganizationCreate) // info org
 
 						r.Route("/employee", func(r chi.Router) {
 							r.Patch("/", nil)              // info employees

@@ -24,6 +24,9 @@ docs/OrganizationCreateDataAttributes.md
 docs/OrganizationCreateDataAttributesOwner.md
 docs/OrganizationData.md
 docs/OrganizationDataAttributes.md
+docs/OrganizationLinksUpdate.md
+docs/OrganizationLinksUpdateData.md
+docs/OrganizationLinksUpdateDataAttributes.md
 docs/OrganizationUpdate.md
 docs/OrganizationUpdateData.md
 docs/OrganizationUpdateDataAttributes.md
@@ -48,6 +51,9 @@ model_organization_create_data_attributes.go
 model_organization_create_data_attributes_owner.go
 model_organization_data.go
 model_organization_data_attributes.go
+model_organization_links_update.go
+model_organization_links_update_data.go
+model_organization_links_update_data_attributes.go
 model_organization_update.go
 model_organization_update_data.go
 model_organization_update_data_attributes.go

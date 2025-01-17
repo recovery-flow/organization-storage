@@ -1,0 +1,52 @@
+type: object
+required:
+  - data
+properties:
+  data:
+    type: object
+    required:
+      - id
+      - type
+      - attributes
+    properties:
+      id:
+        type: string
+        description: "Organization ID"
+      type:
+        type: string
+        enum: [ organization_link_update ]
+      attributes:
+        type: object
+        properties:
+          twitter:
+            type: string
+            format: uri
+            description: "Twitter profile link"
+          instagram:
+            type: string
+            format: uri
+            description: "Instagram profile link"
+          facebook:
+            type: string
+            format: uri
+            description: "Facebook profile link"
+          tiktok:
+            type: string
+            format: uri
+            description: "TikTok profile link"
+          linkedin:
+            type: string
+            format: uri
+            description: "LinkedIn profile link"
+          telegram:
+            type: string
+            format: uri
+            description: "Telegram profile link"
+          discord:
+            type: string
+            format: uri
+            description: "Discord profile link"
+          website:
+            type: string
+            format: uri
+            description: "Companies website"

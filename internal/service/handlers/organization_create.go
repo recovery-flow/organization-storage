@@ -10,6 +10,7 @@ import (
 	"github.com/recovery-flow/organization-storage/internal/config"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
 	"github.com/recovery-flow/organization-storage/internal/service/requests"
+	"github.com/recovery-flow/organization-storage/internal/service/responses"
 	"github.com/recovery-flow/roles"
 	"github.com/recovery-flow/tokens"
 	"github.com/sirupsen/logrus"
@@ -38,7 +39,7 @@ func OrganizationCreate(w http.ResponseWriter, r *http.Request) {
 	country := req.Data.Attributes.Country
 	owner := req.Data.Attributes.Owner
 
-	userID, ok := r.Context().Value(tokens.UserIDKey).(uuid.UUID)
+	userId, ok := r.Context().Value(tokens.UserIDKey).(uuid.UUID)
 	if !ok {
 		server.Logger.Warn("UserID not found in context")
 		httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
@@ -46,7 +47,7 @@ func OrganizationCreate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ownerEmp := models.Employee{
-		UserID:      userID,
+		UserID:      userId,
 		FirstName:   owner.FirstName,
 		SecondName:  owner.SecondName,
 		ThirdName:   owner.ThirdName,
@@ -74,6 +75,6 @@ func OrganizationCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Infof("Organization created: %v by %s", res.ID, userID)
-
+	log.Infof("Organization created: %v by %s", res.ID, userId)
+	httpkit.Render(w, responses.OrganizationResponse(*res))
 }
