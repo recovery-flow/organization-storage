@@ -21,7 +21,7 @@ var _ MappedNullable = &EmployeeCollection{}
 
 // EmployeeCollection struct for EmployeeCollection
 type EmployeeCollection struct {
-	Data []Object `json:"data"`
+	Data []Employee `json:"data"`
 	Links EmployeeCollectionLinks `json:"links"`
 	Meta EmployeeCollectionMeta `json:"meta"`
 }

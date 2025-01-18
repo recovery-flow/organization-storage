@@ -54,7 +54,7 @@ func Run(ctx context.Context) {
 						r.Get("/", handlers.OrganizationByID)
 
 						r.Route("/employee", func(r chi.Router) {
-							r.Patch("/", handlers.EmployeesByOrganization)
+							r.Get("/", handlers.EmployeesByOrganization)
 							r.Get("/{user_id}", handlers.EmployeeByUserID)
 						})
 					})
