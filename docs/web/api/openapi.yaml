@@ -55,6 +55,21 @@ components:
       required:
       - data
       type: object
+    EmployeeCollection:
+      properties:
+        data:
+          items:
+            $ref: ./spec/components/schemas/Employee.yaml
+          type: array
+        links:
+          $ref: '#/components/schemas/EmployeeCollection_links'
+        meta:
+          $ref: '#/components/schemas/EmployeeCollection_meta'
+      required:
+      - data
+      - links
+      - meta
+      type: object
     OrganizationCreate:
       properties:
         data:
@@ -270,7 +285,6 @@ components:
       - position
       - role
       - second_name
-      - third_name
       - user_id
       type: object
     EmployeeCreate_data:
@@ -289,9 +303,6 @@ components:
       properties:
         org_id:
           description: Organization id
-          type: string
-        user_id:
-          description: User id
           type: string
         first_name:
           description: first name of employee
@@ -316,7 +327,6 @@ components:
           type: string
       required:
       - org_id
-      - user_id
       type: object
     EmployeeUpdate_data:
       properties:
@@ -331,7 +341,23 @@ components:
           $ref: '#/components/schemas/EmployeeUpdate_data_attributes'
       required:
       - attributes
+      - id
       - type
+      type: object
+    EmployeeCollection_links:
+      properties:
+        self:
+          description: Link to the current page
+          type: string
+        next:
+          description: Link to the next page
+          type: string
+      type: object
+    EmployeeCollection_meta:
+      properties:
+        total:
+          description: Total number of employees
+          type: integer
       type: object
     OrganizationCreate_data_attributes_owner:
       properties:

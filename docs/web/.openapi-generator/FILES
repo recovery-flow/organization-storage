@@ -8,6 +8,9 @@ configuration.go
 docs/ComplicatedStatus.md
 docs/DefaultAPI.md
 docs/Employee.md
+docs/EmployeeCollection.md
+docs/EmployeeCollectionLinks.md
+docs/EmployeeCollectionMeta.md
 docs/EmployeeCreate.md
 docs/EmployeeCreateData.md
 docs/EmployeeCreateDataAttributes.md
@@ -35,6 +38,9 @@ go.mod
 go.sum
 model_complicated_status.go
 model_employee.go
+model_employee_collection.go
+model_employee_collection_links.go
+model_employee_collection_meta.go
 model_employee_create.go
 model_employee_create_data.go
 model_employee_create_data_attributes.go

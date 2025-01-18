@@ -28,20 +28,20 @@ func Run(ctx context.Context) {
 			r.Route("/private", func(r chi.Router) {
 				r.Use(authMW)
 				r.Route("/organization", func(r chi.Router) {
-					r.Post("/", nil) // create org
+					r.Post("/", handlers.OrganizationCreate)
 
 					r.Route("/{organization_id}", func(r chi.Router) {
 						r.Route("/update", func(r chi.Router) {
-							r.Patch("/", handlers.OrganizationUpdate) // update organization
+							r.Patch("/", handlers.OrganizationUpdate)
 							r.Patch("/photo", handlers.OrganizationUploadLogo)
 							r.Patch("/link", handlers.OrganizationLinksUpdate)
 						})
 
 						r.Route("/employee", func(r chi.Router) {
-							r.Post("/add", nil) // add employee
+							r.Post("/create", handlers.EmployeeCreate)
 
-							r.Route("/{employee_id}", func(r chi.Router) {
-								r.Patch("/update", nil) // update employee
+							r.Route("/{user_id}", func(r chi.Router) {
+								r.Patch("/update", handlers.EmployeeUpdate)
 							})
 						})
 					})
@@ -51,11 +51,11 @@ func Run(ctx context.Context) {
 			r.Route("/public", func(r chi.Router) {
 				r.Route("/organization", func(r chi.Router) {
 					r.Route("/{organization_id}", func(r chi.Router) {
-						r.Patch("/", handlers.OrganizationCreate) // info org
+						r.Get("/", handlers.OrganizationByID)
 
 						r.Route("/employee", func(r chi.Router) {
-							r.Patch("/", nil)              // info employees
-							r.Route("/{employee_id}", nil) // info about one employee
+							r.Patch("/", handlers.EmployeesByOrganization)
+							r.Get("/{user_id}", handlers.EmployeeByUserID)
 						})
 					})
 				})

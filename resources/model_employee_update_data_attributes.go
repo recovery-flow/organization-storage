@@ -23,8 +23,6 @@ var _ MappedNullable = &EmployeeUpdateDataAttributes{}
 type EmployeeUpdateDataAttributes struct {
 	// Organization id
 	OrgId string `json:"org_id"`
-	// User id
-	UserId string `json:"user_id"`
 	// first name of employee
 	FirstName *string `json:"first_name,omitempty"`
 	// second name of employee
@@ -47,10 +45,9 @@ type _EmployeeUpdateDataAttributes EmployeeUpdateDataAttributes
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEmployeeUpdateDataAttributes(orgId string, userId string) *EmployeeUpdateDataAttributes {
+func NewEmployeeUpdateDataAttributes(orgId string) *EmployeeUpdateDataAttributes {
 	this := EmployeeUpdateDataAttributes{}
 	this.OrgId = orgId
-	this.UserId = userId
 	return &this
 }
 
@@ -84,30 +81,6 @@ func (o *EmployeeUpdateDataAttributes) GetOrgIdOk() (*string, bool) {
 // SetOrgId sets field value
 func (o *EmployeeUpdateDataAttributes) SetOrgId(v string) {
 	o.OrgId = v
-}
-
-// GetUserId returns the UserId field value
-func (o *EmployeeUpdateDataAttributes) GetUserId() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.UserId
-}
-
-// GetUserIdOk returns a tuple with the UserId field value
-// and a boolean to check if the value has been set.
-func (o *EmployeeUpdateDataAttributes) GetUserIdOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.UserId, true
-}
-
-// SetUserId sets field value
-func (o *EmployeeUpdateDataAttributes) SetUserId(v string) {
-	o.UserId = v
 }
 
 // GetFirstName returns the FirstName field value if set, zero value otherwise.
@@ -345,7 +318,6 @@ func (o EmployeeUpdateDataAttributes) MarshalJSON() ([]byte, error) {
 func (o EmployeeUpdateDataAttributes) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["org_id"] = o.OrgId
-	toSerialize["user_id"] = o.UserId
 	if !IsNil(o.FirstName) {
 		toSerialize["first_name"] = o.FirstName
 	}
@@ -376,7 +348,6 @@ func (o *EmployeeUpdateDataAttributes) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"org_id",
-		"user_id",
 	}
 
 	allProperties := make(map[string]interface{})

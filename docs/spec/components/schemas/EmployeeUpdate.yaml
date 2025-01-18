@@ -4,6 +4,7 @@ required:
 properties:
   data:
     required:
+      - id
       - type
       - attributes
     properties:
@@ -17,14 +18,10 @@ properties:
         type: object
         required:
           - org_id
-          - user_id
         properties:
           org_id:
             type: string
             description: "Organization id"
-          user_id:
-            type: string
-            description: "User id"
           first_name:
             type: string
             description: "first name of employee"

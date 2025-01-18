@@ -76,5 +76,5 @@ func OrganizationCreate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Infof("Organization created: %v by %s", res.ID, userId)
-	httpkit.Render(w, responses.OrganizationResponse(*res))
+	httpkit.Render(w, responses.Organization(*res))
 }

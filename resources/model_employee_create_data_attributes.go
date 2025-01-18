@@ -30,7 +30,7 @@ type EmployeeCreateDataAttributes struct {
 	// second name of employee
 	SecondName string `json:"second_name"`
 	// third name of employee
-	ThirdName string `json:"third_name"`
+	ThirdName *string `json:"third_name,omitempty"`
 	// name of employee
 	DisplayName string `json:"display_name"`
 	// position in the company
@@ -47,13 +47,12 @@ type _EmployeeCreateDataAttributes EmployeeCreateDataAttributes
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEmployeeCreateDataAttributes(orgId string, userId string, firstName string, secondName string, thirdName string, displayName string, position string, desc string, role string) *EmployeeCreateDataAttributes {
+func NewEmployeeCreateDataAttributes(orgId string, userId string, firstName string, secondName string, displayName string, position string, desc string, role string) *EmployeeCreateDataAttributes {
 	this := EmployeeCreateDataAttributes{}
 	this.OrgId = orgId
 	this.UserId = userId
 	this.FirstName = firstName
 	this.SecondName = secondName
-	this.ThirdName = thirdName
 	this.DisplayName = displayName
 	this.Position = position
 	this.Desc = desc
@@ -165,28 +164,36 @@ func (o *EmployeeCreateDataAttributes) SetSecondName(v string) {
 	o.SecondName = v
 }
 
-// GetThirdName returns the ThirdName field value
+// GetThirdName returns the ThirdName field value if set, zero value otherwise.
 func (o *EmployeeCreateDataAttributes) GetThirdName() string {
-	if o == nil {
+	if o == nil || IsNil(o.ThirdName) {
 		var ret string
 		return ret
 	}
-
-	return o.ThirdName
+	return *o.ThirdName
 }
 
-// GetThirdNameOk returns a tuple with the ThirdName field value
+// GetThirdNameOk returns a tuple with the ThirdName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *EmployeeCreateDataAttributes) GetThirdNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ThirdName) {
 		return nil, false
 	}
-	return &o.ThirdName, true
+	return o.ThirdName, true
 }
 
-// SetThirdName sets field value
+// HasThirdName returns a boolean if a field has been set.
+func (o *EmployeeCreateDataAttributes) HasThirdName() bool {
+	if o != nil && !IsNil(o.ThirdName) {
+		return true
+	}
+
+	return false
+}
+
+// SetThirdName gets a reference to the given string and assigns it to the ThirdName field.
 func (o *EmployeeCreateDataAttributes) SetThirdName(v string) {
-	o.ThirdName = v
+	o.ThirdName = &v
 }
 
 // GetDisplayName returns the DisplayName field value
@@ -299,7 +306,9 @@ func (o EmployeeCreateDataAttributes) ToMap() (map[string]interface{}, error) {
 	toSerialize["user_id"] = o.UserId
 	toSerialize["first_name"] = o.FirstName
 	toSerialize["second_name"] = o.SecondName
-	toSerialize["third_name"] = o.ThirdName
+	if !IsNil(o.ThirdName) {
+		toSerialize["third_name"] = o.ThirdName
+	}
 	toSerialize["display_name"] = o.DisplayName
 	toSerialize["position"] = o.Position
 	toSerialize["desc"] = o.Desc
@@ -316,7 +325,6 @@ func (o *EmployeeCreateDataAttributes) UnmarshalJSON(data []byte) (err error) {
 		"user_id",
 		"first_name",
 		"second_name",
-		"third_name",
 		"display_name",
 		"position",
 		"desc",

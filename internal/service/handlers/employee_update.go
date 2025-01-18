@@ -1,8 +1,10 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 	"github.com/recovery-flow/comtools/cifractx"
 	"github.com/recovery-flow/comtools/httpkit"
@@ -16,7 +18,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
+func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 	server, err := cifractx.GetValue[*config.Service](r.Context(), config.SERVER)
 	if err != nil {
 		logrus.Errorf("Failed to retrieve service configuration: %v", err)
@@ -25,7 +27,7 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 	log := server.Logger
 
-	req, err := requests.NewOrganizationUpdate(r)
+	req, err := requests.NewEmployeeUpdate(r)
 	if err != nil {
 		log.Info("Failed to parse request: ", err)
 		httpkit.RenderErr(w, problems.BadRequest(err)...)
@@ -39,18 +41,36 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	name := req.Data.Attributes.Name
-	desc := req.Data.Attributes.Desc
-	sort := req.Data.Attributes.Sort
-	country := req.Data.Attributes.Country
-	city := req.Data.Attributes.City
+	if chi.URLParam(r, "organization_id") != req.Data.Attributes.OrgId {
+		httpkit.RenderErr(w, problems.BadRequest(fmt.Errorf("organization_id does not match request organization_id"))...)
+		return
+	}
 
-	orgId, err := primitive.ObjectIDFromHex(req.Data.Id)
+	if chi.URLParam(r, "user_id") != req.Data.Id {
+		httpkit.RenderErr(w, problems.BadRequest(fmt.Errorf("user_id does not match request user_id"))...)
+		return
+	}
+
+	updatedId, err := uuid.Parse(chi.URLParam(r, "user_id"))
+	if err != nil {
+		log.WithError(err).Error("Failed to parse request: ")
+		httpkit.RenderErr(w, problems.BadRequest(err)...)
+		return
+	}
+	orgId, err := primitive.ObjectIDFromHex(chi.URLParam(r, "organization_id"))
 	if err != nil {
 		log.WithError(err).Error("Failed to parse organization id")
 		httpkit.RenderErr(w, problems.BadRequest(err)...)
 		return
 	}
+
+	firstName := req.Data.Attributes.FirstName
+	secondName := req.Data.Attributes.SecondName
+	thirdName := req.Data.Attributes.ThirdName
+	displayName := req.Data.Attributes.DisplayName
+	position := req.Data.Attributes.Position
+	desc := req.Data.Attributes.Desc
+	role := req.Data.Attributes.Role
 
 	organization, err := server.MongoDB.Organization.FilterById(orgId).Get(r.Context())
 	if err != nil {
@@ -61,7 +81,9 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 
 	for _, emp := range organization.Employees {
 		if emp.UserID == initiatorId {
-			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgAdmin) > -1 {
+			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgModer) > -1 &&
+				roles.CompareRolesOrg(emp.Role, roles.OrgRole(*role)) > -1 &&
+				roles.OrgRole(*role) != roles.RoleOrgOwner {
 				err = roles.ErrorNoPermission
 			}
 			break
@@ -75,33 +97,40 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var stmt map[string]any
-	if name != nil {
-		stmt["name"] = *name
+	if firstName != nil {
+		stmt["first_name"] = firstName
 		stmt["verified"] = false
+	}
+	if secondName != nil {
+		stmt["second_name"] = secondName
+		stmt["verified"] = false
+	}
+	if thirdName != nil {
+		stmt["third_name"] = thirdName
+		stmt["verified"] = false
+	}
+	if displayName != nil {
+		stmt["display_name"] = displayName
+	}
+	if position != nil {
+		stmt["position"] = position
 	}
 	if desc != nil {
-		stmt["desc"] = *desc
+		stmt["desc"] = desc
 	}
-	if sort != nil {
-		stmt["sort"] = *sort
-		stmt["verified"] = false
-	}
-	if country != nil {
-		stmt["country"] = *country
-		stmt["verified"] = false
-	}
-	if city != nil {
-		stmt["city"] = *city
-		stmt["verified"] = false
+	if role != nil {
+		stmt["role"] = role
 	}
 
-	res, err := server.MongoDB.Organization.FilterById(orgId).UpdateOne(r.Context(), stmt)
+	employee, err := server.MongoDB.Organization.FilterById(orgId).Employees().
+		FilterById(updatedId).UpdateOne(r.Context(), stmt)
 	if err != nil {
 		log.WithError(err).Error("Failed to update organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to update organization"))
 		return
 	}
 
-	log.Infof("Organization updated %s", initiatorId)
-	httpkit.Render(w, responses.Organization(*res))
+	log.Infof("employee updated: %v in orgnaization %s", employee.UserID, orgId)
+	httpkit.Render(w, responses.Employee(*employee))
+
 }

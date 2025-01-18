@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | user Id | [optional] 
+**Id** | **string** | user Id | 
 **Type** | **string** |  | 
 **Attributes** | [**EmployeeUpdateDataAttributes**](EmployeeUpdateDataAttributes.md) |  | 
 
@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 
 ### NewEmployeeUpdateData
 
-`func NewEmployeeUpdateData(type_ string, attributes EmployeeUpdateDataAttributes, ) *EmployeeUpdateData`
+`func NewEmployeeUpdateData(id string, type_ string, attributes EmployeeUpdateDataAttributes, ) *EmployeeUpdateData`
 
 NewEmployeeUpdateData instantiates a new EmployeeUpdateData object
 This constructor will assign default values to properties that have it defined,
@@ -46,11 +46,6 @@ and a boolean to check if the value has been set.
 
 SetId sets Id field to given value.
 
-### HasId
-
-`func (o *EmployeeUpdateData) HasId() bool`
-
-HasId returns a boolean if a field has been set.
 
 ### GetType
 

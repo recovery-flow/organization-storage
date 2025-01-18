@@ -5,7 +5,7 @@ import (
 	"github.com/recovery-flow/organization-storage/resources"
 )
 
-func OrganizationResponse(organization models.Organization) resources.Organization {
+func Organization(organization models.Organization) resources.Organization {
 	var orgStamp []string
 	for _, el := range organization.Status.Stamp {
 		orgStamp = append(orgStamp, string(el))

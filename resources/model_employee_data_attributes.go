@@ -39,7 +39,7 @@ type EmployeeDataAttributes struct {
 	// User role
 	Role string `json:"role"`
 	// User updated at
-	UpdatedAt *string `json:"updated_at,omitempty"`
+	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	// User created at
 	CreatedAt time.Time `json:"created_at"`
 }

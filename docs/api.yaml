@@ -25,6 +25,8 @@ components:
       $ref: './spec/components/schemas/EmployeeCreate.yaml'
     EmployeeUpdate:
       $ref: './spec/components/schemas/EmployeeUpdate.yaml'
+    EmployeeCollection:
+      $ref: './spec/components/schemas/EmployeeCollection.yaml'
     OrganizationCreate:
       $ref: './spec/components/schemas/OrganizationCreate.yaml'
     OrganizationUpdate:

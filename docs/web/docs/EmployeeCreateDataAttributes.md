@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **UserId** | **string** | User ID | 
 **FirstName** | **string** | first name of employee | 
 **SecondName** | **string** | second name of employee | 
-**ThirdName** | **string** | third name of employee | 
+**ThirdName** | Pointer to **string** | third name of employee | [optional] 
 **DisplayName** | **string** | name of employee | 
 **Position** | **string** | position in the company | 
 **Desc** | **string** | Description | 
@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 
 ### NewEmployeeCreateDataAttributes
 
-`func NewEmployeeCreateDataAttributes(orgId string, userId string, firstName string, secondName string, thirdName string, displayName string, position string, desc string, role string, ) *EmployeeCreateDataAttributes`
+`func NewEmployeeCreateDataAttributes(orgId string, userId string, firstName string, secondName string, displayName string, position string, desc string, role string, ) *EmployeeCreateDataAttributes`
 
 NewEmployeeCreateDataAttributes instantiates a new EmployeeCreateDataAttributes object
 This constructor will assign default values to properties that have it defined,
@@ -132,6 +132,11 @@ and a boolean to check if the value has been set.
 
 SetThirdName sets ThirdName field to given value.
 
+### HasThirdName
+
+`func (o *EmployeeCreateDataAttributes) HasThirdName() bool`
+
+HasThirdName returns a boolean if a field has been set.
 
 ### GetDisplayName
 

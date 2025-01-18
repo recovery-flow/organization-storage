@@ -22,7 +22,7 @@ var _ MappedNullable = &EmployeeUpdateData{}
 // EmployeeUpdateData struct for EmployeeUpdateData
 type EmployeeUpdateData struct {
 	// user Id
-	Id *string `json:"id,omitempty"`
+	Id string `json:"id"`
 	Type string `json:"type"`
 	Attributes EmployeeUpdateDataAttributes `json:"attributes"`
 }
@@ -33,8 +33,9 @@ type _EmployeeUpdateData EmployeeUpdateData
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEmployeeUpdateData(type_ string, attributes EmployeeUpdateDataAttributes) *EmployeeUpdateData {
+func NewEmployeeUpdateData(id string, type_ string, attributes EmployeeUpdateDataAttributes) *EmployeeUpdateData {
 	this := EmployeeUpdateData{}
+	this.Id = id
 	this.Type = type_
 	this.Attributes = attributes
 	return &this
@@ -48,36 +49,28 @@ func NewEmployeeUpdateDataWithDefaults() *EmployeeUpdateData {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *EmployeeUpdateData) GetId() string {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *EmployeeUpdateData) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *EmployeeUpdateData) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
+// SetId sets field value
 func (o *EmployeeUpdateData) SetId(v string) {
-	o.Id = &v
+	o.Id = v
 }
 
 // GetType returns the Type field value
@@ -138,9 +131,7 @@ func (o EmployeeUpdateData) MarshalJSON() ([]byte, error) {
 
 func (o EmployeeUpdateData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
+	toSerialize["id"] = o.Id
 	toSerialize["type"] = o.Type
 	toSerialize["attributes"] = o.Attributes
 	return toSerialize, nil
@@ -151,6 +142,7 @@ func (o *EmployeeUpdateData) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"id",
 		"type",
 		"attributes",
 	}

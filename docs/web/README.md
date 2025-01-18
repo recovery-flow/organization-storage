@@ -85,6 +85,9 @@ Class | Method | HTTP request | Description
 
  - [ComplicatedStatus](docs/ComplicatedStatus.md)
  - [Employee](docs/Employee.md)
+ - [EmployeeCollection](docs/EmployeeCollection.md)
+ - [EmployeeCollectionLinks](docs/EmployeeCollectionLinks.md)
+ - [EmployeeCollectionMeta](docs/EmployeeCollectionMeta.md)
  - [EmployeeCreate](docs/EmployeeCreate.md)
  - [EmployeeCreateData](docs/EmployeeCreateData.md)
  - [EmployeeCreateDataAttributes](docs/EmployeeCreateDataAttributes.md)

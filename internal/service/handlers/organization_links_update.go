@@ -64,7 +64,7 @@ func OrganizationLinksUpdate(w http.ResponseWriter, r *http.Request) {
 
 	for _, emp := range organization.Employees {
 		if emp.UserID == initiatorId {
-			if roles.CompareRolesTeam(roles.TeamRole(emp.Role), roles.RoleTeamModer) > -1 {
+			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgModer) > -1 {
 				err = roles.ErrorNoPermission
 			}
 			break
@@ -117,5 +117,5 @@ func OrganizationLinksUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	httpkit.Render(w, responses.OrganizationResponse(*organization))
+	httpkit.Render(w, responses.Organization(*organization))
 }

@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | **string** | Organization id | 
-**UserId** | **string** | User id | 
 **FirstName** | Pointer to **string** | first name of employee | [optional] 
 **SecondName** | Pointer to **string** | second name of employee | [optional] 
 **ThirdName** | Pointer to **string** | third name of employee | [optional] 
@@ -18,7 +17,7 @@ Name | Type | Description | Notes
 
 ### NewEmployeeUpdateDataAttributes
 
-`func NewEmployeeUpdateDataAttributes(orgId string, userId string, ) *EmployeeUpdateDataAttributes`
+`func NewEmployeeUpdateDataAttributes(orgId string, ) *EmployeeUpdateDataAttributes`
 
 NewEmployeeUpdateDataAttributes instantiates a new EmployeeUpdateDataAttributes object
 This constructor will assign default values to properties that have it defined,
@@ -51,26 +50,6 @@ and a boolean to check if the value has been set.
 `func (o *EmployeeUpdateDataAttributes) SetOrgId(v string)`
 
 SetOrgId sets OrgId field to given value.
-
-
-### GetUserId
-
-`func (o *EmployeeUpdateDataAttributes) GetUserId() string`
-
-GetUserId returns the UserId field if non-nil, zero value otherwise.
-
-### GetUserIdOk
-
-`func (o *EmployeeUpdateDataAttributes) GetUserIdOk() (*string, bool)`
-
-GetUserIdOk returns a tuple with the UserId field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetUserId
-
-`func (o *EmployeeUpdateDataAttributes) SetUserId(v string)`
-
-SetUserId sets UserId field to given value.
 
 
 ### GetFirstName

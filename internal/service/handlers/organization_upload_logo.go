@@ -57,7 +57,7 @@ func OrganizationUploadLogo(w http.ResponseWriter, r *http.Request) {
 
 	for _, emp := range organization.Employees {
 		if emp.UserID == initiatorId {
-			if roles.CompareRolesTeam(roles.TeamRole(emp.Role), roles.RoleTeamAdmin) > -1 {
+			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgAdmin) > -1 {
 				err = roles.ErrorNoPermission
 			}
 			break
