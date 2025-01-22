@@ -60,13 +60,12 @@ func OrganizationUploadLogo(w http.ResponseWriter, r *http.Request) {
 
 	for _, emp := range organization.Employees {
 		if emp.UserID == initiatorId {
-			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgAdmin) > -1 {
+			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgAdmin) < 0 {
 				err = roles.ErrorNoPermission
 			}
 			break
 		}
 	}
-
 	if err != nil {
 		log.WithError(err).Error("Failed to find initiator user")
 		httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
@@ -88,7 +87,7 @@ func OrganizationUploadLogo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	stmt := map[string]any{
-		"avatar": uploadResult.SecureURL,
+		"logo": uploadResult.SecureURL,
 	}
 
 	_, err = server.MongoDB.Organization.Filter(filters).UpdateOne(r.Context(), stmt)

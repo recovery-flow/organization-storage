@@ -12,7 +12,7 @@ type UpdateAvatarRequest struct {
 }
 
 func NewUploadImage(r *http.Request) (UpdateAvatarRequest, error) {
-	file, header, err := r.FormFile("avatar")
+	file, header, err := r.FormFile("logo")
 	if err != nil {
 		return UpdateAvatarRequest{}, fmt.Errorf("failed to retrieve file from form-data")
 	}
