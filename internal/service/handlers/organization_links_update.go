@@ -67,7 +67,7 @@ func OrganizationLinksUpdate(w http.ResponseWriter, r *http.Request) {
 
 	for _, emp := range organization.Employees {
 		if emp.UserID == initiatorId {
-			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgModer) > -1 {
+			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgModer) < 0 {
 				err = roles.ErrorNoPermission
 			}
 			break
@@ -80,16 +80,18 @@ func OrganizationLinksUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = server.MongoDB.Organization.Links().UpdateOne(r.Context(), map[string]any{
-		"twitter":   twitter,
-		"instagram": instagram,
-		"facebook":  facebook,
-		"tiktok":    tiktok,
-		"linkedin":  linkedin,
-		"telegram":  telegram,
-		"discord":   discord,
-		"website":   website,
-	})
+	err = server.MongoDB.Organization.New().Filter(filters).
+		Links().
+		UpdateOne(r.Context(), map[string]any{
+			"twitter":   twitter,
+			"instagram": instagram,
+			"facebook":  facebook,
+			"tiktok":    tiktok,
+			"linkedin":  linkedin,
+			"telegram":  telegram,
+			"discord":   discord,
+			"website":   website,
+		})
 
 	if err != nil {
 		log.WithError(err).Error("Failed to update organization links")
@@ -97,7 +99,7 @@ func OrganizationLinksUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	organization, err = server.MongoDB.Organization.Filter(filters).Get(r.Context())
+	organization, err = server.MongoDB.Organization.New().Filter(filters).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))

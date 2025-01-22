@@ -35,12 +35,10 @@ func (l *links) UpdateOne(ctx context.Context, fields map[string]any) error {
 		return fmt.Errorf("no fields to update")
 	}
 
-	// Проверка наличия фильтра для статуса
 	if l.filters == nil || len(l.filters) == 0 {
 		return fmt.Errorf("no filters set for links update")
 	}
 
-	// Валидация допустимых полей для обновления
 	validFields := map[string]bool{
 		"twitter":   true,
 		"instagram": true,
@@ -49,12 +47,13 @@ func (l *links) UpdateOne(ctx context.Context, fields map[string]any) error {
 		"linkedin":  true,
 		"telegram":  true,
 		"discord":   true,
+		"website":   true,
 	}
 
 	updateFields := bson.M{}
 	for key, value := range fields {
-		if validFields[key] {
-			updateFields[key] = value
+		if validFields[key] && value != nil {
+			updateFields["links."+key] = value
 		}
 	}
 
@@ -63,14 +62,9 @@ func (l *links) UpdateOne(ctx context.Context, fields map[string]any) error {
 	}
 
 	update := bson.M{"$set": updateFields}
-
-	result, err := l.collection.UpdateOne(ctx, l.filters, update)
+	_, err := l.collection.UpdateOne(ctx, l.filters, update)
 	if err != nil {
-		return fmt.Errorf("failed to update status: %w", err)
-	}
-
-	if result.ModifiedCount == 0 {
-		return fmt.Errorf("no status found with the given criteria")
+		return fmt.Errorf("failed to update links: %w", err)
 	}
 
 	return nil

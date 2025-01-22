@@ -17,7 +17,7 @@ func NewOrganizationLinksUpdate(r *http.Request) (req *resources.OrganizationLin
 
 	errs := validation.Errors{
 		"data/id":         validation.Validate(req.Data.Id, validation.Required),
-		"data/type":       validation.Validate(req.Data.Type, validation.Required, validation.In(resources.OrganizationUpdateType)),
+		"data/type":       validation.Validate(req.Data.Type, validation.Required, validation.In(resources.OrganizationLinksUpdateType)),
 		"data/attributes": validation.Validate(req.Data.Attributes, validation.Required),
 	}
 	return req, errs.Filter()

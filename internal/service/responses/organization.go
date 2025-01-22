@@ -17,7 +17,7 @@ func Organization(organization models.Organization) resources.Organization {
 	for _, el := range organization.Employees {
 		ver := "false"
 		if el.Verified {
-			ver = "verified"
+			ver = "true"
 		}
 		employees = append(employees, resources.Employee{
 			Data: resources.EmployeeData{
@@ -76,6 +76,11 @@ func Organization(organization models.Organization) resources.Organization {
 		}
 	}
 
+	verOrg := "false"
+	if organization.Verified {
+		verOrg = "true"
+	}
+
 	return resources.Organization{
 		Data: resources.OrganizationData{
 			Id:   organization.ID.String(),
@@ -83,7 +88,7 @@ func Organization(organization models.Organization) resources.Organization {
 			Attributes: resources.OrganizationDataAttributes{
 				Name:              organization.Name,
 				Logo:              organization.Logo,
-				Verified:          organization.Logo,
+				Verified:          verOrg,
 				Desc:              organization.Desc,
 				Sort:              string(organization.Sort),
 				Country:           organization.Country,
