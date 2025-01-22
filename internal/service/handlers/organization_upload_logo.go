@@ -48,7 +48,10 @@ func OrganizationUploadLogo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	organization, err := server.MongoDB.Organization.FilterById(orgId).Get(r.Context())
+	var filters map[string]any
+	filters["id"] = orgId
+
+	organization, err := server.MongoDB.Organization.Filter(filters).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))
@@ -88,7 +91,7 @@ func OrganizationUploadLogo(w http.ResponseWriter, r *http.Request) {
 		"avatar": uploadResult.SecureURL,
 	}
 
-	_, err = server.MongoDB.Organization.FilterById(orgId).UpdateOne(r.Context(), stmt)
+	_, err = server.MongoDB.Organization.Filter(filters).UpdateOne(r.Context(), stmt)
 	if err != nil {
 		log.WithError(err).Error("Failed to update organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to update organization"))

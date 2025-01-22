@@ -55,7 +55,10 @@ func OrganizationLinksUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	organization, err := server.MongoDB.Organization.FilterById(orgId).Get(r.Context())
+	var filters map[string]any
+	filters["id"] = orgId
+
+	organization, err := server.MongoDB.Organization.Filter(filters).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))
@@ -77,40 +80,24 @@ func OrganizationLinksUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	stmt := map[string]any{}
-	if twitter != nil {
-		stmt["twitter"] = twitter
-	}
-	if instagram != nil {
-		stmt["instagram"] = instagram
-	}
-	if facebook != nil {
-		stmt["facebook"] = facebook
-	}
-	if tiktok != nil {
-		stmt["tiktok"] = tiktok
-	}
-	if linkedin != nil {
-		stmt["linkedin"] = linkedin
-	}
-	if telegram != nil {
-		stmt["telegram"] = telegram
-	}
-	if discord != nil {
-		stmt["discord"] = discord
-	}
-	if website != nil {
-		stmt["website"] = website
-	}
+	err = server.MongoDB.Organization.Links().UpdateOne(r.Context(), map[string]any{
+		"twitter":   twitter,
+		"instagram": instagram,
+		"facebook":  facebook,
+		"tiktok":    tiktok,
+		"linkedin":  linkedin,
+		"telegram":  telegram,
+		"discord":   discord,
+		"website":   website,
+	})
 
-	err = server.MongoDB.Organization.Links().UpdateOne(r.Context(), stmt)
 	if err != nil {
 		log.WithError(err).Error("Failed to update organization links")
 		httpkit.RenderErr(w, problems.InternalError("Failed to update organization links"))
 		return
 	}
 
-	organization, err = server.MongoDB.Organization.FilterById(orgId).Get(r.Context())
+	organization, err = server.MongoDB.Organization.Filter(filters).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))

@@ -7,7 +7,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
-	"github.com/recovery-flow/roles"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -20,9 +19,7 @@ type Employees interface {
 	Select(ctx context.Context) ([]models.Employee, error)
 	Get(ctx context.Context) (*models.Employee, error)
 
-	FilterById(id uuid.UUID) Employees
-	FilterByRole(role roles.OrgRole) Employees
-
+	Filter(filters map[string]any) Employees
 	UpdateOne(ctx context.Context, fields map[string]any) (*models.Employee, error)
 
 	SortBy(field string, ascending bool) Employees
@@ -92,26 +89,27 @@ func (e *employees) Get(ctx context.Context) (*models.Employee, error) {
 	return &empl, nil
 }
 
-func (e *employees) FilterById(id uuid.UUID) Employees {
-	if e.filters == nil {
-		e.filters = bson.M{}
+func (e *employees) Filter(filters map[string]any) Employees {
+	var validFilters = map[string]bool{
+		"user_id":      true,
+		"first_name":   true,
+		"second_name":  true,
+		"third_name":   true,
+		"display_name": true,
+		"position":     true,
+		"desc":         true,
+		"verified":     true,
+		"role":         true,
 	}
-	e.filters["employees"] = bson.M{
-		"$elemMatch": bson.M{
-			"user_id": id,
-		},
-	}
-	return e
-}
 
-func (e *employees) FilterByRole(role roles.OrgRole) Employees {
-	if e.filters == nil {
-		e.filters = bson.M{}
-	}
-	e.filters["employees"] = bson.M{
-		"$elemMatch": bson.M{
-			"role": role,
-		},
+	for field, value := range filters {
+		if !validFilters[field] {
+			continue
+		}
+		if value == nil {
+			continue
+		}
+		e.filters[field] = value
 	}
 	return e
 }

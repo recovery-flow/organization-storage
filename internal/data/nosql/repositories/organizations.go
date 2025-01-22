@@ -22,14 +22,14 @@ type Organization interface {
 	Select(ctx context.Context) ([]models.Organization, error)
 	Get(ctx context.Context) (*models.Organization, error)
 
-	FilterById(id primitive.ObjectID) Organization
-	FilterByType(typeOp models.SortOfOrg) Organization
+	Filter(filters map[string]any) Organization
 
 	Employees() Employees
 	Status() Status
 	Links() Links
 
 	UpdateOne(ctx context.Context, fields map[string]any) (*models.Organization, error)
+	UpdateMany(ctx context.Context, fields map[string]any) (int64, error)
 
 	SortBy(field string, ascending bool) Organization
 	Limit(limit int64) Organization
@@ -133,13 +133,27 @@ func (o *organization) Get(ctx context.Context) (*models.Organization, error) {
 	return &org, nil
 }
 
-func (o *organization) FilterById(id primitive.ObjectID) Organization {
-	o.filters["_id"] = id
-	return o
-}
+func (o *organization) Filter(filters map[string]any) Organization {
+	var validFilters = map[string]bool{
+		"_id":      true,
+		"name":     true,
+		"logo":     true,
+		"verified": true,
+		"desc":     true,
+		"country":  true,
+		"city":     true,
+		"sort":     true,
+	}
 
-func (o *organization) FilterByType(typeOp models.SortOfOrg) Organization {
-	o.filters["type"] = typeOp
+	for field, value := range filters {
+		if !validFilters[field] {
+			continue
+		}
+		if value == nil {
+			continue
+		}
+		o.filters[field] = value
+	}
 	return o
 }
 
@@ -224,6 +238,54 @@ func (o *organization) UpdateOne(ctx context.Context, fields map[string]any) (*m
 		return nil, fmt.Errorf("failed to find org: %w", err)
 	}
 	return &org, nil
+}
+
+func (o *organization) UpdateMany(ctx context.Context, fields map[string]any) (int64, error) {
+	// Проверяем, есть ли поля для обновления
+	if len(fields) == 0 {
+		return 0, fmt.Errorf("no fields provided for update")
+	}
+
+	// Определяем список допустимых полей
+	validFields := map[string]bool{
+		"name":   true,
+		"desc":   true,
+		"avatar": true,
+		"type":   true,
+	}
+
+	// Создаем BSON-документ для обновления
+	updateFields := bson.M{}
+	for key, value := range fields {
+		if validFields[key] && value != nil { // Проверяем допустимость поля и значение на nil
+			updateFields[key] = value
+		}
+	}
+
+	// Добавляем поле updated_at
+	updateFields["updated_at"] = time.Now()
+
+	// Проверяем, есть ли валидные поля для обновления
+	if len(updateFields) == 0 {
+		return 0, fmt.Errorf("no valid fields to update")
+	}
+
+	// Проверяем, установлены ли фильтры
+	if o.filters == nil || len(o.filters) == 0 {
+		return 0, fmt.Errorf("organization filters are empty")
+	}
+
+	// Формируем запрос для обновления
+	update := bson.M{"$set": updateFields}
+
+	// Выполняем обновление нескольких документов
+	result, err := o.collection.UpdateMany(ctx, o.filters, update)
+	if err != nil {
+		return 0, fmt.Errorf("failed to update organizations: %w", err)
+	}
+
+	// Возвращаем количество обновленных документов
+	return result.ModifiedCount, nil
 }
 
 func (o *organization) SortBy(field string, ascending bool) Organization {

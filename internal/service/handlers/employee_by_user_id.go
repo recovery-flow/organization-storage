@@ -37,7 +37,14 @@ func EmployeeByUserID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, err := server.MongoDB.Organization.FilterById(orgId).Employees().FilterById(userId).Get(r.Context())
+	var filtersOrg map[string]any
+	filtersOrg["id"] = orgId
+
+	res, err := server.MongoDB.Organization.Filter(filtersOrg).Employees().
+		Filter(map[string]any{
+			"user_id": userId,
+		}).
+		Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to update organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to update organization"))

@@ -70,7 +70,10 @@ func EmployeeCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	organization, err := server.MongoDB.Organization.FilterById(orgId).Get(r.Context())
+	var filters map[string]any
+	filters["id"] = orgId
+
+	organization, err := server.MongoDB.Organization.Filter(filters).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))
@@ -94,7 +97,7 @@ func EmployeeCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	employee, err := server.MongoDB.Organization.FilterById(orgId).Employees().Insert(r.Context(), models.Employee{
+	employee, err := server.MongoDB.Organization.Filter(filters).Employees().Insert(r.Context(), models.Employee{
 		UserID:      employeeId,
 		FirstName:   firstName,
 		SecondName:  secondName,

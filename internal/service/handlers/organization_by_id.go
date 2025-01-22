@@ -29,12 +29,15 @@ func OrganizationByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, err := server.MongoDB.Organization.FilterById(orgId).Get(r.Context())
+	var filters map[string]any
+	filters["id"] = orgId
+
+	organization, err := server.MongoDB.Organization.Filter(filters).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to update organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to update organization"))
 		return
 	}
 
-	httpkit.Render(w, responses.Organization(*res))
+	httpkit.Render(w, responses.Organization(*organization))
 }
