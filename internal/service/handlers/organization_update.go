@@ -34,7 +34,7 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 
 	initiatorId, ok := r.Context().Value(tokens.UserIDKey).(uuid.UUID)
 	if !ok {
-		server.Logger.Warn("UserID not found in context")
+		log.Warn("UserID not found in context")
 		httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
 		return
 	}
@@ -52,10 +52,13 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var filters map[string]any
-	filters["id"] = orgId
+	filters := make(map[string]any)
+	filters["_id"] = orgId
 
-	organization, err := server.MongoDB.Organization.Filter(filters).Get(r.Context())
+	organization, err := server.MongoDB.Organization.New().
+		Filter(filters).
+		Get(r.Context())
+
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))
@@ -64,7 +67,7 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 
 	for _, emp := range organization.Employees {
 		if emp.UserID == initiatorId {
-			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgAdmin) > -1 {
+			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgAdmin) < 0 {
 				err = roles.ErrorNoPermission
 			}
 			break
@@ -72,12 +75,12 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
-		log.WithError(err).Error("Failed to find initiator user")
+		log.WithError(err).Error("User does not have permission to update organization")
 		httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
 		return
 	}
 
-	var stmt map[string]any
+	stmt := make(map[string]any)
 	if name != nil {
 		stmt["name"] = *name
 		stmt["verified"] = false
@@ -94,7 +97,9 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 		stmt["city"] = *city
 		stmt["verified"] = false
 	}
-	stmt["desc"] = *desc
+	if desc != nil {
+		stmt["desc"] = *desc
+	}
 
 	res, err := server.MongoDB.Organization.Filter(filters).UpdateOne(r.Context(), stmt)
 	if err != nil {
@@ -102,6 +107,8 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 		httpkit.RenderErr(w, problems.InternalError("Failed to update organization"))
 		return
 	}
+
+	log.Infof("Organization update test")
 
 	log.Infof("Organization updated %s", initiatorId)
 	httpkit.Render(w, responses.Organization(*res))

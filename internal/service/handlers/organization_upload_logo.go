@@ -48,8 +48,8 @@ func OrganizationUploadLogo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var filters map[string]any
-	filters["id"] = orgId
+	filters := make(map[string]any)
+	filters["_id"] = orgId
 
 	organization, err := server.MongoDB.Organization.Filter(filters).Get(r.Context())
 	if err != nil {

@@ -37,8 +37,8 @@ func EmployeeByUserID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var filtersOrg map[string]any
-	filtersOrg["id"] = orgId
+	filtersOrg := make(map[string]any)
+	filtersOrg["_id"] = orgId
 
 	res, err := server.MongoDB.Organization.Filter(filtersOrg).Employees().
 		Filter(map[string]any{

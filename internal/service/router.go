@@ -31,17 +31,15 @@ func Run(ctx context.Context) {
 					r.Post("/", handlers.OrganizationCreate)
 
 					r.Route("/{organization_id}", func(r chi.Router) {
-						r.Route("/update", func(r chi.Router) {
-							r.Patch("/", handlers.OrganizationUpdate)
-							r.Patch("/photo", handlers.OrganizationUploadLogo)
-							r.Patch("/link", handlers.OrganizationLinksUpdate)
-						})
+						r.Patch("/", handlers.OrganizationUpdate)
+						r.Patch("/photo", handlers.OrganizationUploadLogo)
+						r.Patch("/link", handlers.OrganizationLinksUpdate)
 
 						r.Route("/employee", func(r chi.Router) {
-							r.Post("/create", handlers.EmployeeCreate)
+							r.Post("/", handlers.EmployeeCreate)
 
 							r.Route("/{user_id}", func(r chi.Router) {
-								r.Patch("/update", handlers.EmployeeUpdate)
+								r.Patch("/", handlers.EmployeeUpdate)
 							})
 						})
 					})

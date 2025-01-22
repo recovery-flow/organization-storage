@@ -8,6 +8,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
+	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
@@ -136,7 +137,7 @@ func (o *organization) Insert(ctx context.Context, org models.Organization) (*mo
 	}
 
 	employee.CreatedAt = now
-	
+
 	res, err := o.collection.InsertOne(ctx, org)
 	if err != nil {
 		return nil, fmt.Errorf("failed to insert organization: %w", err)
@@ -198,6 +199,8 @@ func (o *organization) Filter(filters map[string]any) Organization {
 		"sort":     true,
 	}
 
+	logrus.Info("filters: ", filters)
+
 	for field, value := range filters {
 		if !validFilters[field] {
 			continue
@@ -205,6 +208,7 @@ func (o *organization) Filter(filters map[string]any) Organization {
 		if value == nil {
 			continue
 		}
+		logrus.Info("field: ", field, " value: ", value)
 		o.filters[field] = value
 	}
 	return o
@@ -249,10 +253,13 @@ func (o *organization) UpdateOne(ctx context.Context, fields map[string]any) (*m
 	}
 
 	validFields := map[string]bool{
-		"name":   true,
-		"desc":   true,
-		"avatar": true,
-		"type":   true,
+		"name":     true,
+		"logo":     true,
+		"verified": true,
+		"desc":     true,
+		"country":  true,
+		"city":     true,
+		"sort":     true,
 	}
 
 	updateFields := bson.M{}

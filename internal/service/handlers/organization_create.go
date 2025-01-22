@@ -76,7 +76,7 @@ func OrganizationCreate(w http.ResponseWriter, r *http.Request) {
 		Employees: []models.Employee{ownerEmp},
 	}
 
-	res, err := server.MongoDB.Organization.Insert(r.Context(), Organization)
+	res, err := server.MongoDB.Organization.New().Insert(r.Context(), Organization)
 	if err != nil {
 		if strings.HasPrefix(err.Error(), "failed to insert organization") {
 			httpkit.RenderErr(w, problems.InternalError("Failed to insert organization"))

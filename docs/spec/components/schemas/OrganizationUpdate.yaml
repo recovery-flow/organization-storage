@@ -14,7 +14,7 @@ properties:
         description: "organization id"
       type:
         type: string
-        enum: [ organization ]
+        enum: [ organization_update ]
       attributes:
         type: object
         properties:
