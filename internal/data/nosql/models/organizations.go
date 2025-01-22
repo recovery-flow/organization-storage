@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -29,3 +30,18 @@ const (
 	CompanySort     SortOfOrg = "company"
 	CorporationSort SortOfOrg = "corporation"
 )
+
+var ErrInvalidSort = fmt.Errorf("invalid sort of organization")
+
+func StringToSortOfOrg(s string) (SortOfOrg, error) {
+	switch s {
+	case "foundation":
+		return FoundationSort, nil
+	case "company":
+		return CompanySort, nil
+	case "corporation":
+		return CorporationSort, nil
+	default:
+		return FoundationSort, ErrInvalidSort
+	}
+}

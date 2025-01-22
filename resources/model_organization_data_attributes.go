@@ -36,8 +36,8 @@ type OrganizationDataAttributes struct {
 	Country string `json:"country"`
 	// City of HQ
 	City *string `json:"city,omitempty"`
-	Links *Object `json:"links,omitempty"`
-	ComplicatedStatus *Object `json:"complicated_status,omitempty"`
+	Links *Links `json:"links,omitempty"`
+	ComplicatedStatus *ComplicatedStatus `json:"complicated_status,omitempty"`
 	// Team creation timestamp
 	CreatedAt time.Time `json:"created_at"`
 }
@@ -245,9 +245,9 @@ func (o *OrganizationDataAttributes) SetCity(v string) {
 }
 
 // GetLinks returns the Links field value if set, zero value otherwise.
-func (o *OrganizationDataAttributes) GetLinks() Object {
+func (o *OrganizationDataAttributes) GetLinks() Links {
 	if o == nil || IsNil(o.Links) {
-		var ret Object
+		var ret Links
 		return ret
 	}
 	return *o.Links
@@ -255,7 +255,7 @@ func (o *OrganizationDataAttributes) GetLinks() Object {
 
 // GetLinksOk returns a tuple with the Links field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrganizationDataAttributes) GetLinksOk() (*Object, bool) {
+func (o *OrganizationDataAttributes) GetLinksOk() (*Links, bool) {
 	if o == nil || IsNil(o.Links) {
 		return nil, false
 	}
@@ -272,14 +272,14 @@ func (o *OrganizationDataAttributes) HasLinks() bool {
 }
 
 // SetLinks gets a reference to the given Object and assigns it to the Links field.
-func (o *OrganizationDataAttributes) SetLinks(v Object) {
+func (o *OrganizationDataAttributes) SetLinks(v Links) {
 	o.Links = &v
 }
 
 // GetComplicatedStatus returns the ComplicatedStatus field value if set, zero value otherwise.
-func (o *OrganizationDataAttributes) GetComplicatedStatus() Object {
+func (o *OrganizationDataAttributes) GetComplicatedStatus() ComplicatedStatus {
 	if o == nil || IsNil(o.ComplicatedStatus) {
-		var ret Object
+		var ret ComplicatedStatus
 		return ret
 	}
 	return *o.ComplicatedStatus
@@ -287,7 +287,7 @@ func (o *OrganizationDataAttributes) GetComplicatedStatus() Object {
 
 // GetComplicatedStatusOk returns a tuple with the ComplicatedStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrganizationDataAttributes) GetComplicatedStatusOk() (*Object, bool) {
+func (o *OrganizationDataAttributes) GetComplicatedStatusOk() (*ComplicatedStatus, bool) {
 	if o == nil || IsNil(o.ComplicatedStatus) {
 		return nil, false
 	}
@@ -304,7 +304,7 @@ func (o *OrganizationDataAttributes) HasComplicatedStatus() bool {
 }
 
 // SetComplicatedStatus gets a reference to the given Object and assigns it to the ComplicatedStatus field.
-func (o *OrganizationDataAttributes) SetComplicatedStatus(v Object) {
+func (o *OrganizationDataAttributes) SetComplicatedStatus(v ComplicatedStatus) {
 	o.ComplicatedStatus = &v
 }
 

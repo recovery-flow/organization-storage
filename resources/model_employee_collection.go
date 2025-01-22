@@ -32,7 +32,7 @@ type _EmployeeCollection EmployeeCollection
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewEmployeeCollection(data []Object, links EmployeeCollectionLinks, meta EmployeeCollectionMeta) *EmployeeCollection {
+func NewEmployeeCollection(data []Employee, links EmployeeCollectionLinks, meta EmployeeCollectionMeta) *EmployeeCollection {
 	this := EmployeeCollection{}
 	this.Data = data
 	this.Links = links
@@ -49,9 +49,9 @@ func NewEmployeeCollectionWithDefaults() *EmployeeCollection {
 }
 
 // GetData returns the Data field value
-func (o *EmployeeCollection) GetData() []Object {
+func (o *EmployeeCollection) GetData() []Employee {
 	if o == nil {
-		var ret []Object
+		var ret []Employee
 		return ret
 	}
 
@@ -60,7 +60,7 @@ func (o *EmployeeCollection) GetData() []Object {
 
 // GetDataOk returns a tuple with the Data field value
 // and a boolean to check if the value has been set.
-func (o *EmployeeCollection) GetDataOk() ([]Object, bool) {
+func (o *EmployeeCollection) GetDataOk() ([]Employee, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -68,7 +68,7 @@ func (o *EmployeeCollection) GetDataOk() ([]Object, bool) {
 }
 
 // SetData sets field value
-func (o *EmployeeCollection) SetData(v []Object) {
+func (o *EmployeeCollection) SetData(v []Employee) {
 	o.Data = v
 }
 

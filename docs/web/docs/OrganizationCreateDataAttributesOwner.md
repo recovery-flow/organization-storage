@@ -11,13 +11,12 @@ Name | Type | Description | Notes
 **Position** | **string** | position in the company | 
 **Verified** | Pointer to **string** | verified status | [optional] 
 **Desc** | **string** | Description | 
-**CreatedAt** | **time.Time** | User created at | 
 
 ## Methods
 
 ### NewOrganizationCreateDataAttributesOwner
 
-`func NewOrganizationCreateDataAttributesOwner(firstName string, secondName string, displayName string, position string, desc string, createdAt time.Time, ) *OrganizationCreateDataAttributesOwner`
+`func NewOrganizationCreateDataAttributesOwner(firstName string, secondName string, displayName string, position string, desc string, ) *OrganizationCreateDataAttributesOwner`
 
 NewOrganizationCreateDataAttributesOwner instantiates a new OrganizationCreateDataAttributesOwner object
 This constructor will assign default values to properties that have it defined,
@@ -180,26 +179,6 @@ and a boolean to check if the value has been set.
 `func (o *OrganizationCreateDataAttributesOwner) SetDesc(v string)`
 
 SetDesc sets Desc field to given value.
-
-
-### GetCreatedAt
-
-`func (o *OrganizationCreateDataAttributesOwner) GetCreatedAt() time.Time`
-
-GetCreatedAt returns the CreatedAt field if non-nil, zero value otherwise.
-
-### GetCreatedAtOk
-
-`func (o *OrganizationCreateDataAttributesOwner) GetCreatedAtOk() (*time.Time, bool)`
-
-GetCreatedAtOk returns a tuple with the CreatedAt field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetCreatedAt
-
-`func (o *OrganizationCreateDataAttributesOwner) SetCreatedAt(v time.Time)`
-
-SetCreatedAt sets CreatedAt field to given value.
 
 
 

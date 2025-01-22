@@ -272,9 +272,9 @@ func (o *EmployeeDataAttributes) SetRole(v string) {
 }
 
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
-func (o *EmployeeDataAttributes) GetUpdatedAt() string {
+func (o *EmployeeDataAttributes) GetUpdatedAt() time.Time {
 	if o == nil || IsNil(o.UpdatedAt) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdatedAt
@@ -282,7 +282,7 @@ func (o *EmployeeDataAttributes) GetUpdatedAt() string {
 
 // GetUpdatedAtOk returns a tuple with the UpdatedAt field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *EmployeeDataAttributes) GetUpdatedAtOk() (*string, bool) {
+func (o *EmployeeDataAttributes) GetUpdatedAtOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdatedAt) {
 		return nil, false
 	}
@@ -299,7 +299,7 @@ func (o *EmployeeDataAttributes) HasUpdatedAt() bool {
 }
 
 // SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
-func (o *EmployeeDataAttributes) SetUpdatedAt(v string) {
+func (o *EmployeeDataAttributes) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = &v
 }
 

@@ -23,7 +23,7 @@ func Run(ctx context.Context) {
 	r.Use(cifractx.MiddlewareWithContext(config.SERVER, service))
 	authMW := service.TokenManager.AuthMdl(service.Config.JWT.AccessToken.SecretKey)
 
-	r.Route("/organization-storage", func(r chi.Router) {
+	r.Route("/org-storage", func(r chi.Router) {
 		r.Route("/v1", func(r chi.Router) {
 			r.Route("/private", func(r chi.Router) {
 				r.Use(authMW)

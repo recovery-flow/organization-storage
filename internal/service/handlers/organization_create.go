@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/recovery-flow/comtools/cifractx"
@@ -58,20 +59,31 @@ func OrganizationCreate(w http.ResponseWriter, r *http.Request) {
 		Role:        roles.RoleOrgOwner,
 	}
 
+	sortOrg, err := models.StringToSortOfOrg(sort)
+	if err != nil {
+		log.WithError(err).Error("Failed to convert sort of organization")
+		httpkit.RenderErr(w, problems.BadRequest(err)...)
+		return
+	}
+
 	Organization := models.Organization{
 		Name:      name,
 		Verified:  false,
 		Desc:      desc,
 		Country:   country,
 		City:      city,
-		Sort:      models.SortOfOrg(sort),
+		Sort:      sortOrg,
 		Employees: []models.Employee{ownerEmp},
 	}
 
 	res, err := server.MongoDB.Organization.Insert(r.Context(), Organization)
 	if err != nil {
-		log.WithError(err).Error("Failed to insert organization")
-		httpkit.RenderErr(w, problems.InternalError("Failed to insert organization"))
+		if strings.HasPrefix(err.Error(), "failed to insert organization") {
+			httpkit.RenderErr(w, problems.InternalError("Failed to insert organization"))
+			return
+		}
+		log.Infof("Failed to create organization: %v", err)
+		httpkit.RenderErr(w, problems.BadRequest(err)...)
 		return
 	}
 

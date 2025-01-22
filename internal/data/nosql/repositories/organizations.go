@@ -3,8 +3,10 @@ package repositories
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -84,9 +86,60 @@ func (o *organization) Insert(ctx context.Context, org models.Organization) (*mo
 	now := time.Now().UTC()
 	org.UpdatedAt = &now
 
+	org.ID = primitive.NewObjectID()
+
+	normalize := func(s *string) *string {
+		if s == nil {
+			return nil
+		}
+		trimmed := strings.TrimSpace(*s)
+		if trimmed == "" {
+			return nil
+		}
+		return &trimmed
+	}
+
+	org.Name = strings.TrimSpace(org.Name)
+	if org.Name == "" {
+		return nil, fmt.Errorf("organization name cannot be empty")
+	}
+
+	org.Desc = strings.TrimSpace(org.Desc)
+	org.Country = strings.TrimSpace(org.Country)
+	if org.Country == "" {
+		return nil, fmt.Errorf("organization country cannot be empty")
+	}
+
+	org.City = normalize(org.City)
+
+	orgEmpls := org.Employees
+	if len(orgEmpls) != 1 {
+		return nil, fmt.Errorf("when creating an organization, you must specify exactly one employee")
+	}
+	employee := orgEmpls[0]
+
+	employee.FirstName = strings.TrimSpace(employee.FirstName)
+	employee.SecondName = strings.TrimSpace(employee.SecondName)
+	employee.ThirdName = normalize(employee.ThirdName)
+	employee.DisplayName = strings.TrimSpace(employee.DisplayName)
+	if employee.DisplayName == "" {
+		return nil, fmt.Errorf("employee display name cannot be empty")
+	}
+	employee.Position = strings.TrimSpace(employee.Position)
+	if employee.Position == "" {
+		return nil, fmt.Errorf("employee position cannot be empty")
+	}
+	employee.Desc = strings.TrimSpace(employee.Desc)
+
+	if employee.UserID == uuid.Nil {
+		return nil, fmt.Errorf("employee UserID cannot be nil")
+	}
+
+	employee.CreatedAt = now
+	
 	res, err := o.collection.InsertOne(ctx, org)
 	if err != nil {
-		return nil, fmt.Errorf("failed to insert team: %w", err)
+		return nil, fmt.Errorf("failed to insert organization: %w", err)
 	}
 
 	org.ID = res.InsertedID.(primitive.ObjectID)

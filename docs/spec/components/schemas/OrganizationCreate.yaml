@@ -40,7 +40,6 @@ properties:
               - display_name
               - position
               - desc
-              - created_at
             properties:
               first_name:
                 type: string
@@ -57,17 +56,9 @@ properties:
               position:
                 type: string
                 description: "position in the company"
-              verified:
-                type: string
-                description: "verified status"
               desc:
                 type: string
                 description: "Description"
-              created_at:
-                type: string
-                format: date-time
-                description: "User created at"
-                example: "2021-01-01T00:00:00Z"
           city:
             type: string
             description: "City of HQ"

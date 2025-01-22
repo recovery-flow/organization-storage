@@ -12,7 +12,6 @@ package resources
 
 import (
 	"encoding/json"
-	"time"
 	"bytes"
 	"fmt"
 )
@@ -32,12 +31,8 @@ type OrganizationCreateDataAttributesOwner struct {
 	DisplayName string `json:"display_name"`
 	// position in the company
 	Position string `json:"position"`
-	// verified status
-	Verified *string `json:"verified,omitempty"`
 	// Description
 	Desc string `json:"desc"`
-	// User created at
-	CreatedAt time.Time `json:"created_at"`
 }
 
 type _OrganizationCreateDataAttributesOwner OrganizationCreateDataAttributesOwner
@@ -46,14 +41,13 @@ type _OrganizationCreateDataAttributesOwner OrganizationCreateDataAttributesOwne
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrganizationCreateDataAttributesOwner(firstName string, secondName string, displayName string, position string, desc string, createdAt time.Time) *OrganizationCreateDataAttributesOwner {
+func NewOrganizationCreateDataAttributesOwner(firstName string, secondName string, displayName string, position string, desc string) *OrganizationCreateDataAttributesOwner {
 	this := OrganizationCreateDataAttributesOwner{}
 	this.FirstName = firstName
 	this.SecondName = secondName
 	this.DisplayName = displayName
 	this.Position = position
 	this.Desc = desc
-	this.CreatedAt = createdAt
 	return &this
 }
 
@@ -193,38 +187,6 @@ func (o *OrganizationCreateDataAttributesOwner) SetPosition(v string) {
 	o.Position = v
 }
 
-// GetVerified returns the Verified field value if set, zero value otherwise.
-func (o *OrganizationCreateDataAttributesOwner) GetVerified() string {
-	if o == nil || IsNil(o.Verified) {
-		var ret string
-		return ret
-	}
-	return *o.Verified
-}
-
-// GetVerifiedOk returns a tuple with the Verified field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *OrganizationCreateDataAttributesOwner) GetVerifiedOk() (*string, bool) {
-	if o == nil || IsNil(o.Verified) {
-		return nil, false
-	}
-	return o.Verified, true
-}
-
-// HasVerified returns a boolean if a field has been set.
-func (o *OrganizationCreateDataAttributesOwner) HasVerified() bool {
-	if o != nil && !IsNil(o.Verified) {
-		return true
-	}
-
-	return false
-}
-
-// SetVerified gets a reference to the given string and assigns it to the Verified field.
-func (o *OrganizationCreateDataAttributesOwner) SetVerified(v string) {
-	o.Verified = &v
-}
-
 // GetDesc returns the Desc field value
 func (o *OrganizationCreateDataAttributesOwner) GetDesc() string {
 	if o == nil {
@@ -249,30 +211,6 @@ func (o *OrganizationCreateDataAttributesOwner) SetDesc(v string) {
 	o.Desc = v
 }
 
-// GetCreatedAt returns the CreatedAt field value
-func (o *OrganizationCreateDataAttributesOwner) GetCreatedAt() time.Time {
-	if o == nil {
-		var ret time.Time
-		return ret
-	}
-
-	return o.CreatedAt
-}
-
-// GetCreatedAtOk returns a tuple with the CreatedAt field value
-// and a boolean to check if the value has been set.
-func (o *OrganizationCreateDataAttributesOwner) GetCreatedAtOk() (*time.Time, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.CreatedAt, true
-}
-
-// SetCreatedAt sets field value
-func (o *OrganizationCreateDataAttributesOwner) SetCreatedAt(v time.Time) {
-	o.CreatedAt = v
-}
-
 func (o OrganizationCreateDataAttributesOwner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -290,11 +228,7 @@ func (o OrganizationCreateDataAttributesOwner) ToMap() (map[string]interface{}, 
 	}
 	toSerialize["display_name"] = o.DisplayName
 	toSerialize["position"] = o.Position
-	if !IsNil(o.Verified) {
-		toSerialize["verified"] = o.Verified
-	}
 	toSerialize["desc"] = o.Desc
-	toSerialize["created_at"] = o.CreatedAt
 	return toSerialize, nil
 }
 
@@ -308,7 +242,6 @@ func (o *OrganizationCreateDataAttributesOwner) UnmarshalJSON(data []byte) (err 
 		"display_name",
 		"position",
 		"desc",
-		"created_at",
 	}
 
 	allProperties := make(map[string]interface{})
