@@ -10,6 +10,7 @@ import (
 	"github.com/recovery-flow/comtools/httpkit"
 	"github.com/recovery-flow/comtools/httpkit/problems"
 	"github.com/recovery-flow/organization-storage/internal/config"
+	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
 	"github.com/recovery-flow/organization-storage/internal/service/requests"
 	"github.com/recovery-flow/organization-storage/internal/service/responses"
 	"github.com/recovery-flow/roles"
@@ -82,24 +83,51 @@ func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for _, emp := range organization.Employees {
-		if emp.UserID == initiatorId {
-			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgModer) > -1 &&
-				roles.CompareRolesOrg(emp.Role, roles.OrgRole(*role)) > -1 &&
-				roles.OrgRole(*role) != roles.RoleOrgOwner {
-				err = roles.ErrorNoPermission
+	stmt := make(map[string]any)
+
+	if role != nil {
+		newEmpRole, err := roles.StringToRoleOrg(*role)
+		if err != nil {
+			log.WithError(err).Error("Failed to parse role")
+			httpkit.RenderErr(w, problems.BadRequest(err)...)
+			return
+		}
+		var owner models.Employee
+		for _, emp := range organization.Employees {
+			if emp.UserID == initiatorId {
+				if roles.CompareRolesOrg(emp.Role, roles.RoleOrgModer) < 0 ||
+					roles.CompareRolesOrg(emp.Role, newEmpRole) < 0 ||
+					newEmpRole == roles.RoleOrgOwner {
+					log.Error("User haven't enough rights to create employee")
+					httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
+					return
+				}
+				if emp.Role == roles.RoleOrgOwner {
+					owner = emp
+				}
+				break
 			}
-			break
+		}
+		if owner.UserID == initiatorId {
+			if newEmpRole != roles.RoleOrgOwner {
+				log.Error("Owner can't change his role")
+				httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
+				return
+			}
+		}
+	} else {
+		for _, emp := range organization.Employees {
+			if emp.UserID == initiatorId {
+				if roles.CompareRolesOrg(emp.Role, roles.RoleOrgModer) < 0 {
+					log.Error("User haven't enough rights to create employee")
+					httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
+					return
+				}
+				break
+			}
 		}
 	}
 
-	if err != nil {
-		log.WithError(err).Error("Failed to find initiator user")
-		httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
-		return
-	}
-
-	var stmt map[string]any
 	if firstName != nil {
 		stmt["first_name"] = firstName
 		stmt["verified"] = false
@@ -112,18 +140,24 @@ func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 		stmt["third_name"] = thirdName
 		stmt["verified"] = false
 	}
-	stmt["display_name"] = displayName
-	stmt["position"] = position
-	stmt["desc"] = desc
-	stmt["role"] = role
+	if displayName != nil {
+		stmt["display_name"] = displayName
+	}
+	if position != nil {
+		stmt["position"] = position
+	}
+	if desc != nil {
+		stmt["desc"] = desc
+	}
 
-	employee, err := server.MongoDB.Organization.New().Filter(filters).Employees().
+	employee, err := server.MongoDB.Organization.New().Filter(filters).
+		Employees().
 		Filter(map[string]any{
 			"user_id": updatedId,
-		}).UpdateOne(r.Context(), stmt)
+		}).Get(r.Context())
 	if err != nil {
-		log.WithError(err).Error("Failed to update organization")
-		httpkit.RenderErr(w, problems.InternalError("Failed to update organization"))
+		log.WithError(err).Error("Failed to update employee")
+		httpkit.RenderErr(w, problems.InternalError("Failed to update employee"))
 		return
 	}
 

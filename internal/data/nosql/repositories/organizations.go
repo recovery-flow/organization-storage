@@ -8,7 +8,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
-	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
@@ -199,8 +198,6 @@ func (o *organization) Filter(filters map[string]any) Organization {
 		"sort":     true,
 	}
 
-	logrus.Info("filters: ", filters)
-
 	for field, value := range filters {
 		if !validFilters[field] {
 			continue
@@ -208,7 +205,6 @@ func (o *organization) Filter(filters map[string]any) Organization {
 		if value == nil {
 			continue
 		}
-		logrus.Info("field: ", field, " value: ", value)
 		o.filters[field] = value
 	}
 	return o
