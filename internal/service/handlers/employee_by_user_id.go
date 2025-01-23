@@ -44,12 +44,12 @@ func EmployeeByUserID(w http.ResponseWriter, r *http.Request) {
 		Filter(map[string]any{
 			"user_id": userId,
 		}).
-		Get(r.Context())
+		Select(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to update organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to update organization"))
 		return
 	}
 
-	httpkit.Render(w, responses.Employee(*res))
+	httpkit.Render(w, responses.Employee(res[0]))
 }

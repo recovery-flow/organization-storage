@@ -12,7 +12,6 @@ import (
 	"github.com/recovery-flow/organization-storage/internal/config"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
 	"github.com/recovery-flow/organization-storage/internal/service/requests"
-	"github.com/recovery-flow/organization-storage/internal/service/responses"
 	"github.com/recovery-flow/roles"
 	"github.com/recovery-flow/tokens"
 	"github.com/sirupsen/logrus"
@@ -46,12 +45,10 @@ func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 		httpkit.RenderErr(w, problems.BadRequest(fmt.Errorf("organization_id does not match request organization_id"))...)
 		return
 	}
-
 	if chi.URLParam(r, "user_id") != req.Data.Id {
 		httpkit.RenderErr(w, problems.BadRequest(fmt.Errorf("user_id does not match request user_id"))...)
 		return
 	}
-
 	updatedId, err := uuid.Parse(chi.URLParam(r, "user_id"))
 	if err != nil {
 		log.WithError(err).Error("Failed to parse request: ")
@@ -65,18 +62,10 @@ func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	firstName := req.Data.Attributes.FirstName
-	secondName := req.Data.Attributes.SecondName
-	thirdName := req.Data.Attributes.ThirdName
-	displayName := req.Data.Attributes.DisplayName
-	position := req.Data.Attributes.Position
-	desc := req.Data.Attributes.Desc
-	role := req.Data.Attributes.Role
+	filtersForOrg := make(map[string]any)
+	filtersForOrg["_id"] = orgId
 
-	filters := make(map[string]any)
-	filters["_id"] = orgId
-
-	organization, err := server.MongoDB.Organization.New().Filter(filters).Get(r.Context())
+	organization, err := server.MongoDB.Organization.New().Filter(filtersForOrg).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))
@@ -84,7 +73,29 @@ func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	stmt := make(map[string]any)
+	if req.Data.Attributes.FirstName != nil {
+		stmt["first_name"] = req.Data.Attributes.FirstName
+		stmt["verified"] = false
+	}
+	if req.Data.Attributes.SecondName != nil {
+		stmt["second_name"] = req.Data.Attributes.SecondName
+		stmt["verified"] = false
+	}
+	if req.Data.Attributes.ThirdName != nil {
+		stmt["third_name"] = req.Data.Attributes.ThirdName
+		stmt["verified"] = false
+	}
+	if req.Data.Attributes.DisplayName != nil {
+		stmt["display_name"] = req.Data.Attributes.DisplayName
+	}
+	if req.Data.Attributes.Position != nil {
+		stmt["position"] = req.Data.Attributes.Position
+	}
+	if req.Data.Attributes.Desc != nil {
+		stmt["desc"] = req.Data.Attributes.Desc
+	}
 
+	role := req.Data.Attributes.Role
 	if role != nil {
 		newEmpRole, err := roles.StringToRoleOrg(*role)
 		if err != nil {
@@ -108,13 +119,14 @@ func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 		}
-		if owner.UserID == initiatorId {
+		if owner.UserID == updatedId {
 			if newEmpRole != roles.RoleOrgOwner {
 				log.Error("Owner can't change his role")
 				httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
 				return
 			}
 		}
+		stmt["role"] = newEmpRole
 	} else {
 		for _, emp := range organization.Employees {
 			if emp.UserID == initiatorId {
@@ -128,40 +140,18 @@ func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if firstName != nil {
-		stmt["first_name"] = firstName
-		stmt["verified"] = false
-	}
-	if secondName != nil {
-		stmt["second_name"] = secondName
-		stmt["verified"] = false
-	}
-	if thirdName != nil {
-		stmt["third_name"] = thirdName
-		stmt["verified"] = false
-	}
-	if displayName != nil {
-		stmt["display_name"] = displayName
-	}
-	if position != nil {
-		stmt["position"] = position
-	}
-	if desc != nil {
-		stmt["desc"] = desc
-	}
+	filterForEmp := make(map[string]any)
+	filterForEmp["user_id"] = updatedId
 
-	employee, err := server.MongoDB.Organization.New().Filter(filters).
+	err = server.MongoDB.Organization.New().Filter(filtersForOrg).
 		Employees().
-		Filter(map[string]any{
-			"user_id": updatedId,
-		}).Get(r.Context())
+		Filter(filterForEmp).
+		UpdateOne(r.Context(), stmt)
 	if err != nil {
 		log.WithError(err).Error("Failed to update employee")
 		httpkit.RenderErr(w, problems.InternalError("Failed to update employee"))
 		return
 	}
 
-	log.Infof("employee updated: %v in orgnaization %s", employee.UserID, orgId)
-	httpkit.Render(w, responses.Employee(*employee))
-
+	httpkit.Render(w, 202)
 }

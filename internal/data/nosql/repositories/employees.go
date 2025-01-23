@@ -5,27 +5,22 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
-	"github.com/recovery-flow/roles"
 	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Employees interface {
 	Create(ctx context.Context, employee models.Employee) (*models.Employee, error)
-	DeleteOne(ctx context.Context) error
-	Count(ctx context.Context) (int64, error)
 	Select(ctx context.Context) ([]models.Employee, error)
 	Get(ctx context.Context) (*models.Employee, error)
 
 	Filter(filters map[string]any) Employees
-	UpdateOne(ctx context.Context, fields map[string]any) (*models.Employee, error)
-
-	SortBy(field string, ascending bool) Employees
-	Limit(limit int64) Employees
-	Skip(skip int64) Employees
+	UpdateOne(ctx context.Context, fields map[string]any) error
 }
 
 type employees struct {
@@ -39,12 +34,108 @@ type employees struct {
 	skip    int64
 }
 
+func ConvertUUIDToBinary(uuidValue uuid.UUID) primitive.Binary {
+	return primitive.Binary{Subtype: 4, Data: uuidValue[:]}
+}
+
+func (e *employees) Filter(filters map[string]any) Employees {
+	// Проверяем, что фильтр уже содержит _id (т.е. ID организации)
+	if e.filters == nil || e.filters["_id"] == nil {
+		logrus.Errorf("Filter must include _id (organization ID)")
+		return e
+	}
+
+	// Если user_id есть, сохраним его
+	if userID, ok := filters["user_id"]; ok && userID != nil {
+		e.filters["employees.user_id"] = userID
+	}
+
+	// Если нужно, можете добавить поддержку других фильтров:
+	// Например:
+	//   if firstName, ok := filters["first_name"]; ok {
+	//       e.filters["employees.first_name"] = firstName
+	//   }
+	// И так далее...
+
+	return e
+}
+
+func (e *employees) UpdateOne(ctx context.Context, fields map[string]any) error {
+	if len(fields) == 0 {
+		return fmt.Errorf("no fields to update")
+	}
+
+	// Разрешённые поля для обновления
+	validFields := map[string]bool{
+		"first_name":   true,
+		"second_name":  true,
+		"display_name": true,
+		"position":     true,
+		"desc":         true,
+		"verified":     true,
+		"role":         true,
+	}
+
+	// Собираем, что реально будем сетить
+	updateFields := bson.M{}
+	for key, value := range fields {
+		if validFields[key] {
+			updateFields["employees.$[employee]."+key] = value
+		}
+	}
+	// Пропишем обновление updated_at
+	updateFields["employees.$[employee].updated_at"] = time.Now()
+
+	if len(updateFields) == 1 {
+		return fmt.Errorf("no valid fields to update")
+	}
+
+	// Итоговое обновление
+	update := bson.M{"$set": updateFields}
+
+	// Достаём из фильтров ID организации
+	orgID, ok := e.filters["_id"]
+	if !ok {
+		return fmt.Errorf("organization ID filter is missing (filters['_id'])")
+	}
+
+	// Достаём user_id сотрудника
+	userID, ok := e.filters["employees.user_id"]
+	if !ok {
+		return fmt.Errorf("employee user_id filter is missing (filters['employees.user_id'])")
+	}
+
+	// Настраиваем arrayFilters, чтобы обновлялся только сотрудник с нужным user_id
+	arrayFilters := options.Update().SetArrayFilters(options.ArrayFilters{
+		Filters: []interface{}{
+			bson.M{"employee.user_id": userID},
+		},
+	})
+
+	// Выполняем запрос
+	result, err := e.collection.UpdateOne(
+		ctx,
+		bson.M{"_id": orgID}, // фильтр по организации
+		update,               // {"$set": {"employees.$[employee]....": <value>}}
+		arrayFilters,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update employee: %w", err)
+	}
+
+	if result.ModifiedCount == 0 {
+		return fmt.Errorf("no employee found with the given criteria")
+	}
+
+	return nil
+}
+
 func (e *employees) Create(ctx context.Context, employee models.Employee) (*models.Employee, error) {
 	if e.filters == nil || len(e.filters) == 0 {
 		return nil, fmt.Errorf("no filters set for employees creation")
 	}
 
-	employee.CreatedAt = time.Now()
+	employee.CreatedAt = time.Now().UTC()
 
 	logrus.Infof("Creating employee: %v", employee)
 
@@ -68,306 +159,24 @@ func (e *employees) Create(ctx context.Context, employee models.Employee) (*mode
 	return &employee, nil
 }
 
-func (e *employees) DeleteOne(ctx context.Context) error {
-	if e.filters["employees"] == nil || e.filters["_id"] == nil {
-		return fmt.Errorf("no valid filters for deleting employee")
-	}
-
-	filter := bson.M{
-		"_id": e.filters["_id"],
-	}
-
-	update := bson.M{
-		"$pull": bson.M{
-			"employees": e.filters["employees"],
-		},
-	}
-
-	result, err := e.collection.UpdateOne(ctx, filter, update)
-	if err != nil {
-		return fmt.Errorf("failed to delete employee: %w", err)
-	}
-
-	if result.ModifiedCount == 0 {
-		return fmt.Errorf("no employee found with the given criteria")
-	}
-
-	return nil
-}
-
-func (e *employees) Count(ctx context.Context) (int64, error) {
-	if e.filters["employees"] == nil || e.filters["_id"] == nil {
-		return 0, fmt.Errorf("no valid filters for counting employees")
-	}
-
-	filter := bson.M{
-		"_id": e.filters["_id"],
-		"employees": bson.M{
-			"$elemMatch": e.filters["employees"],
-		},
-	}
-
-	count, err := e.collection.CountDocuments(ctx, filter)
-	if err != nil {
-		return 0, fmt.Errorf("failed to count employees: %w", err)
-	}
-
-	return count, nil
-}
-
 func (e *employees) Select(ctx context.Context) ([]models.Employee, error) {
-	if e.filters["_id"] == nil {
-		return nil, fmt.Errorf("no valid filters for selecting employees")
-	}
-
-	filter := bson.M{
-		"_id": e.filters["_id"],
-		"employees": bson.M{
-			"$elemMatch": e.filters["employees"],
-		},
-	}
-
-	projection := bson.M{
-		"employees": 1,
-	}
-
-	cursor, err := e.collection.Find(ctx, filter, options.Find().SetProjection(projection))
+	var org models.Organization
+	err := e.collection.FindOne(ctx, e.filters).Decode(&org)
 	if err != nil {
-		return nil, fmt.Errorf("failed to find employees: %w", err)
-	}
-	defer cursor.Close(ctx)
-
-	var orgs []models.Organization
-	if err := cursor.All(ctx, &orgs); err != nil {
-		return nil, fmt.Errorf("failed to decode employees: %w", err)
+		return nil, fmt.Errorf("failed to find organization: %w", err)
 	}
 
-	// Извлекаем всех сотрудников, соответствующих фильтру
-	var employees []models.Employee
-	for _, org := range orgs {
-		for _, emp := range org.Employees {
-			matches := true
-			for key, value := range e.filters["employees"].(bson.M) {
-				switch key {
-				case "user_id":
-					if emp.UserID.String() != value.(string) {
-						matches = false
-					}
-				case "first_name":
-					if emp.FirstName != value {
-						matches = false
-					}
-					// Добавьте остальные проверки для других полей
-				}
-				if !matches {
-					break
-				}
-			}
-			if matches {
-				employees = append(employees, emp)
-			}
-		}
-	}
-
-	return employees, nil
+	return org.Employees, nil
 }
 
 func (e *employees) Get(ctx context.Context) (*models.Employee, error) {
 	var org models.Organization
-
-	if err := e.collection.FindOne(ctx, e.filters).Decode(&org); err != nil {
+	err := e.collection.FindOne(ctx, e.filters).Decode(&org)
+	if err != nil {
 		return nil, fmt.Errorf("failed to find organization: %w", err)
 	}
 
-	employeeFilter := e.filters["employees"].(bson.M)
-	for _, empl := range org.Employees {
-		matches := true
+	logrus.Infof("Organization: %v", org)
 
-		for key, value := range employeeFilter {
-			switch key {
-			case "user_id":
-				if empl.UserID.String() != value.(string) {
-					matches = false
-					break
-				}
-			case "first_name":
-				if empl.FirstName != value {
-					matches = false
-					break
-				}
-			case "second_name":
-				if empl.SecondName != value {
-					matches = false
-					break
-				}
-			case "third_name":
-				if empl.ThirdName != nil && *empl.ThirdName != value {
-					matches = false
-					break
-				}
-			case "display_name":
-				if empl.DisplayName != value {
-					matches = false
-					break
-				}
-			case "position":
-				if empl.Position != value {
-					matches = false
-					break
-				}
-			case "desc":
-				if empl.Desc != value {
-					matches = false
-					break
-				}
-			case "verified":
-				if empl.Verified != value {
-					matches = false
-					break
-				}
-			case "role":
-				if empl.Role != roles.OrgRole(value.(string)) {
-					matches = false
-					break
-				}
-			}
-		}
-
-		if matches {
-			return &empl, nil
-		}
-	}
-	return nil, fmt.Errorf("employee not found")
-}
-
-func (e *employees) Filter(filters map[string]any) Employees {
-	var validFilters = map[string]bool{
-		"user_id":      true,
-		"first_name":   true,
-		"second_name":  true,
-		"third_name":   true,
-		"display_name": true,
-		"position":     true,
-		"desc":         true,
-		"verified":     true,
-		"role":         true,
-	}
-
-	employeeFilter := bson.M{}
-
-	for key, value := range filters {
-		if !validFilters[key] {
-			continue
-		}
-		if value == nil {
-			continue
-		}
-		employeeFilter[key] = value
-	}
-
-	e.filters = bson.M{
-		"_id": e.filters["_id"],
-		"employees": bson.M{
-			"$elemMatch": employeeFilter,
-		},
-	}
-
-	logrus.Infof("Employee filter: %v", e.filters)
-
-	return e
-}
-
-func (e *employees) UpdateOne(ctx context.Context, fields map[string]any) (*models.Employee, error) {
-	if len(fields) == 0 {
-		return nil, fmt.Errorf("no fields to update")
-	}
-
-	validFields := map[string]bool{
-		"first_name":   true,
-		"second_name":  true,
-		"third_name":   true,
-		"display_name": true,
-		"position":     true,
-		"desc":         true,
-		"verified":     true,
-		"role":         true,
-	}
-
-	updateFields := bson.M{}
-	for key, value := range fields {
-		if validFields[key] {
-			updateFields[key] = value
-		}
-	}
-
-	updateFields["updated_at"] = time.Now()
-
-	if len(updateFields) == 0 {
-		return nil, fmt.Errorf("no valid fields to update")
-	}
-
-	if e.filters == nil || e.filters["employees"] == nil {
-		return nil, fmt.Errorf("no employee filter set")
-	}
-
-	filter := bson.M{
-		"_id": e.filters["_id"],
-		"employees": bson.M{
-			"$elemMatch": e.filters["employees"],
-		},
-	}
-
-	logrus.Infof("Updating filters 2: %v", filter)
-
-	update := bson.M{
-		"$set": bson.M{
-			"employees.$": updateFields,
-		},
-	}
-
-	logrus.Infof("Updating fields: %v", update)
-
-	result, err := e.collection.UpdateOne(ctx, filter, update)
-	if err != nil {
-		return nil, fmt.Errorf("failed to update employee: %w", err)
-	}
-
-	if result.ModifiedCount == 0 {
-		return nil, fmt.Errorf("no employee found with the given criteria")
-	}
-
-	var org struct {
-		Employees []models.Employee `bson:"employees"`
-	}
-	err = e.collection.FindOne(ctx, bson.M{"_id": e.filters["_id"]}).Decode(&org)
-	if err != nil {
-		return nil, fmt.Errorf("failed to retrieve updated employee: %w", err)
-	}
-
-	for _, empl := range org.Employees {
-		if empl.UserID == e.filters["employees"].(bson.M)["user_id"] {
-			return &empl, nil
-		}
-	}
-
-	return nil, fmt.Errorf("updated employee not found")
-}
-
-func (e *employees) SortBy(field string, ascending bool) Employees {
-	order := 1
-	if !ascending {
-		order = -1
-	}
-	e.sort = append(e.sort, bson.E{Key: field, Value: order})
-	return e
-}
-
-func (e *employees) Skip(skip int64) Employees {
-	e.skip = skip
-	return e
-}
-
-func (e *employees) Limit(limit int64) Employees {
-	e.limit = limit
-	return e
+	return nil, nil
 }
