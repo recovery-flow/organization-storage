@@ -5,15 +5,15 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
+	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Employees interface {
-	Insert(ctx context.Context, employee models.Employee) (*models.Employee, error)
+	Create(ctx context.Context, employee models.Employee) (*models.Employee, error)
 	DeleteOne(ctx context.Context) error
 	Count(ctx context.Context) (int64, error)
 	Select(ctx context.Context) ([]models.Employee, error)
@@ -38,13 +38,32 @@ type employees struct {
 	skip    int64
 }
 
-func (e *employees) Insert(ctx context.Context, employee models.Employee) (*models.Employee, error) {
-	res, err := e.collection.InsertOne(ctx, employee)
-	if err != nil {
-		return nil, fmt.Errorf("failed to insert team: %w", err)
+func (e *employees) Create(ctx context.Context, employee models.Employee) (*models.Employee, error) {
+	if e.filters == nil || len(e.filters) == 0 {
+		return nil, fmt.Errorf("no filters set for employees creation")
 	}
 
-	employee.UserID = res.InsertedID.(uuid.UUID)
+	employee.CreatedAt = time.Now()
+
+	logrus.Infof("Creating employee: %v", employee)
+
+	update := bson.M{
+		"$push": bson.M{
+			"employees": employee,
+		},
+		"$set": bson.M{
+			"updated_at": time.Now(),
+		},
+	}
+
+	result, err := e.collection.UpdateOne(ctx, e.filters, update)
+	if err != nil {
+		return nil, fmt.Errorf("failed to add employee to organization: %w", err)
+	}
+
+	if result.ModifiedCount == 0 {
+		return nil, fmt.Errorf("no organization found with the given filters")
+	}
 	return &employee, nil
 }
 

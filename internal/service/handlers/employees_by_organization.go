@@ -32,7 +32,7 @@ func EmployeesByOrganization(w http.ResponseWriter, r *http.Request) {
 	filters := make(map[string]any)
 	filters["_id"] = orgId
 
-	employees, err := server.MongoDB.Organization.Filter(filters).Employees().Select(r.Context())
+	employees, err := server.MongoDB.Organization.New().Filter(filters).Employees().Select(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get employees")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get employees"))

@@ -40,7 +40,7 @@ func EmployeeByUserID(w http.ResponseWriter, r *http.Request) {
 	filtersOrg := make(map[string]any)
 	filtersOrg["_id"] = orgId
 
-	res, err := server.MongoDB.Organization.Filter(filtersOrg).Employees().
+	res, err := server.MongoDB.Organization.New().Filter(filtersOrg).Employees().
 		Filter(map[string]any{
 			"user_id": userId,
 		}).

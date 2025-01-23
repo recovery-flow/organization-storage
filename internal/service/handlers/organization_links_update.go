@@ -58,7 +58,7 @@ func OrganizationLinksUpdate(w http.ResponseWriter, r *http.Request) {
 	filters := make(map[string]any)
 	filters["_id"] = orgId
 
-	organization, err := server.MongoDB.Organization.Filter(filters).Get(r.Context())
+	organization, err := server.MongoDB.Organization.New().Filter(filters).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))

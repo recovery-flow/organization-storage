@@ -40,6 +40,7 @@ func EmployeeCreate(w http.ResponseWriter, r *http.Request) {
 		httpkit.RenderErr(w, problems.BadRequest(fmt.Errorf("organization_id does not match request organization_id"))...)
 		return
 	}
+
 	employeeIdStr := req.Data.Attributes.UserId
 	firstName := req.Data.Attributes.FirstName
 	secondName := req.Data.Attributes.SecondName
@@ -73,31 +74,44 @@ func EmployeeCreate(w http.ResponseWriter, r *http.Request) {
 	filters := make(map[string]any)
 	filters["_id"] = orgId
 
-	organization, err := server.MongoDB.Organization.Filter(filters).Get(r.Context())
+	organization, err := server.MongoDB.Organization.New().Filter(filters).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))
 		return
 	}
 
+	newEmpRole, err := roles.StringToRoleOrg(role)
+	if err != nil {
+		log.WithError(err).Error("Failed to parse role")
+		httpkit.RenderErr(w, problems.BadRequest(err)...)
+		return
+	}
+
 	for _, emp := range organization.Employees {
 		if emp.UserID == initiatorId {
-			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgModer) > -1 &&
-				roles.CompareRolesOrg(emp.Role, roles.OrgRole(role)) > -1 &&
-				roles.OrgRole(role) != roles.RoleOrgOwner {
-				err = roles.ErrorNoPermission
+			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgModer) < 0 ||
+				roles.CompareRolesOrg(emp.Role, newEmpRole) < 0 ||
+				newEmpRole == roles.RoleOrgOwner {
+				log.Error("User haven't enough rights to create employee")
+				httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
+				return
 			}
 			break
 		}
 	}
 
-	if err != nil {
-		log.WithError(err).Error("Failed to find initiator user")
-		httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
-		return
+	for _, emp := range organization.Employees {
+		log.Infof("emp.UserID: %v, employeeId: %v", emp.UserID, employeeId)
+		if emp.UserID == employeeId {
+			log.WithError(err).Error("Failed to find initiator user")
+			httpkit.RenderErr(w, problems.Conflict("User already exists in organization"))
+			return
+		}
 	}
 
-	employee, err := server.MongoDB.Organization.Filter(filters).Employees().Insert(r.Context(), models.Employee{
+	employee, err := server.MongoDB.Organization.New().Filter(filters).
+		Employees().Create(r.Context(), models.Employee{
 		UserID:      employeeId,
 		FirstName:   firstName,
 		SecondName:  secondName,
@@ -106,15 +120,18 @@ func EmployeeCreate(w http.ResponseWriter, r *http.Request) {
 		Position:    position,
 		Desc:        desc,
 		Verified:    false,
-		Role:        roles.OrgRole(role),
+		Role:        newEmpRole,
 
 		CreatedAt: time.Now(),
 	})
+
 	if err != nil {
 		log.WithError(err).Error("Failed to insert employee")
 		httpkit.RenderErr(w, problems.InternalError("Failed to insert employee"))
 		return
 	}
+
+	log.Infof("Create employee test")
 
 	httpkit.Render(w, responses.Employee(*employee))
 }

@@ -75,7 +75,7 @@ func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 	filters := make(map[string]any)
 	filters["_id"] = orgId
 
-	organization, err := server.MongoDB.Organization.Filter(filters).Get(r.Context())
+	organization, err := server.MongoDB.Organization.New().Filter(filters).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))
@@ -117,7 +117,7 @@ func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 	stmt["desc"] = desc
 	stmt["role"] = role
 
-	employee, err := server.MongoDB.Organization.Filter(filters).Employees().
+	employee, err := server.MongoDB.Organization.New().Filter(filters).Employees().
 		Filter(map[string]any{
 			"user_id": updatedId,
 		}).UpdateOne(r.Context(), stmt)
