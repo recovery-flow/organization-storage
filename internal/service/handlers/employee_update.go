@@ -12,6 +12,7 @@ import (
 	"github.com/recovery-flow/organization-storage/internal/config"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
 	"github.com/recovery-flow/organization-storage/internal/service/requests"
+	"github.com/recovery-flow/organization-storage/internal/service/responses"
 	"github.com/recovery-flow/roles"
 	"github.com/recovery-flow/tokens"
 	"github.com/sirupsen/logrus"
@@ -153,5 +154,12 @@ func EmployeeUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	httpkit.Render(w, 202)
+	res, err := server.MongoDB.Organization.New().Filter(filtersForOrg).Employees().Filter(filterForEmp).Get(r.Context())
+	if err != nil {
+		log.WithError(err).Error("Failed to get updated employee")
+		httpkit.RenderErr(w, problems.InternalError("Failed to get updated employee"))
+		return
+	}
+
+	httpkit.Render(w, responses.Employee(*res))
 }
