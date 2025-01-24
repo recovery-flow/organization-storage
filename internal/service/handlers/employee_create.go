@@ -122,7 +122,7 @@ func EmployeeCreate(w http.ResponseWriter, r *http.Request) {
 		Verified:    false,
 		Role:        newEmpRole,
 
-		CreatedAt: time.Now(),
+		CreatedAt: time.Now().UTC(),
 	})
 
 	if err != nil {

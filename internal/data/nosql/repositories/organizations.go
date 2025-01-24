@@ -265,7 +265,7 @@ func (o *organization) UpdateOne(ctx context.Context, fields map[string]any) (*m
 		}
 	}
 
-	updateFields["updated_at"] = time.Now()
+	updateFields["updated_at"] = time.Now().UTC()
 
 	if len(updateFields) == 0 {
 		return nil, fmt.Errorf("no valid fields to update")
@@ -319,7 +319,7 @@ func (o *organization) UpdateMany(ctx context.Context, fields map[string]any) (i
 	}
 
 	// Добавляем поле updated_at
-	updateFields["updated_at"] = time.Now()
+	updateFields["updated_at"] = time.Now().UTC()
 
 	// Проверяем, есть ли валидные поля для обновления
 	if len(updateFields) == 0 {

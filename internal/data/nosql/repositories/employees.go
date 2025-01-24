@@ -99,7 +99,7 @@ func (e *employees) UpdateOne(ctx context.Context, fields map[string]any) error 
 		}
 	}
 	// Добавим обновление времени
-	updateFields["employees.$[employee].updated_at"] = time.Now()
+	updateFields["employees.$[employee].updated_at"] = time.Now().UTC()
 
 	// Если только updated_at, значит валидных полей для обновления не было
 	if len(updateFields) == 1 {
@@ -168,7 +168,7 @@ func (e *employees) Create(ctx context.Context, employee models.Employee) (*mode
 			"employees": employee,
 		},
 		"$set": bson.M{
-			"updated_at": time.Now(),
+			"updated_at": time.Now().UTC(),
 		},
 	}
 
