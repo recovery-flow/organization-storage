@@ -14,12 +14,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Employee'
+                $ref: '#/components/schemas/Participant'
           description: Ok
       summary: Test
 components:
   schemas:
-    Employee:
+    Participant:
       example:
         data:
           attributes:
@@ -34,37 +34,37 @@ components:
             first_name: first_name
             desc: desc
           id: id
-          type: employee
+          type: participant
       properties:
         data:
-          $ref: '#/components/schemas/Employee_data'
+          $ref: '#/components/schemas/Participant_data'
       required:
       - data
       type: object
-    EmployeeCreate:
+    ParticipantCreate:
       properties:
         data:
-          $ref: '#/components/schemas/EmployeeCreate_data'
+          $ref: '#/components/schemas/ParticipantCreate_data'
       required:
       - data
       type: object
-    EmployeeUpdate:
+    ParticipantUpdate:
       properties:
         data:
-          $ref: '#/components/schemas/EmployeeUpdate_data'
+          $ref: '#/components/schemas/ParticipantUpdate_data'
       required:
       - data
       type: object
-    EmployeeCollection:
+    ParticipantsCollection:
       properties:
         data:
           items:
-            $ref: ./spec/components/schemas/Employee.yaml
+            $ref: '#/components/schemas/Participant'
           type: array
         links:
-          $ref: '#/components/schemas/EmployeeCollection_links'
+          $ref: '#/components/schemas/ParticipantsCollection_links'
         meta:
-          $ref: '#/components/schemas/EmployeeCollection_meta'
+          $ref: '#/components/schemas/ParticipantsCollection_meta'
       required:
       - data
       - links
@@ -156,12 +156,27 @@ components:
           $ref: '#/components/schemas/Organization_data'
         included:
           items:
-            $ref: ./spec/components/schemas/Employee.yaml
+            $ref: '#/components/schemas/Participant'
           type: array
       required:
       - data
       type: object
-    Employee_data_attributes:
+    ParticipantCollection:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/Participant'
+          type: array
+        links:
+          $ref: '#/components/schemas/ParticipantsCollection_links'
+        meta:
+          $ref: '#/components/schemas/ParticipantsCollection_meta'
+      required:
+      - data
+      - links
+      - meta
+      type: object
+    Participant_data_attributes:
       example:
         role: role
         updated_at: 2021-01-01T00:00:00Z
@@ -175,16 +190,16 @@ components:
         desc: desc
       properties:
         first_name:
-          description: first name of employee
+          description: first name of participant
           type: string
         second_name:
-          description: second name of employee
+          description: second name of participant
           type: string
         third_name:
-          description: third name of employee
+          description: third name of participant
           type: string
         display_name:
-          description: name of employee
+          description: name of participant
           type: string
         position:
           description: position in the company
@@ -218,7 +233,7 @@ components:
       - second_name
       - verified
       type: object
-    Employee_data:
+    Participant_data:
       example:
         attributes:
           role: role
@@ -232,23 +247,23 @@ components:
           first_name: first_name
           desc: desc
         id: id
-        type: employee
+        type: participant
       properties:
         id:
           description: user id
           type: string
         type:
           enum:
-          - employee
+          - participant
           type: string
         attributes:
-          $ref: '#/components/schemas/Employee_data_attributes'
+          $ref: '#/components/schemas/Participant_data_attributes'
       required:
       - attributes
       - id
       - type
       type: object
-    EmployeeCreate_data_attributes:
+    ParticipantCreate_data_attributes:
       properties:
         org_id:
           description: Organization ID
@@ -257,16 +272,16 @@ components:
           description: User ID
           type: string
         first_name:
-          description: first name of employee
+          description: first name of participant
           type: string
         second_name:
-          description: second name of employee
+          description: second name of participant
           type: string
         third_name:
-          description: third name of employee
+          description: third name of participant
           type: string
         display_name:
-          description: name of employee
+          description: name of participant
           type: string
         position:
           description: position in the company
@@ -287,40 +302,40 @@ components:
       - second_name
       - user_id
       type: object
-    EmployeeCreate_data:
+    ParticipantCreate_data:
       properties:
         type:
           enum:
-          - employee_create
+          - participant_create
           type: string
         attributes:
-          $ref: '#/components/schemas/EmployeeCreate_data_attributes'
+          $ref: '#/components/schemas/ParticipantCreate_data_attributes'
       required:
       - attributes
       - type
       type: object
-    EmployeeUpdate_data_attributes:
+    ParticipantUpdate_data_attributes:
       properties:
         org_id:
           description: Organization id
           type: string
         first_name:
-          description: first name of employee
+          description: first name of participant
           type: string
         second_name:
-          description: second name of employee
+          description: second name of participant
           type: string
         third_name:
-          description: third name of employee
+          description: third name of participant
           type: string
         display_name:
-          description: name of employee
+          description: name of participant
           type: string
         position:
           description: position in the company
           type: string
         desc:
-          description: Description
+          description: description of participant
           type: string
         role:
           description: User role
@@ -328,23 +343,23 @@ components:
       required:
       - org_id
       type: object
-    EmployeeUpdate_data:
+    ParticipantUpdate_data:
       properties:
         id:
           description: user Id
           type: string
         type:
           enum:
-          - employee_update
+          - participant_update
           type: string
         attributes:
-          $ref: '#/components/schemas/EmployeeUpdate_data_attributes'
+          $ref: '#/components/schemas/ParticipantUpdate_data_attributes'
       required:
       - attributes
       - id
       - type
       type: object
-    EmployeeCollection_links:
+    ParticipantsCollection_links:
       properties:
         self:
           description: Link to the current page
@@ -353,31 +368,28 @@ components:
           description: Link to the next page
           type: string
       type: object
-    EmployeeCollection_meta:
+    ParticipantsCollection_meta:
       properties:
         total:
-          description: Total number of employees
+          description: Total number of participant
           type: integer
       type: object
     OrganizationCreate_data_attributes_owner:
       properties:
         first_name:
-          description: first name of employee
+          description: first name of participant
           type: string
         second_name:
-          description: second name of employee
+          description: second name of participant
           type: string
         third_name:
-          description: third name of employee
+          description: third name of participant
           type: string
         display_name:
-          description: name of employee
+          description: name of participant
           type: string
         position:
           description: position in the company
-          type: string
-        verified:
-          description: verified status
           type: string
         desc:
           description: Description
@@ -452,7 +464,7 @@ components:
           type: string
         type:
           enum:
-          - organization
+          - organization_update
           type: string
         attributes:
           $ref: '#/components/schemas/OrganizationUpdate_data_attributes'
@@ -460,41 +472,6 @@ components:
       - attributes
       - id
       - type
-      type: object
-    OrganizationLinksUpdate_data_attributes:
-      properties:
-        twitter:
-          description: Twitter profile link
-          format: uri
-          type: string
-        instagram:
-          description: Instagram profile link
-          format: uri
-          type: string
-        facebook:
-          description: Facebook profile link
-          format: uri
-          type: string
-        tiktok:
-          description: TikTok profile link
-          format: uri
-          type: string
-        linkedin:
-          description: LinkedIn profile link
-          format: uri
-          type: string
-        telegram:
-          description: Telegram profile link
-          format: uri
-          type: string
-        discord:
-          description: Discord profile link
-          format: uri
-          type: string
-        website:
-          description: Companies website
-          format: uri
-          type: string
       type: object
     OrganizationLinksUpdate_data:
       properties:
@@ -506,7 +483,7 @@ components:
           - organization_link_update
           type: string
         attributes:
-          $ref: '#/components/schemas/OrganizationLinksUpdate_data_attributes'
+          $ref: '#/components/schemas/Links'
       required:
       - attributes
       - id
@@ -536,9 +513,9 @@ components:
           description: City of HQ
           type: string
         links:
-          $ref: ./spec/components/schemas/Links.yaml
+          $ref: '#/components/schemas/Links'
         complicated_status:
-          $ref: ./spec/components/schemas/ComplicatedStatus.yaml
+          $ref: '#/components/schemas/ComplicatedStatus'
         created_at:
           description: Team creation timestamp
           format: date-time

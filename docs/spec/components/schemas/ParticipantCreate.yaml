@@ -1,0 +1,51 @@
+type: object
+required:
+  - data
+properties:
+  data:
+    required:
+      - type
+      - attributes
+    properties:
+      type:
+        type: string
+        enum: [ participant_create ]
+      attributes:
+        type: object
+        required:
+          - org_id
+          - user_id
+          - first_name
+          - second_name
+          - display_name
+          - position
+          - desc
+          - role
+        properties:
+          org_id:
+            type: string
+            description: "organization ID"
+          user_id:
+            type: string
+            description: "user ID"
+          first_name:
+            type: string
+            description: "first name of participant"
+          second_name:
+            type: string
+            description: "second name of participant"
+          third_name:
+            type: string
+            description: "third name of participant"
+          display_name:
+            type: string
+            description: "name of participant"
+          position:
+            type: string
+            description: "position in the company"
+          desc:
+            type: string
+            description: "description of participant"
+          role:
+            type: string
+            description: "participant role"

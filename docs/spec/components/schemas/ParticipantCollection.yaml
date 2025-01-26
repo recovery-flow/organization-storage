@@ -1,0 +1,25 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    type: array
+    items:
+      $ref: './Participant.yaml'
+  links:
+    type: object
+    properties:
+      self:
+        type: string
+        description: Link to the current page
+      next:
+        type: string
+        description: Link to the next page
+  meta:
+    type: object
+    properties:
+      total:
+        type: integer
+        description: Total number of participant

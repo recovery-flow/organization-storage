@@ -63,7 +63,7 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for _, emp := range organization.Employees {
+	for _, emp := range organization.Participants {
 		if emp.UserID == initiatorId {
 			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgAdmin) < 0 {
 				err = roles.ErrorNoPermission

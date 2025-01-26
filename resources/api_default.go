@@ -27,7 +27,7 @@ type ApiTestRequest struct {
 	ApiService *DefaultAPIService
 }
 
-func (r ApiTestRequest) Execute() (*Employee, *http.Response, error) {
+func (r ApiTestRequest) Execute() (*Participant, *http.Response, error) {
 	return r.ApiService.TestExecute(r)
 }
 
@@ -45,13 +45,13 @@ func (a *DefaultAPIService) Test(ctx context.Context) ApiTestRequest {
 }
 
 // Execute executes the request
-//  @return Employee
-func (a *DefaultAPIService) TestExecute(r ApiTestRequest) (*Employee, *http.Response, error) {
+//  @return Participant
+func (a *DefaultAPIService) TestExecute(r ApiTestRequest) (*Participant, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *Employee
+		localVarReturnValue  *Participant
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.Test")

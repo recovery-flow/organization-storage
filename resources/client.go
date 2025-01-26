@@ -582,7 +582,7 @@ func CacheExpires(r *http.Response) time.Time {
 	var expires time.Time
 	now, err := time.Parse(time.RFC1123, r.Header.Get("date"))
 	if err != nil {
-		return time.Now().UTC()
+		return time.Now()
 	}
 	respCacheControl := parseCacheControl(r.Header)
 

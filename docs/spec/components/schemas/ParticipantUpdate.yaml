@@ -1,0 +1,45 @@
+type: object
+required:
+  - data
+properties:
+  data:
+    required:
+      - id
+      - type
+      - attributes
+    properties:
+      id:
+        type: string
+        description: "user Id"
+      type:
+        type: string
+        enum: [ participant_update ]
+      attributes:
+        type: object
+        required:
+          - org_id
+        properties:
+          org_id:
+            type: string
+            description: "Organization id"
+          first_name:
+            type: string
+            description: "first name of participant"
+          second_name:
+            type: string
+            description: "second name of participant"
+          third_name:
+            type: string
+            description: "third name of participant"
+          display_name:
+            type: string
+            description: "name of participant"
+          position:
+            type: string
+            description: "position in the company"
+          desc:
+            type: string
+            description: "Description"
+          role:
+            type: string
+            description: "User role"

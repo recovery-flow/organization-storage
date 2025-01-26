@@ -9,7 +9,6 @@ Name | Type | Description | Notes
 **ThirdName** | Pointer to **string** | third name of employee | [optional] 
 **DisplayName** | **string** | name of employee | 
 **Position** | **string** | position in the company | 
-**Verified** | Pointer to **string** | verified status | [optional] 
 **Desc** | **string** | Description | 
 
 ## Methods
@@ -135,31 +134,6 @@ and a boolean to check if the value has been set.
 
 SetPosition sets Position field to given value.
 
-
-### GetVerified
-
-`func (o *OrganizationCreateDataAttributesOwner) GetVerified() string`
-
-GetVerified returns the Verified field if non-nil, zero value otherwise.
-
-### GetVerifiedOk
-
-`func (o *OrganizationCreateDataAttributesOwner) GetVerifiedOk() (*string, bool)`
-
-GetVerifiedOk returns a tuple with the Verified field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetVerified
-
-`func (o *OrganizationCreateDataAttributesOwner) SetVerified(v string)`
-
-SetVerified sets Verified field to given value.
-
-### HasVerified
-
-`func (o *OrganizationCreateDataAttributesOwner) HasVerified() bool`
-
-HasVerified returns a boolean if a field has been set.
 
 ### GetDesc
 

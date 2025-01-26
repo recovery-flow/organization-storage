@@ -58,4 +58,4 @@ properties:
   included:
     type: array
     items:
-      $ref: "./Employee.yaml"
+      $ref: "./Participant.yaml"

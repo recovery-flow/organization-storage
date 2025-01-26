@@ -47,7 +47,7 @@ func OrganizationCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ownerEmp := models.Employee{
+	ownerEmp := models.Participant{
 		UserID:      userId,
 		FirstName:   owner.FirstName,
 		SecondName:  owner.SecondName,
@@ -67,13 +67,13 @@ func OrganizationCreate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Organization := models.Organization{
-		Name:      name,
-		Verified:  false,
-		Desc:      desc,
-		Country:   country,
-		City:      city,
-		Sort:      sortOrg,
-		Employees: []models.Employee{ownerEmp},
+		Name:         name,
+		Verified:     false,
+		Desc:         desc,
+		Country:      country,
+		City:         city,
+		Sort:         sortOrg,
+		Participants: []models.Participant{ownerEmp},
 	}
 
 	res, err := server.MongoDB.Organization.New().Insert(r.Context(), Organization)

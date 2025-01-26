@@ -271,7 +271,7 @@ func (o *OrganizationDataAttributes) HasLinks() bool {
 	return false
 }
 
-// SetLinks gets a reference to the given Object and assigns it to the Links field.
+// SetLinks gets a reference to the given Links and assigns it to the Links field.
 func (o *OrganizationDataAttributes) SetLinks(v Links) {
 	o.Links = &v
 }
@@ -303,7 +303,7 @@ func (o *OrganizationDataAttributes) HasComplicatedStatus() bool {
 	return false
 }
 
-// SetComplicatedStatus gets a reference to the given Object and assigns it to the ComplicatedStatus field.
+// SetComplicatedStatus gets a reference to the given ComplicatedStatus and assigns it to the ComplicatedStatus field.
 func (o *OrganizationDataAttributes) SetComplicatedStatus(v ComplicatedStatus) {
 	o.ComplicatedStatus = &v
 }

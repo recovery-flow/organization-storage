@@ -43,22 +43,22 @@ properties:
             properties:
               first_name:
                 type: string
-                description: "first name of employee"
+                description: "first name of participant"
               second_name:
                 type: string
-                description: "second name of employee"
+                description: "second name of participant"
               third_name:
                 type: string
-                description: "third name of employee"
+                description: "third name of participant"
               display_name:
                 type: string
-                description: "name of employee"
+                description: "name of participant"
               position:
                 type: string
                 description: "position in the company"
               desc:
                 type: string
-                description: "Description"
+                description: "description of participant"
           city:
             type: string
             description: "City of HQ"

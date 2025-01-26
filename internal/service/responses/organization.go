@@ -13,17 +13,17 @@ func Organization(organization models.Organization) resources.Organization {
 		}
 	}
 
-	var employees []resources.Employee
-	for _, el := range organization.Employees {
+	var participants []resources.Participant
+	for _, el := range organization.Participants {
 		ver := "false"
 		if el.Verified {
 			ver = "true"
 		}
-		employees = append(employees, resources.Employee{
-			Data: resources.EmployeeData{
+		participants = append(participants, resources.Participant{
+			Data: resources.ParticipantData{
 				Id:   el.UserID.String(),
-				Type: resources.EmployeeType,
-				Attributes: resources.EmployeeDataAttributes{
+				Type: resources.ParticipantType,
+				Attributes: resources.ParticipantDataAttributes{
 					FirstName:   el.FirstName,
 					SecondName:  el.SecondName,
 					ThirdName:   el.ThirdName,
@@ -97,6 +97,6 @@ func Organization(organization models.Organization) resources.Organization {
 				ComplicatedStatus: &complicatedStatus,
 			},
 		},
-		Included: employees,
+		Included: participants,
 	}
 }

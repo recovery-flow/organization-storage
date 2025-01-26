@@ -6,13 +6,13 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | Organization ID | 
 **Type** | **string** |  | 
-**Attributes** | [**OrganizationLinksUpdateDataAttributes**](OrganizationLinksUpdateDataAttributes.md) |  | 
+**Attributes** | [**Links**](Links.md) |  | 
 
 ## Methods
 
 ### NewOrganizationLinksUpdateData
 
-`func NewOrganizationLinksUpdateData(id string, type_ string, attributes OrganizationLinksUpdateDataAttributes, ) *OrganizationLinksUpdateData`
+`func NewOrganizationLinksUpdateData(id string, type_ string, attributes Links, ) *OrganizationLinksUpdateData`
 
 NewOrganizationLinksUpdateData instantiates a new OrganizationLinksUpdateData object
 This constructor will assign default values to properties that have it defined,
@@ -69,20 +69,20 @@ SetType sets Type field to given value.
 
 ### GetAttributes
 
-`func (o *OrganizationLinksUpdateData) GetAttributes() OrganizationLinksUpdateDataAttributes`
+`func (o *OrganizationLinksUpdateData) GetAttributes() Links`
 
 GetAttributes returns the Attributes field if non-nil, zero value otherwise.
 
 ### GetAttributesOk
 
-`func (o *OrganizationLinksUpdateData) GetAttributesOk() (*OrganizationLinksUpdateDataAttributes, bool)`
+`func (o *OrganizationLinksUpdateData) GetAttributesOk() (*Links, bool)`
 
 GetAttributesOk returns a tuple with the Attributes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAttributes
 
-`func (o *OrganizationLinksUpdateData) SetAttributes(v OrganizationLinksUpdateDataAttributes)`
+`func (o *OrganizationLinksUpdateData) SetAttributes(v Links)`
 
 SetAttributes sets Attributes field to given value.
 

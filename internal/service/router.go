@@ -35,11 +35,11 @@ func Run(ctx context.Context) {
 						r.Patch("/photo", handlers.OrganizationUploadLogo)
 						r.Patch("/links", handlers.OrganizationLinksUpdate)
 
-						r.Route("/employee", func(r chi.Router) {
-							r.Post("/", handlers.EmployeeCreate)
+						r.Route("/participant", func(r chi.Router) {
+							r.Post("/", handlers.ParticipantCreate)
 
 							r.Route("/{user_id}", func(r chi.Router) {
-								r.Patch("/", handlers.EmployeeUpdate)
+								r.Patch("/", handlers.ParticipantUpdate)
 							})
 						})
 					})
@@ -51,9 +51,9 @@ func Run(ctx context.Context) {
 					r.Route("/{organization_id}", func(r chi.Router) {
 						r.Get("/", handlers.OrganizationByID)
 
-						r.Route("/employee", func(r chi.Router) {
-							r.Get("/", handlers.EmployeesByOrganization)
-							r.Get("/{user_id}", handlers.EmployeeByUserID)
+						r.Route("/participant", func(r chi.Router) {
+							r.Get("/", handlers.ParticipantsByOrganization)
+							r.Get("/{user_id}", handlers.ParticipantByUserID)
 						})
 					})
 				})

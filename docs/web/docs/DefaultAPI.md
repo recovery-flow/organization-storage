@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## Test
 
-> Employee Test(ctx).Execute()
+> Participant Test(ctx).Execute()
 
 Test
 
@@ -35,7 +35,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.Test``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `Test`: Employee
+	// response from `Test`: Participant
 	fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.Test`: %v\n", resp)
 }
 ```
@@ -51,7 +51,7 @@ Other parameters are passed through a pointer to a apiTestRequest struct via the
 
 ### Return type
 
-[**Employee**](Employee.md)
+[**Participant**](Participant.md)
 
 ### Authorization
 

@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | [**OrganizationData**](OrganizationData.md) |  | 
-**Included** | Pointer to [**[]Object**](Object.md) |  | [optional] 
+**Included** | Pointer to [**[]Participant**](Participant.md) |  | [optional] 
 
 ## Methods
 
@@ -48,20 +48,20 @@ SetData sets Data field to given value.
 
 ### GetIncluded
 
-`func (o *Organization) GetIncluded() []Object`
+`func (o *Organization) GetIncluded() []Participant`
 
 GetIncluded returns the Included field if non-nil, zero value otherwise.
 
 ### GetIncludedOk
 
-`func (o *Organization) GetIncludedOk() (*[]Object, bool)`
+`func (o *Organization) GetIncludedOk() (*[]Participant, bool)`
 
 GetIncludedOk returns a tuple with the Included field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetIncluded
 
-`func (o *Organization) SetIncluded(v []Object)`
+`func (o *Organization) SetIncluded(v []Participant)`
 
 SetIncluded sets Included field to given value.
 

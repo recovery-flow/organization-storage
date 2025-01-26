@@ -15,18 +15,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Employee"
+                $ref: "#/components/schemas/Participant"
 
 components:
   schemas:
-    Employee:
-      $ref: './spec/components/schemas/Employee.yaml'
-    EmployeeCreate:
-      $ref: './spec/components/schemas/EmployeeCreate.yaml'
-    EmployeeUpdate:
-      $ref: './spec/components/schemas/EmployeeUpdate.yaml'
-    EmployeeCollection:
-      $ref: './spec/components/schemas/EmployeeCollection.yaml'
+    Participant:
+      $ref: './spec/components/schemas/Participant.yaml'
+    ParticipantCreate:
+      $ref: './spec/components/schemas/ParticipantCreate.yaml'
+    ParticipantUpdate:
+      $ref: './spec/components/schemas/ParticipantUpdate.yaml'
+    ParticipantsCollection:
+      $ref: './spec/components/schemas/ParticipantCollection.yaml'
     OrganizationCreate:
       $ref: './spec/components/schemas/OrganizationCreate.yaml'
     OrganizationUpdate:

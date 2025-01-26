@@ -21,13 +21,13 @@ var _ MappedNullable = &OrganizationCreateDataAttributesOwner{}
 
 // OrganizationCreateDataAttributesOwner struct for OrganizationCreateDataAttributesOwner
 type OrganizationCreateDataAttributesOwner struct {
-	// first name of employee
+	// first name of participant
 	FirstName string `json:"first_name"`
-	// second name of employee
+	// second name of participant
 	SecondName string `json:"second_name"`
-	// third name of employee
+	// third name of participant
 	ThirdName *string `json:"third_name,omitempty"`
-	// name of employee
+	// name of participant
 	DisplayName string `json:"display_name"`
 	// position in the company
 	Position string `json:"position"`

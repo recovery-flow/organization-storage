@@ -1,9 +1,9 @@
 package resources
 
 const (
-	EmployeeType       = "employee"
-	EmployeeCreateType = "employee_create"
-	EmployeeUpdateType = "employee_update"
+	ParticipantType       = "participant"
+	ParticipantCreateType = "participant_create"
+	ParticipantUpdateType = "participant_update"
 
 	OrganizationType            = "organization"
 	OrganizationCreateType      = "organization_create"

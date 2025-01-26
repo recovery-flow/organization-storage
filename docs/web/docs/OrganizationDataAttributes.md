@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **Sort** | **string** | Type of Organization | 
 **Country** | **string** | Country of registration | 
 **City** | Pointer to **string** | City of HQ | [optional] 
-**Links** | Pointer to [**Object**](Object.md) |  | [optional] 
-**ComplicatedStatus** | Pointer to [**Object**](Object.md) |  | [optional] 
+**Links** | Pointer to [**Links**](Links.md) |  | [optional] 
+**ComplicatedStatus** | Pointer to [**ComplicatedStatus**](ComplicatedStatus.md) |  | [optional] 
 **CreatedAt** | **time.Time** | Team creation timestamp | 
 
 ## Methods
@@ -181,20 +181,20 @@ HasCity returns a boolean if a field has been set.
 
 ### GetLinks
 
-`func (o *OrganizationDataAttributes) GetLinks() Object`
+`func (o *OrganizationDataAttributes) GetLinks() Links`
 
 GetLinks returns the Links field if non-nil, zero value otherwise.
 
 ### GetLinksOk
 
-`func (o *OrganizationDataAttributes) GetLinksOk() (*Object, bool)`
+`func (o *OrganizationDataAttributes) GetLinksOk() (*Links, bool)`
 
 GetLinksOk returns a tuple with the Links field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLinks
 
-`func (o *OrganizationDataAttributes) SetLinks(v Object)`
+`func (o *OrganizationDataAttributes) SetLinks(v Links)`
 
 SetLinks sets Links field to given value.
 
@@ -206,20 +206,20 @@ HasLinks returns a boolean if a field has been set.
 
 ### GetComplicatedStatus
 
-`func (o *OrganizationDataAttributes) GetComplicatedStatus() Object`
+`func (o *OrganizationDataAttributes) GetComplicatedStatus() ComplicatedStatus`
 
 GetComplicatedStatus returns the ComplicatedStatus field if non-nil, zero value otherwise.
 
 ### GetComplicatedStatusOk
 
-`func (o *OrganizationDataAttributes) GetComplicatedStatusOk() (*Object, bool)`
+`func (o *OrganizationDataAttributes) GetComplicatedStatusOk() (*ComplicatedStatus, bool)`
 
 GetComplicatedStatusOk returns a tuple with the ComplicatedStatus field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetComplicatedStatus
 
-`func (o *OrganizationDataAttributes) SetComplicatedStatus(v Object)`
+`func (o *OrganizationDataAttributes) SetComplicatedStatus(v ComplicatedStatus)`
 
 SetComplicatedStatus sets ComplicatedStatus field to given value.
 

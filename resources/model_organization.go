@@ -22,7 +22,7 @@ var _ MappedNullable = &Organization{}
 // Organization struct for Organization
 type Organization struct {
 	Data OrganizationData `json:"data"`
-	Included []Employee `json:"included,omitempty"`
+	Included []Participant `json:"included,omitempty"`
 }
 
 type _Organization Organization
@@ -70,9 +70,9 @@ func (o *Organization) SetData(v OrganizationData) {
 }
 
 // GetIncluded returns the Included field value if set, zero value otherwise.
-func (o *Organization) GetIncluded() []Employee {
+func (o *Organization) GetIncluded() []Participant {
 	if o == nil || IsNil(o.Included) {
-		var ret []Employee
+		var ret []Participant
 		return ret
 	}
 	return o.Included
@@ -80,7 +80,7 @@ func (o *Organization) GetIncluded() []Employee {
 
 // GetIncludedOk returns a tuple with the Included field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Organization) GetIncludedOk() ([]Employee, bool) {
+func (o *Organization) GetIncludedOk() ([]Participant, bool) {
 	if o == nil || IsNil(o.Included) {
 		return nil, false
 	}
@@ -96,8 +96,8 @@ func (o *Organization) HasIncluded() bool {
 	return false
 }
 
-// SetIncluded gets a reference to the given []Object and assigns it to the Included field.
-func (o *Organization) SetIncluded(v []Employee) {
+// SetIncluded gets a reference to the given []Participant and assigns it to the Included field.
+func (o *Organization) SetIncluded(v []Participant) {
 	o.Included = v
 }
 

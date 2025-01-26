@@ -26,7 +26,7 @@ type Organization interface {
 
 	Filter(filters map[string]any) Organization
 
-	Employees() Employees
+	Participants() Participant
 	Status() Status
 	Links() Links
 
@@ -112,30 +112,31 @@ func (o *organization) Insert(ctx context.Context, org models.Organization) (*mo
 
 	org.City = normalize(org.City)
 
-	orgEmpls := org.Employees
-	if len(orgEmpls) != 1 {
-		return nil, fmt.Errorf("when creating an organization, you must specify exactly one employee")
-	}
-	employee := orgEmpls[0]
-
-	employee.FirstName = strings.TrimSpace(employee.FirstName)
-	employee.SecondName = strings.TrimSpace(employee.SecondName)
-	employee.ThirdName = normalize(employee.ThirdName)
-	employee.DisplayName = strings.TrimSpace(employee.DisplayName)
-	if employee.DisplayName == "" {
-		return nil, fmt.Errorf("employee display name cannot be empty")
-	}
-	employee.Position = strings.TrimSpace(employee.Position)
-	if employee.Position == "" {
-		return nil, fmt.Errorf("employee position cannot be empty")
-	}
-	employee.Desc = strings.TrimSpace(employee.Desc)
-
-	if employee.UserID == uuid.Nil {
-		return nil, fmt.Errorf("employee UserID cannot be nil")
+	orgPrts := org.Participants
+	if len(orgPrts) != 1 {
+		return nil, fmt.Errorf("when creating an organization, you must specify exactly one prtc")
 	}
 
-	employee.CreatedAt = now
+	prtc := orgPrts[0]
+
+	prtc.FirstName = strings.TrimSpace(prtc.FirstName)
+	prtc.SecondName = strings.TrimSpace(prtc.SecondName)
+	prtc.ThirdName = normalize(prtc.ThirdName)
+	prtc.DisplayName = strings.TrimSpace(prtc.DisplayName)
+	if prtc.DisplayName == "" {
+		return nil, fmt.Errorf("prtc display name cannot be empty")
+	}
+	prtc.Position = strings.TrimSpace(prtc.Position)
+	if prtc.Position == "" {
+		return nil, fmt.Errorf("prtc position cannot be empty")
+	}
+	prtc.Desc = strings.TrimSpace(prtc.Desc)
+
+	if prtc.UserID == uuid.Nil {
+		return nil, fmt.Errorf("prtc UserID cannot be nil")
+	}
+
+	prtc.CreatedAt = now
 
 	res, err := o.collection.InsertOne(ctx, org)
 	if err != nil {
@@ -210,8 +211,8 @@ func (o *organization) Filter(filters map[string]any) Organization {
 	return o
 }
 
-func (o *organization) Employees() Employees {
-	return &employees{
+func (o *organization) Participants() Participant {
+	return &participant{
 		client:     o.client,
 		database:   o.database,
 		collection: o.collection,
