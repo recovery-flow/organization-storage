@@ -10,7 +10,7 @@ func ParticipantCollection(participants []models.Participant) resources.Particip
 	for _, el := range participants {
 		ver := "false"
 		if el.Verified {
-			ver = "verified"
+			ver = "true"
 		}
 		res = append(res, resources.Participant{
 			Data: resources.ParticipantData{

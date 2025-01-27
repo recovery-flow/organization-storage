@@ -144,20 +144,13 @@ func ParticipantUpdate(w http.ResponseWriter, r *http.Request) {
 	filterForEmp := make(map[string]any)
 	filterForEmp["user_id"] = updatedId
 
-	err = server.MongoDB.Organization.New().Filter(filtersForOrg).
+	res, err := server.MongoDB.Organization.New().Filter(filtersForOrg).
 		Participants().
 		Filter(filterForEmp).
 		UpdateOne(r.Context(), stmt)
 	if err != nil {
 		log.WithError(err).Error("Failed to update participant")
 		httpkit.RenderErr(w, problems.InternalError("Failed to update participant"))
-		return
-	}
-
-	res, err := server.MongoDB.Organization.New().Filter(filtersForOrg).Participants().Filter(filterForEmp).Get(r.Context())
-	if err != nil {
-		log.WithError(err).Error("Failed to get updated participant")
-		httpkit.RenderErr(w, problems.InternalError("Failed to get updated participant"))
 		return
 	}
 

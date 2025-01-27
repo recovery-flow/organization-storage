@@ -21,7 +21,7 @@ type Participant interface {
 	Get(ctx context.Context) (*models.Participant, error)
 
 	Filter(filters map[string]any) Participant
-	UpdateOne(ctx context.Context, fields map[string]any) error
+	UpdateOne(ctx context.Context, fields map[string]any) (*models.Participant, error)
 
 	DeleteMany(ctx context.Context) error
 	DeleteOne(ctx context.Context) error
@@ -185,38 +185,42 @@ func (p *participant) Filter(filters map[string]any) Participant {
 	if userID, ok := filters["user_id"]; ok && userID != nil {
 		p.filters["participants.user_id"] = userID
 	}
-
 	if firstName, ok := filters["first_name"]; ok && firstName != nil {
 		p.filters["participants.first_name"] = firstName
 	}
-
 	if secondName, ok := filters["second_name"]; ok && secondName != nil {
 		p.filters["participants.second_name"] = secondName
 	}
-
 	if displayName, ok := filters["display_name"]; ok && displayName != nil {
 		p.filters["participants.display_name"] = displayName
 	}
-
 	if position, ok := filters["position"]; ok && position != nil {
 		p.filters["participants.position"] = position
+	}
+
+	// Добавим проверку для "verified"
+	if verVal, ok := filters["verified"]; ok && verVal != nil {
+		boolVal, err := parseBool(verVal)
+		if err != nil {
+			logrus.Warnf("Cannot parse 'verified': %v", err)
+		} else {
+			p.filters["participants.verified"] = boolVal
+		}
 	}
 
 	return p
 }
 
-func (p *participant) UpdateOne(ctx context.Context, fields map[string]any) error {
+func (p *participant) UpdateOne(ctx context.Context, fields map[string]any) (*models.Participant, error) {
 	if len(fields) == 0 {
-		return fmt.Errorf("no fields to update")
+		return nil, fmt.Errorf("no fields to update")
 	}
 
-	// 1. Проверяем, что есть ID организации
 	orgID, ok := p.filters["_id"]
 	if !ok {
-		return fmt.Errorf("organization ID filter is missing (filters['_id'])")
+		return nil, fmt.Errorf("organization ID filter is missing (filters['_id'])")
 	}
 
-	// 2. Определяем валидные поля, которые мы можем обновлять
 	validFields := map[string]bool{
 		"first_name":   true,
 		"second_name":  true,
@@ -227,67 +231,65 @@ func (p *participant) UpdateOne(ctx context.Context, fields map[string]any) erro
 		"role":         true,
 	}
 
-	// 3. Собираем, какие поля будем сетить
 	updateFields := bson.M{}
 	for key, value := range fields {
-		if validFields[key] {
-			updateFields["participants.$[participants]."+key] = value
+		if !validFields[key] {
+			continue
+		}
+
+		fieldKey := "participants.$[participants]." + key
+
+		// Обрабатываем специально поле "verified"
+		if key == "verified" {
+			boolVal, err := parseBool(value)
+			if err != nil {
+				return nil, fmt.Errorf("invalid value for 'verified': %v", err)
+			}
+			updateFields[fieldKey] = boolVal
+		} else {
+			// Остальные поля записываем напрямую
+			updateFields[fieldKey] = value
 		}
 	}
-	// Добавим обновление времени
+
+	// Проставляем updated_at
 	updateFields["participants.$[participants].updated_at"] = time.Now().UTC()
 
-	// Если только updated_at, значит валидных полей для обновления не было
 	if len(updateFields) == 1 {
-		return fmt.Errorf("no valid fields to update")
+		// означает, что изменять нечего, кроме updated_at
+		return nil, fmt.Errorf("no valid fields to update")
 	}
 
-	// Итоговый запрос: $set = {...}
 	update := bson.M{"$set": updateFields}
 
-	// 4. Собираем фильтры для конкретного(ых) сотрудника(ов).
-	//    Перебираем e.filters, ищем все ключи, которые начинаются на "participant."
-	//    и формируем одно условие для arrayFilters.
 	var subFilters []bson.M
 	for key, val := range p.filters {
-		// Ищем только ключи вида "participants.<field>"
 		if strings.HasPrefix(key, "participants.") {
-			// поле после participant. -> participants.<field>
-			// Например, если key="participants.user_id", то field="user_id"
 			field := strings.TrimPrefix(key, "participants.")
 			subFilters = append(subFilters, bson.M{"participants." + field: val})
 		}
 	}
 
-	// Если subFilters пуст, значит у нас не задан ни user_id, ни другие условия для participant
 	if len(subFilters) == 0 {
-		return fmt.Errorf("no participant filter found (e.filters['participants.*'])")
+		return nil, fmt.Errorf("no participant filter found (e.filters['participants.*'])")
 	}
 
-	// Объединяем все условия через $and
 	arrayFilter := bson.M{"$and": subFilters}
 
-	// 5. Создаём опцию с arrayFilters
 	arrayFilters := options.Update().SetArrayFilters(options.ArrayFilters{
 		Filters: []interface{}{arrayFilter},
 	})
 
-	// 6. Выполняем UpdateOne:
-	result, err := p.collection.UpdateOne(
-		ctx,
-		bson.M{"_id": orgID}, // ищем документ организации
-		update,
-		arrayFilters,
-	)
+	result, err := p.collection.UpdateOne(ctx, bson.M{"_id": orgID}, update, arrayFilters)
 	if err != nil {
-		return fmt.Errorf("failed to update participant: %w", err)
+		return nil, fmt.Errorf("failed to update participant: %w", err)
 	}
 
 	if result.ModifiedCount == 0 {
-		return fmt.Errorf("no participant found with the given criteria")
+		return nil, fmt.Errorf("no participant found with the given criteria")
 	}
 
-	return nil
+	return p.Get(ctx)
 }
 
 func (p *participant) DeleteMany(ctx context.Context) error {

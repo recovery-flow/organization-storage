@@ -8,7 +8,7 @@ import (
 func Participant(participant models.Participant) resources.Participant {
 	ver := "false"
 	if participant.Verified {
-		ver = "verified"
+		ver = "true"
 	}
 	return resources.Participant{
 		Data: resources.ParticipantData{

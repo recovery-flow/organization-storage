@@ -3,11 +3,13 @@ package repositories
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
+	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
@@ -31,7 +33,6 @@ type Organization interface {
 	Links() Links
 
 	UpdateOne(ctx context.Context, fields map[string]any) (*models.Organization, error)
-	UpdateMany(ctx context.Context, fields map[string]any) (int64, error)
 
 	SortBy(field string, ascending bool) Organization
 	Limit(limit int64) Organization
@@ -190,11 +191,12 @@ func (o *organization) Get(ctx context.Context) (*models.Organization, error) {
 }
 
 func (o *organization) Filter(filters map[string]any) Organization {
+	// Разрешённые поля
 	var validFilters = map[string]bool{
 		"_id":      true,
 		"name":     true,
 		"logo":     true,
-		"verified": true,
+		"verified": true, // теперь явно проверяем
 		"desc":     true,
 		"country":  true,
 		"city":     true,
@@ -202,14 +204,29 @@ func (o *organization) Filter(filters map[string]any) Organization {
 	}
 
 	for field, value := range filters {
+		// Если поле не в списке – пропускаем
 		if !validFilters[field] {
 			continue
 		}
+		// Если значение nil – пропускаем
 		if value == nil {
 			continue
 		}
-		o.filters[field] = value
+
+		if field == "verified" {
+			// Пытаемся перевести в bool
+			boolVal, err := parseBool(value)
+			if err != nil {
+				logrus.Warnf("Cannot parse 'verified' filter: %v", err)
+				continue
+			}
+			o.filters[field] = boolVal
+		} else {
+			// Остальные поля без преобразования
+			o.filters[field] = value
+		}
 	}
+
 	return o
 }
 
@@ -263,14 +280,26 @@ func (o *organization) UpdateOne(ctx context.Context, fields map[string]any) (*m
 
 	updateFields := bson.M{}
 	for key, value := range fields {
-		if validFields[key] {
+		if !validFields[key] {
+			continue
+		}
+		// Если это "verified", парсим в bool
+		if key == "verified" {
+			boolVal, err := parseBool(value)
+			if err != nil {
+				return nil, fmt.Errorf("invalid value for 'verified': %v", err)
+			}
+			updateFields[key] = boolVal
+		} else {
 			updateFields[key] = value
 		}
 	}
 
+	// Обновляем updated_at
 	updateFields["updated_at"] = time.Now().UTC()
 
-	if len(updateFields) == 0 {
+	if len(updateFields) == 1 {
+		// значит кроме updated_at ничего не обновляется
 		return nil, fmt.Errorf("no valid fields to update")
 	}
 
@@ -292,59 +321,11 @@ func (o *organization) UpdateOne(ctx context.Context, fields map[string]any) (*m
 	}
 
 	var org models.Organization
-	err = o.collection.FindOne(ctx, o.filters).Decode(&org)
+	err = o.collection.FindOne(ctx, filter).Decode(&org)
 	if err != nil {
 		return nil, fmt.Errorf("failed to find org: %w", err)
 	}
 	return &org, nil
-}
-
-func (o *organization) UpdateMany(ctx context.Context, fields map[string]any) (int64, error) {
-	// Проверяем, есть ли поля для обновления
-	if len(fields) == 0 {
-		return 0, fmt.Errorf("no fields provided for update")
-	}
-
-	// Определяем список допустимых полей
-	validFields := map[string]bool{
-		"name":   true,
-		"desc":   true,
-		"avatar": true,
-		"type":   true,
-	}
-
-	// Создаем BSON-документ для обновления
-	updateFields := bson.M{}
-	for key, value := range fields {
-		if validFields[key] && value != nil { // Проверяем допустимость поля и значение на nil
-			updateFields[key] = value
-		}
-	}
-
-	// Добавляем поле updated_at
-	updateFields["updated_at"] = time.Now().UTC()
-
-	// Проверяем, есть ли валидные поля для обновления
-	if len(updateFields) == 0 {
-		return 0, fmt.Errorf("no valid fields to update")
-	}
-
-	// Проверяем, установлены ли фильтры
-	if o.filters == nil || len(o.filters) == 0 {
-		return 0, fmt.Errorf("organization filters are empty")
-	}
-
-	// Формируем запрос для обновления
-	update := bson.M{"$set": updateFields}
-
-	// Выполняем обновление нескольких документов
-	result, err := o.collection.UpdateMany(ctx, o.filters, update)
-	if err != nil {
-		return 0, fmt.Errorf("failed to update organizations: %w", err)
-	}
-
-	// Возвращаем количество обновленных документов
-	return result.ModifiedCount, nil
 }
 
 func (o *organization) SortBy(field string, ascending bool) Organization {
@@ -364,4 +345,19 @@ func (o *organization) Skip(skip int64) Organization {
 func (o *organization) Limit(limit int64) Organization {
 	o.limit = limit
 	return o
+}
+
+func parseBool(v any) (bool, error) {
+	switch val := v.(type) {
+	case bool:
+		return val, nil
+	case string:
+		parsed, err := strconv.ParseBool(val)
+		if err != nil {
+			return false, fmt.Errorf("cannot parse string '%s' as bool", val)
+		}
+		return parsed, nil
+	default:
+		return false, fmt.Errorf("cannot convert %T to bool", v)
+	}
 }
