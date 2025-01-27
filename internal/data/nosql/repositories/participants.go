@@ -49,7 +49,7 @@ func (p *participant) Create(ctx context.Context, participant models.Participant
 
 	update := bson.M{
 		"$push": bson.M{
-			"participant": participant,
+			"participants": participant,
 		},
 		"$set": bson.M{
 			"updated_at": time.Now().UTC(),
@@ -64,6 +64,7 @@ func (p *participant) Create(ctx context.Context, participant models.Participant
 	if result.ModifiedCount == 0 {
 		return nil, fmt.Errorf("no organization found with the given filters")
 	}
+
 	return &participant, nil
 }
 
@@ -137,20 +138,20 @@ func (p *participant) Get(ctx context.Context) (*models.Participant, error) {
 	}
 
 	// 2. Проверяем, что в e.filters есть user_id сотрудника
-	userID, ok := p.filters["participant.user_id"]
+	userID, ok := p.filters["participants.user_id"]
 	if !ok {
-		return nil, fmt.Errorf("participant user_id filter is missing (filters['participant.user_id'])")
+		return nil, fmt.Errorf("participants user_id filter is missing (filters['participant.user_id'])")
 	}
 
 	// 3. Собираем фильтр и проекцию:
-	//    - Фильтр: {"_id": orgID, "participant.user_id": userID}
-	//    - Проекция: {"participant": {"$elemMatch": {"user_id": userID}}}
+	//    - Фильтр: {"_id": orgID, "participants.user_id": userID}
+	//    - Проекция: {"participants": {"$elemMatch": {"user_id": userID}}}
 	filter := bson.M{
-		"_id":                 orgID,
-		"participant.user_id": userID,
+		"_id":                  orgID,
+		"participants.user_id": userID,
 	}
 	projection := bson.M{
-		"participant": bson.M{
+		"participants": bson.M{
 			"$elemMatch": bson.M{"user_id": userID},
 		},
 	}
@@ -182,23 +183,23 @@ func (p *participant) Filter(filters map[string]any) Participant {
 	}
 
 	if userID, ok := filters["user_id"]; ok && userID != nil {
-		p.filters["participant.user_id"] = userID
+		p.filters["participants.user_id"] = userID
 	}
 
 	if firstName, ok := filters["first_name"]; ok && firstName != nil {
-		p.filters["participant.first_name"] = firstName
+		p.filters["participants.first_name"] = firstName
 	}
 
 	if secondName, ok := filters["second_name"]; ok && secondName != nil {
-		p.filters["participant.second_name"] = secondName
+		p.filters["participants.second_name"] = secondName
 	}
 
 	if displayName, ok := filters["display_name"]; ok && displayName != nil {
-		p.filters["participant.display_name"] = displayName
+		p.filters["participants.display_name"] = displayName
 	}
 
 	if position, ok := filters["position"]; ok && position != nil {
-		p.filters["participant.position"] = position
+		p.filters["participants.position"] = position
 	}
 
 	return p
@@ -230,11 +231,11 @@ func (p *participant) UpdateOne(ctx context.Context, fields map[string]any) erro
 	updateFields := bson.M{}
 	for key, value := range fields {
 		if validFields[key] {
-			updateFields["participant.$[participant]."+key] = value
+			updateFields["participants.$[participants]."+key] = value
 		}
 	}
 	// Добавим обновление времени
-	updateFields["participant.$[participant].updated_at"] = time.Now().UTC()
+	updateFields["participants.$[participants].updated_at"] = time.Now().UTC()
 
 	// Если только updated_at, значит валидных полей для обновления не было
 	if len(updateFields) == 1 {
@@ -249,18 +250,18 @@ func (p *participant) UpdateOne(ctx context.Context, fields map[string]any) erro
 	//    и формируем одно условие для arrayFilters.
 	var subFilters []bson.M
 	for key, val := range p.filters {
-		// Ищем только ключи вида "participant.<field>"
-		if strings.HasPrefix(key, "participant.") {
-			// поле после participant. -> participant.<field>
-			// Например, если key="participant.user_id", то field="user_id"
-			field := strings.TrimPrefix(key, "participant.")
-			subFilters = append(subFilters, bson.M{"participant." + field: val})
+		// Ищем только ключи вида "participants.<field>"
+		if strings.HasPrefix(key, "participants.") {
+			// поле после participant. -> participants.<field>
+			// Например, если key="participants.user_id", то field="user_id"
+			field := strings.TrimPrefix(key, "participants.")
+			subFilters = append(subFilters, bson.M{"participants." + field: val})
 		}
 	}
 
 	// Если subFilters пуст, значит у нас не задан ни user_id, ни другие условия для participant
 	if len(subFilters) == 0 {
-		return fmt.Errorf("no participant filter found (e.filters['participant.*'])")
+		return fmt.Errorf("no participant filter found (e.filters['participants.*'])")
 	}
 
 	// Объединяем все условия через $and
@@ -302,15 +303,15 @@ func (p *participant) DeleteMany(ctx context.Context) error {
 	//    Если нужно объединять условия через $or – логику можно изменить.
 	var subFilters []bson.M
 	for key, val := range p.filters {
-		if strings.HasPrefix(key, "participant.") {
+		if strings.HasPrefix(key, "participants.") {
 			// Удаляем префикс "participant."
-			field := strings.TrimPrefix(key, "participant.")
+			field := strings.TrimPrefix(key, "participants.")
 			subFilters = append(subFilters, bson.M{field: val})
 		}
 	}
 
 	if len(subFilters) == 0 {
-		return fmt.Errorf("no participant filters found (keys like 'participant.*')")
+		return fmt.Errorf("no participant filters found (keys like 'participants.*')")
 	}
 
 	// 3. Объединяем условия в одно.
@@ -321,7 +322,7 @@ func (p *participant) DeleteMany(ctx context.Context) error {
 	// 4. Формируем $pull
 	update := bson.M{
 		"$pull": bson.M{
-			"participant": participantsCondition,
+			"participants": participantsCondition,
 		},
 	}
 
@@ -350,13 +351,13 @@ func (p *participant) DeleteOne(ctx context.Context) error {
 	//    чтобы понять, какого сотрудника мы ищем.
 	var subFilters []bson.M
 	for key, val := range p.filters {
-		if strings.HasPrefix(key, "participant.") {
-			field := strings.TrimPrefix(key, "participant.")
+		if strings.HasPrefix(key, "participants.") {
+			field := strings.TrimPrefix(key, "participants.")
 			subFilters = append(subFilters, bson.M{field: val})
 		}
 	}
 	if len(subFilters) == 0 {
-		return fmt.Errorf("no participant filters found (keys like 'participant.*')")
+		return fmt.Errorf("no participant filters found (keys like 'participants.*')")
 	}
 
 	// 3. Построим условие для «elemMatch».
@@ -366,11 +367,11 @@ func (p *participant) DeleteOne(ctx context.Context) error {
 	// 4. Делаем FindOne с проекцией, чтобы «вытащить» ровно первого сотрудника,
 	//    удовлетворяющего условию. Используем $elemMatch в projection.
 	filter := bson.M{
-		"_id":         orgID,
-		"participant": bson.M{"$elemMatch": participantCondition},
+		"_id":          orgID,
+		"participants": bson.M{"$elemMatch": participantCondition},
 	}
 	projection := bson.M{
-		"participant": bson.M{"$elemMatch": participantCondition},
+		"participants": bson.M{"$elemMatch": participantCondition},
 	}
 	findOpts := options.FindOne().SetProjection(projection)
 
@@ -402,7 +403,7 @@ func (p *participant) DeleteOne(ctx context.Context) error {
 	pullFilter := bson.M{"_id": orgID}
 	pullUpdate := bson.M{
 		"$pull": bson.M{
-			"participant": bson.M{"user_id": firstMatched.UserID},
+			"participants": bson.M{"user_id": firstMatched.UserID},
 		},
 	}
 

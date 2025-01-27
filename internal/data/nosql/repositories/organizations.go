@@ -175,6 +175,7 @@ func (o *organization) Select(ctx context.Context) ([]models.Organization, error
 	if err := cursor.All(ctx, &teams); err != nil {
 		return nil, fmt.Errorf("failed to decode teams: %w", err)
 	}
+
 	return teams, nil
 }
 
@@ -184,6 +185,7 @@ func (o *organization) Get(ctx context.Context) (*models.Organization, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to find org: %w", err)
 	}
+
 	return &org, nil
 }
 

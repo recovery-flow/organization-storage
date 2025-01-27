@@ -17,7 +17,7 @@ type Organization struct {
 	City         *string            `bson:"city,omitempty" json:"city,omitempty"`
 	Sort         SortOfOrg          `bson:"sort" json:"sort"`
 	Participants []Participant      `bson:"participants" json:"participants"`
-	Status       *Status            `bson:"complianceStatus,omitempty" json:"complianceStatus,omitempty"`
+	Status       *Status            `bson:"compliance_status,omitempty" json:"compliance_status,omitempty"`
 	Links        *Links             `bson:"links,omitempty" json:"links,omitempty"`
 
 	UpdatedAt *time.Time `bson:"updated_at" json:"updated_at"`
