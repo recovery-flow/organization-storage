@@ -21,6 +21,8 @@ components:
   schemas:
     Participant:
       $ref: './spec/components/schemas/Participant.yaml'
+    ParticipantData:
+      $ref: './spec/components/schemas/ParticipantData.yaml'
     ParticipantCreate:
       $ref: './spec/components/schemas/ParticipantCreate.yaml'
     ParticipantUpdate:
@@ -33,9 +35,11 @@ components:
       $ref: './spec/components/schemas/OrganizationUpdate.yaml'
     OrganizationLinksUpdate:
       $ref: './spec/components/schemas/OrganizationLinksUpdate.yaml'
-    Links:
-      $ref: './spec/components/schemas/Links.yaml'
+    OrganizationLinks:
+      $ref: './spec/components/schemas/OrganizationLinks.yaml'
     ComplicatedStatus:
       $ref: './spec/components/schemas/ComplicatedStatus.yaml'
     Organization:
       $ref: './spec/components/schemas/Organization.yaml'
+    Links:
+      $ref: './spec/components/schemas/Links.yaml'

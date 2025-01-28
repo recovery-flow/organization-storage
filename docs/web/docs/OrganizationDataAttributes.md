@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **Sort** | **string** | Type of Organization | 
 **Country** | **string** | Country of registration | 
 **City** | Pointer to **string** | City of HQ | [optional] 
-**Links** | Pointer to [**Links**](Links.md) |  | [optional] 
+**Links** | Pointer to [**OrganizationLinks**](OrganizationLinks.md) |  | [optional] 
 **ComplicatedStatus** | Pointer to [**ComplicatedStatus**](ComplicatedStatus.md) |  | [optional] 
 **CreatedAt** | **time.Time** | Team creation timestamp | 
 
@@ -181,20 +181,20 @@ HasCity returns a boolean if a field has been set.
 
 ### GetLinks
 
-`func (o *OrganizationDataAttributes) GetLinks() Links`
+`func (o *OrganizationDataAttributes) GetLinks() OrganizationLinks`
 
 GetLinks returns the Links field if non-nil, zero value otherwise.
 
 ### GetLinksOk
 
-`func (o *OrganizationDataAttributes) GetLinksOk() (*Links, bool)`
+`func (o *OrganizationDataAttributes) GetLinksOk() (*OrganizationLinks, bool)`
 
 GetLinksOk returns a tuple with the Links field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetLinks
 
-`func (o *OrganizationDataAttributes) SetLinks(v Links)`
+`func (o *OrganizationDataAttributes) SetLinks(v OrganizationLinks)`
 
 SetLinks sets Links field to given value.
 

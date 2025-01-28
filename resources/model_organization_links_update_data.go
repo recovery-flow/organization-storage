@@ -24,7 +24,7 @@ type OrganizationLinksUpdateData struct {
 	// Organization ID
 	Id string `json:"id"`
 	Type string `json:"type"`
-	Attributes Links `json:"attributes"`
+	Attributes OrganizationLinks `json:"attributes"`
 }
 
 type _OrganizationLinksUpdateData OrganizationLinksUpdateData
@@ -33,7 +33,7 @@ type _OrganizationLinksUpdateData OrganizationLinksUpdateData
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrganizationLinksUpdateData(id string, type_ string, attributes Links) *OrganizationLinksUpdateData {
+func NewOrganizationLinksUpdateData(id string, type_ string, attributes OrganizationLinks) *OrganizationLinksUpdateData {
 	this := OrganizationLinksUpdateData{}
 	this.Id = id
 	this.Type = type_
@@ -98,9 +98,9 @@ func (o *OrganizationLinksUpdateData) SetType(v string) {
 }
 
 // GetAttributes returns the Attributes field value
-func (o *OrganizationLinksUpdateData) GetAttributes() Links {
+func (o *OrganizationLinksUpdateData) GetAttributes() OrganizationLinks {
 	if o == nil {
-		var ret Links
+		var ret OrganizationLinks
 		return ret
 	}
 
@@ -109,7 +109,7 @@ func (o *OrganizationLinksUpdateData) GetAttributes() Links {
 
 // GetAttributesOk returns a tuple with the Attributes field value
 // and a boolean to check if the value has been set.
-func (o *OrganizationLinksUpdateData) GetAttributesOk() (*Links, bool) {
+func (o *OrganizationLinksUpdateData) GetAttributesOk() (*OrganizationLinks, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -117,7 +117,7 @@ func (o *OrganizationLinksUpdateData) GetAttributesOk() (*Links, bool) {
 }
 
 // SetAttributes sets field value
-func (o *OrganizationLinksUpdateData) SetAttributes(v Links) {
+func (o *OrganizationLinksUpdateData) SetAttributes(v OrganizationLinks) {
 	o.Attributes = v
 }
 

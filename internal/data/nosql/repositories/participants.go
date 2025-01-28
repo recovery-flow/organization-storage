@@ -11,6 +11,7 @@ import (
 	"github.com/recovery-flow/organization-storage/internal/data/nosql/models"
 	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -69,65 +70,88 @@ func (p *participant) Create(ctx context.Context, participant models.Participant
 }
 
 func (p *participant) Select(ctx context.Context) ([]models.Participant, error) {
-	// 1. Берём из e.filters ID организации (обязательный)
+	pipeline := mongo.Pipeline{}
+
+	// 1. Первый match по фильтрам верхнего уровня, например, {"_id": <orgID>}
+	//    Из p.filters достаём orgID
 	orgID, ok := p.filters["_id"]
 	if !ok {
 		return nil, fmt.Errorf("organization ID filter is missing (filters['_id'])")
 	}
+	pipeline = append(pipeline, bson.D{{Key: "$match", Value: bson.M{"_id": orgID}}})
 
-	// 2. Находим саму организацию
-	var org models.Organization
-	err := p.collection.FindOne(ctx, bson.M{"_id": orgID}).Decode(&org)
+	// 2. Распаковываем массив participants
+	pipeline = append(pipeline, bson.D{{Key: "$unwind", Value: "$participants"}})
+
+	// 3. Формируем подфильтр для полей вида "participants.user_id", "participants.first_name" и т.д.
+	//    Например, если p.filters["participants.user_id"] = <...>, делаем дополнительный match.
+	subFilter := bson.M{}
+	for key, val := range p.filters {
+		// Ищем ключи вида "participants.xxx"
+		if strings.HasPrefix(key, "participants.") {
+			subFilter[key] = val
+		}
+	}
+	if len(subFilter) > 0 {
+		// Добавляем ещё один $match
+		pipeline = append(pipeline, bson.D{{Key: "$match", Value: subFilter}})
+	}
+
+	// 4. Сортировка
+	//    p.sort — это slice bson.D, где вы хранили (field, order).
+	//    Но учтите, что ключ нужно превратить в "participants.<field>".
+	if len(p.sort) > 0 {
+		sortDoc := bson.D{}
+		for _, s := range p.sort {
+			// s.Key – это вроде "first_name"
+			// нам нужно "participants.first_name"
+			key := "participants." + s.Key
+			sortDoc = append(sortDoc, bson.E{Key: key, Value: s.Value})
+		}
+		pipeline = append(pipeline, bson.D{{Key: "$sort", Value: sortDoc}})
+	}
+
+	// 5. Skip / Limit
+	if p.skip > 0 {
+		pipeline = append(pipeline, bson.D{{Key: "$skip", Value: p.skip}})
+	}
+	if p.limit > 0 {
+		pipeline = append(pipeline, bson.D{{Key: "$limit", Value: p.limit}})
+	}
+
+	// 6. Если хотим собрать всех участников обратно в массив:
+	pipeline = append(pipeline, bson.D{{
+		Key: "$group",
+		Value: bson.M{
+			"_id":          "$_id",
+			"participants": bson.M{"$push": "$participants"},
+		},
+	}})
+
+	// 7. Теперь запускаем Aggregate
+	cursor, err := p.collection.Aggregate(ctx, pipeline)
 	if err != nil {
-		if errors.Is(err, mongo.ErrNoDocuments) {
-			return nil, fmt.Errorf("organization not found")
-		}
-		return nil, fmt.Errorf("failed to find organization: %w", err)
+		return nil, fmt.Errorf("failed to aggregate participants: %w", err)
+	}
+	defer cursor.Close(ctx)
+
+	var allResults []struct {
+		ID           primitive.ObjectID   `bson:"_id"`
+		Participants []models.Participant `bson:"participants"`
 	}
 
-	// 3. В памяти фильтруем сотрудников, если в e.filters заданы конкретные поля.
-	var results []models.Participant
-
-	// Примеры полей, которые вы можете проверять:
-	userIDVal, hasUserID := p.filters["participant.user_id"]
-	firstNameVal, hasFirstName := p.filters["participant.first_name"]
-	secondNameVal, hasSecondName := p.filters["participant.second_name"]
-	// ... и т.д.
-
-	// 4. Перебираем всех сотрудников и оставляем только тех, кто подходит под наши фильтры
-	for _, emp := range org.Participants {
-		// Проверяем user_id, если передан
-		if hasUserID {
-			uid, okCast := userIDVal.(uuid.UUID)
-			// Если в фильтре user_id есть, но тип не тот / не совпало, пропускаем
-			if !okCast || emp.UserID != uid {
-				continue
-			}
-		}
-
-		// Проверяем first_name, если передан
-		if hasFirstName {
-			fn, okCast := firstNameVal.(string)
-			if !okCast || emp.FirstName != fn {
-				continue
-			}
-		}
-
-		// Проверяем second_name, если передан
-		if hasSecondName {
-			sn, okCast := secondNameVal.(string)
-			if !okCast || emp.SecondName != sn {
-				continue
-			}
-		}
-
-		// ... Добавляете аналогичные проверки для position, role и т.д.
-
-		// Если сотрудник прошёл все проверки – добавляем его в результат
-		results = append(results, emp)
+	if err := cursor.All(ctx, &allResults); err != nil {
+		return nil, fmt.Errorf("failed to decode aggregated participants: %w", err)
 	}
 
-	return results, nil
+	// Если искали конкретную организацию, скорее всего будет один элемент в allResults
+	// но на всякий случай пробежимся
+	var final []models.Participant
+	for _, r := range allResults {
+		final = append(final, r.Participants...)
+	}
+
+	return final, nil
 }
 
 func (p *participant) Get(ctx context.Context) (*models.Participant, error) {

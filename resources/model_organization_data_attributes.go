@@ -36,7 +36,7 @@ type OrganizationDataAttributes struct {
 	Country string `json:"country"`
 	// City of HQ
 	City *string `json:"city,omitempty"`
-	Links *Links `json:"links,omitempty"`
+	Links *OrganizationLinks `json:"links,omitempty"`
 	ComplicatedStatus *ComplicatedStatus `json:"complicated_status,omitempty"`
 	// Team creation timestamp
 	CreatedAt time.Time `json:"created_at"`
@@ -245,9 +245,9 @@ func (o *OrganizationDataAttributes) SetCity(v string) {
 }
 
 // GetLinks returns the Links field value if set, zero value otherwise.
-func (o *OrganizationDataAttributes) GetLinks() Links {
+func (o *OrganizationDataAttributes) GetLinks() OrganizationLinks {
 	if o == nil || IsNil(o.Links) {
-		var ret Links
+		var ret OrganizationLinks
 		return ret
 	}
 	return *o.Links
@@ -255,7 +255,7 @@ func (o *OrganizationDataAttributes) GetLinks() Links {
 
 // GetLinksOk returns a tuple with the Links field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *OrganizationDataAttributes) GetLinksOk() (*Links, bool) {
+func (o *OrganizationDataAttributes) GetLinksOk() (*OrganizationLinks, bool) {
 	if o == nil || IsNil(o.Links) {
 		return nil, false
 	}
@@ -271,8 +271,8 @@ func (o *OrganizationDataAttributes) HasLinks() bool {
 	return false
 }
 
-// SetLinks gets a reference to the given Links and assigns it to the Links field.
-func (o *OrganizationDataAttributes) SetLinks(v Links) {
+// SetLinks gets a reference to the given OrganizationLinks and assigns it to the Links field.
+func (o *OrganizationDataAttributes) SetLinks(v OrganizationLinks) {
 	o.Links = &v
 }
 

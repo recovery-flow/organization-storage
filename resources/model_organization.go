@@ -22,7 +22,6 @@ var _ MappedNullable = &Organization{}
 // Organization struct for Organization
 type Organization struct {
 	Data OrganizationData `json:"data"`
-	Included []Participant `json:"included,omitempty"`
 }
 
 type _Organization Organization
@@ -69,38 +68,6 @@ func (o *Organization) SetData(v OrganizationData) {
 	o.Data = v
 }
 
-// GetIncluded returns the Included field value if set, zero value otherwise.
-func (o *Organization) GetIncluded() []Participant {
-	if o == nil || IsNil(o.Included) {
-		var ret []Participant
-		return ret
-	}
-	return o.Included
-}
-
-// GetIncludedOk returns a tuple with the Included field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Organization) GetIncludedOk() ([]Participant, bool) {
-	if o == nil || IsNil(o.Included) {
-		return nil, false
-	}
-	return o.Included, true
-}
-
-// HasIncluded returns a boolean if a field has been set.
-func (o *Organization) HasIncluded() bool {
-	if o != nil && !IsNil(o.Included) {
-		return true
-	}
-
-	return false
-}
-
-// SetIncluded gets a reference to the given []Participant and assigns it to the Included field.
-func (o *Organization) SetIncluded(v []Participant) {
-	o.Included = v
-}
-
 func (o Organization) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -112,9 +79,6 @@ func (o Organization) MarshalJSON() ([]byte, error) {
 func (o Organization) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["data"] = o.Data
-	if !IsNil(o.Included) {
-		toSerialize["included"] = o.Included
-	}
 	return toSerialize, nil
 }
 

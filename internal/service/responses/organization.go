@@ -13,33 +13,7 @@ func Organization(organization models.Organization) resources.Organization {
 		}
 	}
 
-	var participants []resources.Participant
-	for _, el := range organization.Participants {
-		ver := "false"
-		if el.Verified {
-			ver = "true"
-		}
-		participants = append(participants, resources.Participant{
-			Data: resources.ParticipantData{
-				Id:   el.UserID.String(),
-				Type: resources.ParticipantType,
-				Attributes: resources.ParticipantDataAttributes{
-					FirstName:   el.FirstName,
-					SecondName:  el.SecondName,
-					ThirdName:   el.ThirdName,
-					DisplayName: el.DisplayName,
-					Position:    el.Position,
-					Verified:    ver,
-					Desc:        el.Desc,
-					Role:        string(el.Role),
-					UpdatedAt:   el.UpdatedAt,
-					CreatedAt:   el.CreatedAt,
-				},
-			},
-		})
-	}
-
-	var links resources.Links
+	var links resources.OrganizationLinks
 	if organization.Links != nil {
 		if organization.Links.TikTok != nil {
 			links.Tiktok = organization.Links.TikTok
@@ -96,7 +70,14 @@ func Organization(organization models.Organization) resources.Organization {
 				Links:             &links,
 				ComplicatedStatus: &complicatedStatus,
 			},
+			Relationships: resources.OrganizationDataRelationships{
+				Participants: resources.OrganizationDataRelationshipsParticipants{
+					Links: resources.OrganizationDataRelationshipsParticipantsLinks{
+						Self:    "." + resources.LinkGetOrg + organization.ID.Hex() + "/participant",
+						Related: "." + resources.LinkGetOrg + organization.ID.Hex() + "/participant?page[size]=10&page[number]=1",
+					},
+				},
+			},
 		},
-		Included: participants,
 	}
 }

@@ -8,6 +8,7 @@ properties:
       - id
       - type
       - attributes
+      - relationships
     properties:
       id:
         type: string
@@ -48,14 +49,32 @@ properties:
             type: string
             description: "City of HQ"
           links:
-            $ref: "./Links.yaml"
+            $ref: "./OrganizationLinks.yaml"
           complicated_status:
             $ref: "./ComplicatedStatus.yaml"
           created_at:
             type: string
             format: date-time
             description: "Team creation timestamp"
-  included:
-    type: array
-    items:
-      $ref: "./Participant.yaml"
+      relationships:
+        type: object
+        required:
+          - participants
+        properties:
+          participants:
+            type: object
+            required:
+              - links
+            properties:
+              links:
+                type: object
+                required:
+                  - self
+                  - related
+                properties:
+                  self:
+                    type: string
+                    description: "Link to participants"
+                  related:
+                    type: string
+                    description: "Link to participants"

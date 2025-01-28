@@ -34,7 +34,7 @@ func Run(ctx context.Context) {
 
 					r.Route("/{organization_id}", func(r chi.Router) {
 						r.Patch("/", handlers.OrganizationUpdate)
-						r.Patch("/photo", handlers.OrganizationUploadLogo)
+						r.Patch("/logo", handlers.OrganizationUploadLogo)
 						r.Patch("/links", handlers.OrganizationLinksUpdate)
 
 						r.Route("/participant", func(r chi.Router) {

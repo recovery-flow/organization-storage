@@ -236,9 +236,9 @@ func (o *organization) Participants() Participant {
 		database:   o.database,
 		collection: o.collection,
 		filters:    o.filters,
-		sort:       bson.D{},
-		limit:      0,
-		skip:       0,
+		sort:       o.sort,
+		limit:      o.limit,
+		skip:       o.skip,
 	}
 }
 
@@ -248,9 +248,9 @@ func (o *organization) Status() Status {
 		database:   o.database,
 		collection: o.collection,
 		filters:    o.filters,
-		sort:       bson.D{},
-		limit:      0,
-		skip:       0,
+		sort:       o.sort,
+		limit:      o.limit,
+		skip:       o.skip,
 	}
 }
 

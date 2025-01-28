@@ -25,6 +25,7 @@ type OrganizationData struct {
 	Id string `json:"id"`
 	Type string `json:"type"`
 	Attributes OrganizationDataAttributes `json:"attributes"`
+	Relationships OrganizationDataRelationships `json:"relationships"`
 }
 
 type _OrganizationData OrganizationData
@@ -33,11 +34,12 @@ type _OrganizationData OrganizationData
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewOrganizationData(id string, type_ string, attributes OrganizationDataAttributes) *OrganizationData {
+func NewOrganizationData(id string, type_ string, attributes OrganizationDataAttributes, relationships OrganizationDataRelationships) *OrganizationData {
 	this := OrganizationData{}
 	this.Id = id
 	this.Type = type_
 	this.Attributes = attributes
+	this.Relationships = relationships
 	return &this
 }
 
@@ -121,6 +123,30 @@ func (o *OrganizationData) SetAttributes(v OrganizationDataAttributes) {
 	o.Attributes = v
 }
 
+// GetRelationships returns the Relationships field value
+func (o *OrganizationData) GetRelationships() OrganizationDataRelationships {
+	if o == nil {
+		var ret OrganizationDataRelationships
+		return ret
+	}
+
+	return o.Relationships
+}
+
+// GetRelationshipsOk returns a tuple with the Relationships field value
+// and a boolean to check if the value has been set.
+func (o *OrganizationData) GetRelationshipsOk() (*OrganizationDataRelationships, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Relationships, true
+}
+
+// SetRelationships sets field value
+func (o *OrganizationData) SetRelationships(v OrganizationDataRelationships) {
+	o.Relationships = v
+}
+
 func (o OrganizationData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -134,6 +160,7 @@ func (o OrganizationData) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["type"] = o.Type
 	toSerialize["attributes"] = o.Attributes
+	toSerialize["relationships"] = o.Relationships
 	return toSerialize, nil
 }
 
@@ -145,6 +172,7 @@ func (o *OrganizationData) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"type",
 		"attributes",
+		"relationships",
 	}
 
 	allProperties := make(map[string]interface{})

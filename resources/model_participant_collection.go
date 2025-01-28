@@ -21,9 +21,8 @@ var _ MappedNullable = &ParticipantCollection{}
 
 // ParticipantCollection struct for ParticipantCollection
 type ParticipantCollection struct {
-	Data []Participant `json:"data"`
-	Links ParticipantsCollectionLinks `json:"links"`
-	Meta ParticipantsCollectionMeta `json:"meta"`
+	Data []ParticipantData `json:"data"`
+	Links Links `json:"links"`
 }
 
 type _ParticipantCollection ParticipantCollection
@@ -32,11 +31,10 @@ type _ParticipantCollection ParticipantCollection
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewParticipantCollection(data []Participant, links ParticipantsCollectionLinks, meta ParticipantsCollectionMeta) *ParticipantCollection {
+func NewParticipantCollection(data []ParticipantData, links Links) *ParticipantCollection {
 	this := ParticipantCollection{}
 	this.Data = data
 	this.Links = links
-	this.Meta = meta
 	return &this
 }
 
@@ -49,9 +47,9 @@ func NewParticipantCollectionWithDefaults() *ParticipantCollection {
 }
 
 // GetData returns the Data field value
-func (o *ParticipantCollection) GetData() []Participant {
+func (o *ParticipantCollection) GetData() []ParticipantData {
 	if o == nil {
-		var ret []Participant
+		var ret []ParticipantData
 		return ret
 	}
 
@@ -60,7 +58,7 @@ func (o *ParticipantCollection) GetData() []Participant {
 
 // GetDataOk returns a tuple with the Data field value
 // and a boolean to check if the value has been set.
-func (o *ParticipantCollection) GetDataOk() ([]Participant, bool) {
+func (o *ParticipantCollection) GetDataOk() ([]ParticipantData, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -68,14 +66,14 @@ func (o *ParticipantCollection) GetDataOk() ([]Participant, bool) {
 }
 
 // SetData sets field value
-func (o *ParticipantCollection) SetData(v []Participant) {
+func (o *ParticipantCollection) SetData(v []ParticipantData) {
 	o.Data = v
 }
 
 // GetLinks returns the Links field value
-func (o *ParticipantCollection) GetLinks() ParticipantsCollectionLinks {
+func (o *ParticipantCollection) GetLinks() Links {
 	if o == nil {
-		var ret ParticipantsCollectionLinks
+		var ret Links
 		return ret
 	}
 
@@ -84,7 +82,7 @@ func (o *ParticipantCollection) GetLinks() ParticipantsCollectionLinks {
 
 // GetLinksOk returns a tuple with the Links field value
 // and a boolean to check if the value has been set.
-func (o *ParticipantCollection) GetLinksOk() (*ParticipantsCollectionLinks, bool) {
+func (o *ParticipantCollection) GetLinksOk() (*Links, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -92,32 +90,8 @@ func (o *ParticipantCollection) GetLinksOk() (*ParticipantsCollectionLinks, bool
 }
 
 // SetLinks sets field value
-func (o *ParticipantCollection) SetLinks(v ParticipantsCollectionLinks) {
+func (o *ParticipantCollection) SetLinks(v Links) {
 	o.Links = v
-}
-
-// GetMeta returns the Meta field value
-func (o *ParticipantCollection) GetMeta() ParticipantsCollectionMeta {
-	if o == nil {
-		var ret ParticipantsCollectionMeta
-		return ret
-	}
-
-	return o.Meta
-}
-
-// GetMetaOk returns a tuple with the Meta field value
-// and a boolean to check if the value has been set.
-func (o *ParticipantCollection) GetMetaOk() (*ParticipantsCollectionMeta, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Meta, true
-}
-
-// SetMeta sets field value
-func (o *ParticipantCollection) SetMeta(v ParticipantsCollectionMeta) {
-	o.Meta = v
 }
 
 func (o ParticipantCollection) MarshalJSON() ([]byte, error) {
@@ -132,7 +106,6 @@ func (o ParticipantCollection) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["data"] = o.Data
 	toSerialize["links"] = o.Links
-	toSerialize["meta"] = o.Meta
 	return toSerialize, nil
 }
 
@@ -143,7 +116,6 @@ func (o *ParticipantCollection) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"data",
 		"links",
-		"meta",
 	}
 
 	allProperties := make(map[string]interface{})

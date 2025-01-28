@@ -19,22 +19,12 @@ var _ MappedNullable = &Links{}
 
 // Links struct for Links
 type Links struct {
-	// Twitter profile link
-	Twitter *string `json:"twitter,omitempty"`
-	// Instagram profile link
-	Instagram *string `json:"instagram,omitempty"`
-	// Facebook profile link
-	Facebook *string `json:"facebook,omitempty"`
-	// TikTok profile link
-	Tiktok *string `json:"tiktok,omitempty"`
-	// LinkedIn profile link
-	Linkedin *string `json:"linkedin,omitempty"`
-	// Telegram profile link
-	Telegram *string `json:"telegram,omitempty"`
-	// Discord profile link
-	Discord *string `json:"discord,omitempty"`
-	// Companies website
-	Website *string `json:"website,omitempty"`
+	// Link to the previous page
+	Previous *string `json:"previous,omitempty"`
+	// Link to the current page
+	Self *string `json:"self,omitempty"`
+	// Link to the next page
+	Next *string `json:"next,omitempty"`
 }
 
 // NewLinks instantiates a new Links object
@@ -54,260 +44,100 @@ func NewLinksWithDefaults() *Links {
 	return &this
 }
 
-// GetTwitter returns the Twitter field value if set, zero value otherwise.
-func (o *Links) GetTwitter() string {
-	if o == nil || IsNil(o.Twitter) {
+// GetPrevious returns the Previous field value if set, zero value otherwise.
+func (o *Links) GetPrevious() string {
+	if o == nil || IsNil(o.Previous) {
 		var ret string
 		return ret
 	}
-	return *o.Twitter
+	return *o.Previous
 }
 
-// GetTwitterOk returns a tuple with the Twitter field value if set, nil otherwise
+// GetPreviousOk returns a tuple with the Previous field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetTwitterOk() (*string, bool) {
-	if o == nil || IsNil(o.Twitter) {
+func (o *Links) GetPreviousOk() (*string, bool) {
+	if o == nil || IsNil(o.Previous) {
 		return nil, false
 	}
-	return o.Twitter, true
+	return o.Previous, true
 }
 
-// HasTwitter returns a boolean if a field has been set.
-func (o *Links) HasTwitter() bool {
-	if o != nil && !IsNil(o.Twitter) {
+// HasPrevious returns a boolean if a field has been set.
+func (o *Links) HasPrevious() bool {
+	if o != nil && !IsNil(o.Previous) {
 		return true
 	}
 
 	return false
 }
 
-// SetTwitter gets a reference to the given string and assigns it to the Twitter field.
-func (o *Links) SetTwitter(v string) {
-	o.Twitter = &v
+// SetPrevious gets a reference to the given string and assigns it to the Previous field.
+func (o *Links) SetPrevious(v string) {
+	o.Previous = &v
 }
 
-// GetInstagram returns the Instagram field value if set, zero value otherwise.
-func (o *Links) GetInstagram() string {
-	if o == nil || IsNil(o.Instagram) {
+// GetSelf returns the Self field value if set, zero value otherwise.
+func (o *Links) GetSelf() string {
+	if o == nil || IsNil(o.Self) {
 		var ret string
 		return ret
 	}
-	return *o.Instagram
+	return *o.Self
 }
 
-// GetInstagramOk returns a tuple with the Instagram field value if set, nil otherwise
+// GetSelfOk returns a tuple with the Self field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetInstagramOk() (*string, bool) {
-	if o == nil || IsNil(o.Instagram) {
+func (o *Links) GetSelfOk() (*string, bool) {
+	if o == nil || IsNil(o.Self) {
 		return nil, false
 	}
-	return o.Instagram, true
+	return o.Self, true
 }
 
-// HasInstagram returns a boolean if a field has been set.
-func (o *Links) HasInstagram() bool {
-	if o != nil && !IsNil(o.Instagram) {
+// HasSelf returns a boolean if a field has been set.
+func (o *Links) HasSelf() bool {
+	if o != nil && !IsNil(o.Self) {
 		return true
 	}
 
 	return false
 }
 
-// SetInstagram gets a reference to the given string and assigns it to the Instagram field.
-func (o *Links) SetInstagram(v string) {
-	o.Instagram = &v
+// SetSelf gets a reference to the given string and assigns it to the Self field.
+func (o *Links) SetSelf(v string) {
+	o.Self = &v
 }
 
-// GetFacebook returns the Facebook field value if set, zero value otherwise.
-func (o *Links) GetFacebook() string {
-	if o == nil || IsNil(o.Facebook) {
+// GetNext returns the Next field value if set, zero value otherwise.
+func (o *Links) GetNext() string {
+	if o == nil || IsNil(o.Next) {
 		var ret string
 		return ret
 	}
-	return *o.Facebook
+	return *o.Next
 }
 
-// GetFacebookOk returns a tuple with the Facebook field value if set, nil otherwise
+// GetNextOk returns a tuple with the Next field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Links) GetFacebookOk() (*string, bool) {
-	if o == nil || IsNil(o.Facebook) {
+func (o *Links) GetNextOk() (*string, bool) {
+	if o == nil || IsNil(o.Next) {
 		return nil, false
 	}
-	return o.Facebook, true
+	return o.Next, true
 }
 
-// HasFacebook returns a boolean if a field has been set.
-func (o *Links) HasFacebook() bool {
-	if o != nil && !IsNil(o.Facebook) {
+// HasNext returns a boolean if a field has been set.
+func (o *Links) HasNext() bool {
+	if o != nil && !IsNil(o.Next) {
 		return true
 	}
 
 	return false
 }
 
-// SetFacebook gets a reference to the given string and assigns it to the Facebook field.
-func (o *Links) SetFacebook(v string) {
-	o.Facebook = &v
-}
-
-// GetTiktok returns the Tiktok field value if set, zero value otherwise.
-func (o *Links) GetTiktok() string {
-	if o == nil || IsNil(o.Tiktok) {
-		var ret string
-		return ret
-	}
-	return *o.Tiktok
-}
-
-// GetTiktokOk returns a tuple with the Tiktok field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Links) GetTiktokOk() (*string, bool) {
-	if o == nil || IsNil(o.Tiktok) {
-		return nil, false
-	}
-	return o.Tiktok, true
-}
-
-// HasTiktok returns a boolean if a field has been set.
-func (o *Links) HasTiktok() bool {
-	if o != nil && !IsNil(o.Tiktok) {
-		return true
-	}
-
-	return false
-}
-
-// SetTiktok gets a reference to the given string and assigns it to the Tiktok field.
-func (o *Links) SetTiktok(v string) {
-	o.Tiktok = &v
-}
-
-// GetLinkedin returns the Linkedin field value if set, zero value otherwise.
-func (o *Links) GetLinkedin() string {
-	if o == nil || IsNil(o.Linkedin) {
-		var ret string
-		return ret
-	}
-	return *o.Linkedin
-}
-
-// GetLinkedinOk returns a tuple with the Linkedin field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Links) GetLinkedinOk() (*string, bool) {
-	if o == nil || IsNil(o.Linkedin) {
-		return nil, false
-	}
-	return o.Linkedin, true
-}
-
-// HasLinkedin returns a boolean if a field has been set.
-func (o *Links) HasLinkedin() bool {
-	if o != nil && !IsNil(o.Linkedin) {
-		return true
-	}
-
-	return false
-}
-
-// SetLinkedin gets a reference to the given string and assigns it to the Linkedin field.
-func (o *Links) SetLinkedin(v string) {
-	o.Linkedin = &v
-}
-
-// GetTelegram returns the Telegram field value if set, zero value otherwise.
-func (o *Links) GetTelegram() string {
-	if o == nil || IsNil(o.Telegram) {
-		var ret string
-		return ret
-	}
-	return *o.Telegram
-}
-
-// GetTelegramOk returns a tuple with the Telegram field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Links) GetTelegramOk() (*string, bool) {
-	if o == nil || IsNil(o.Telegram) {
-		return nil, false
-	}
-	return o.Telegram, true
-}
-
-// HasTelegram returns a boolean if a field has been set.
-func (o *Links) HasTelegram() bool {
-	if o != nil && !IsNil(o.Telegram) {
-		return true
-	}
-
-	return false
-}
-
-// SetTelegram gets a reference to the given string and assigns it to the Telegram field.
-func (o *Links) SetTelegram(v string) {
-	o.Telegram = &v
-}
-
-// GetDiscord returns the Discord field value if set, zero value otherwise.
-func (o *Links) GetDiscord() string {
-	if o == nil || IsNil(o.Discord) {
-		var ret string
-		return ret
-	}
-	return *o.Discord
-}
-
-// GetDiscordOk returns a tuple with the Discord field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Links) GetDiscordOk() (*string, bool) {
-	if o == nil || IsNil(o.Discord) {
-		return nil, false
-	}
-	return o.Discord, true
-}
-
-// HasDiscord returns a boolean if a field has been set.
-func (o *Links) HasDiscord() bool {
-	if o != nil && !IsNil(o.Discord) {
-		return true
-	}
-
-	return false
-}
-
-// SetDiscord gets a reference to the given string and assigns it to the Discord field.
-func (o *Links) SetDiscord(v string) {
-	o.Discord = &v
-}
-
-// GetWebsite returns the Website field value if set, zero value otherwise.
-func (o *Links) GetWebsite() string {
-	if o == nil || IsNil(o.Website) {
-		var ret string
-		return ret
-	}
-	return *o.Website
-}
-
-// GetWebsiteOk returns a tuple with the Website field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Links) GetWebsiteOk() (*string, bool) {
-	if o == nil || IsNil(o.Website) {
-		return nil, false
-	}
-	return o.Website, true
-}
-
-// HasWebsite returns a boolean if a field has been set.
-func (o *Links) HasWebsite() bool {
-	if o != nil && !IsNil(o.Website) {
-		return true
-	}
-
-	return false
-}
-
-// SetWebsite gets a reference to the given string and assigns it to the Website field.
-func (o *Links) SetWebsite(v string) {
-	o.Website = &v
+// SetNext gets a reference to the given string and assigns it to the Next field.
+func (o *Links) SetNext(v string) {
+	o.Next = &v
 }
 
 func (o Links) MarshalJSON() ([]byte, error) {
@@ -320,29 +150,14 @@ func (o Links) MarshalJSON() ([]byte, error) {
 
 func (o Links) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Twitter) {
-		toSerialize["twitter"] = o.Twitter
+	if !IsNil(o.Previous) {
+		toSerialize["previous"] = o.Previous
 	}
-	if !IsNil(o.Instagram) {
-		toSerialize["instagram"] = o.Instagram
+	if !IsNil(o.Self) {
+		toSerialize["self"] = o.Self
 	}
-	if !IsNil(o.Facebook) {
-		toSerialize["facebook"] = o.Facebook
-	}
-	if !IsNil(o.Tiktok) {
-		toSerialize["tiktok"] = o.Tiktok
-	}
-	if !IsNil(o.Linkedin) {
-		toSerialize["linkedin"] = o.Linkedin
-	}
-	if !IsNil(o.Telegram) {
-		toSerialize["telegram"] = o.Telegram
-	}
-	if !IsNil(o.Discord) {
-		toSerialize["discord"] = o.Discord
-	}
-	if !IsNil(o.Website) {
-		toSerialize["website"] = o.Website
+	if !IsNil(o.Next) {
+		toSerialize["next"] = o.Next
 	}
 	return toSerialize, nil
 }

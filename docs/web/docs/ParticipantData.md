@@ -7,13 +7,13 @@ Name | Type | Description | Notes
 **Id** | **string** | user id | 
 **Type** | **string** |  | 
 **Attributes** | [**ParticipantDataAttributes**](ParticipantDataAttributes.md) |  | 
-**Relationships** | Pointer to [**ParticipantDataRelationships**](ParticipantDataRelationships.md) |  | [optional] 
+**Relationships** | [**ParticipantDataRelationships**](ParticipantDataRelationships.md) |  | 
 
 ## Methods
 
 ### NewParticipantData
 
-`func NewParticipantData(id string, type_ string, attributes ParticipantDataAttributes, ) *ParticipantData`
+`func NewParticipantData(id string, type_ string, attributes ParticipantDataAttributes, relationships ParticipantDataRelationships, ) *ParticipantData`
 
 NewParticipantData instantiates a new ParticipantData object
 This constructor will assign default values to properties that have it defined,
@@ -107,11 +107,6 @@ and a boolean to check if the value has been set.
 
 SetRelationships sets Relationships field to given value.
 
-### HasRelationships
-
-`func (o *ParticipantData) HasRelationships() bool`
-
-HasRelationships returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

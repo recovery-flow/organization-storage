@@ -5,7 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | [**OrganizationData**](OrganizationData.md) |  | 
-**Included** | Pointer to [**[]Participant**](Participant.md) |  | [optional] 
 
 ## Methods
 
@@ -45,31 +44,6 @@ and a boolean to check if the value has been set.
 
 SetData sets Data field to given value.
 
-
-### GetIncluded
-
-`func (o *Organization) GetIncluded() []Participant`
-
-GetIncluded returns the Included field if non-nil, zero value otherwise.
-
-### GetIncludedOk
-
-`func (o *Organization) GetIncludedOk() (*[]Participant, bool)`
-
-GetIncludedOk returns a tuple with the Included field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetIncluded
-
-`func (o *Organization) SetIncluded(v []Participant)`
-
-SetIncluded sets Included field to given value.
-
-### HasIncluded
-
-`func (o *Organization) HasIncluded() bool`
-
-HasIncluded returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

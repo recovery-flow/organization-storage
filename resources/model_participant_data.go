@@ -25,7 +25,7 @@ type ParticipantData struct {
 	Id string `json:"id"`
 	Type string `json:"type"`
 	Attributes ParticipantDataAttributes `json:"attributes"`
-	Relationships *ParticipantDataRelationships `json:"relationships,omitempty"`
+	Relationships ParticipantDataRelationships `json:"relationships"`
 }
 
 type _ParticipantData ParticipantData
@@ -34,11 +34,12 @@ type _ParticipantData ParticipantData
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewParticipantData(id string, type_ string, attributes ParticipantDataAttributes) *ParticipantData {
+func NewParticipantData(id string, type_ string, attributes ParticipantDataAttributes, relationships ParticipantDataRelationships) *ParticipantData {
 	this := ParticipantData{}
 	this.Id = id
 	this.Type = type_
 	this.Attributes = attributes
+	this.Relationships = relationships
 	return &this
 }
 
@@ -122,36 +123,28 @@ func (o *ParticipantData) SetAttributes(v ParticipantDataAttributes) {
 	o.Attributes = v
 }
 
-// GetRelationships returns the Relationships field value if set, zero value otherwise.
+// GetRelationships returns the Relationships field value
 func (o *ParticipantData) GetRelationships() ParticipantDataRelationships {
-	if o == nil || IsNil(o.Relationships) {
+	if o == nil {
 		var ret ParticipantDataRelationships
 		return ret
 	}
-	return *o.Relationships
+
+	return o.Relationships
 }
 
-// GetRelationshipsOk returns a tuple with the Relationships field value if set, nil otherwise
+// GetRelationshipsOk returns a tuple with the Relationships field value
 // and a boolean to check if the value has been set.
 func (o *ParticipantData) GetRelationshipsOk() (*ParticipantDataRelationships, bool) {
-	if o == nil || IsNil(o.Relationships) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Relationships, true
+	return &o.Relationships, true
 }
 
-// HasRelationships returns a boolean if a field has been set.
-func (o *ParticipantData) HasRelationships() bool {
-	if o != nil && !IsNil(o.Relationships) {
-		return true
-	}
-
-	return false
-}
-
-// SetRelationships gets a reference to the given ParticipantDataRelationships and assigns it to the Relationships field.
+// SetRelationships sets field value
 func (o *ParticipantData) SetRelationships(v ParticipantDataRelationships) {
-	o.Relationships = &v
+	o.Relationships = v
 }
 
 func (o ParticipantData) MarshalJSON() ([]byte, error) {
@@ -167,9 +160,7 @@ func (o ParticipantData) ToMap() (map[string]interface{}, error) {
 	toSerialize["id"] = o.Id
 	toSerialize["type"] = o.Type
 	toSerialize["attributes"] = o.Attributes
-	if !IsNil(o.Relationships) {
-		toSerialize["relationships"] = o.Relationships
-	}
+	toSerialize["relationships"] = o.Relationships
 	return toSerialize, nil
 }
 
@@ -181,6 +172,7 @@ func (o *ParticipantData) UnmarshalJSON(data []byte) (err error) {
 		"id",
 		"type",
 		"attributes",
+		"relationships",
 	}
 
 	allProperties := make(map[string]interface{})

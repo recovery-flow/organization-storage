@@ -92,6 +92,10 @@ Class | Method | HTTP request | Description
  - [OrganizationCreateDataAttributesOwner](docs/OrganizationCreateDataAttributesOwner.md)
  - [OrganizationData](docs/OrganizationData.md)
  - [OrganizationDataAttributes](docs/OrganizationDataAttributes.md)
+ - [OrganizationDataRelationships](docs/OrganizationDataRelationships.md)
+ - [OrganizationDataRelationshipsParticipants](docs/OrganizationDataRelationshipsParticipants.md)
+ - [OrganizationDataRelationshipsParticipantsLinks](docs/OrganizationDataRelationshipsParticipantsLinks.md)
+ - [OrganizationLinks](docs/OrganizationLinks.md)
  - [OrganizationLinksUpdate](docs/OrganizationLinksUpdate.md)
  - [OrganizationLinksUpdateData](docs/OrganizationLinksUpdateData.md)
  - [OrganizationUpdate](docs/OrganizationUpdate.md)
@@ -110,8 +114,6 @@ Class | Method | HTTP request | Description
  - [ParticipantUpdateData](docs/ParticipantUpdateData.md)
  - [ParticipantUpdateDataAttributes](docs/ParticipantUpdateDataAttributes.md)
  - [ParticipantsCollection](docs/ParticipantsCollection.md)
- - [ParticipantsCollectionLinks](docs/ParticipantsCollectionLinks.md)
- - [ParticipantsCollectionMeta](docs/ParticipantsCollectionMeta.md)
 
 
 ## Documentation For Authorization

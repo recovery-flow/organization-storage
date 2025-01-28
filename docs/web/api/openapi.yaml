@@ -44,6 +44,25 @@ components:
       required:
       - data
       type: object
+    ParticipantData:
+      properties:
+        id:
+          description: user id
+          type: string
+        type:
+          enum:
+          - participant
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Participant_data_attributes'
+        relationships:
+          $ref: '#/components/schemas/Participant_data_relationships'
+      required:
+      - attributes
+      - id
+      - relationships
+      - type
+      type: object
     ParticipantCreate:
       properties:
         data:
@@ -62,12 +81,10 @@ components:
       properties:
         data:
           items:
-            $ref: '#/components/schemas/Participant'
+            $ref: '#/components/schemas/ParticipantData'
           type: array
         links:
-          $ref: '#/components/schemas/ParticipantsCollection_links'
-        meta:
-          $ref: '#/components/schemas/ParticipantsCollection_meta'
+          $ref: '#/components/schemas/Links'
       required:
       - data
       - links
@@ -94,7 +111,7 @@ components:
       required:
       - data
       type: object
-    Links:
+    OrganizationLinks:
       properties:
         twitter:
           description: Twitter profile link
@@ -157,23 +174,29 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/Organization_data'
-        included:
-          items:
-            $ref: '#/components/schemas/Participant'
-          type: array
       required:
       - data
+      type: object
+    Links:
+      properties:
+        previous:
+          description: Link to the previous page
+          type: string
+        self:
+          description: Link to the current page
+          type: string
+        next:
+          description: Link to the next page
+          type: string
       type: object
     ParticipantCollection:
       properties:
         data:
           items:
-            $ref: '#/components/schemas/Participant'
+            $ref: '#/components/schemas/ParticipantData'
           type: array
         links:
-          $ref: '#/components/schemas/ParticipantsCollection_links'
-        meta:
-          $ref: '#/components/schemas/ParticipantsCollection_meta'
+          $ref: '#/components/schemas/Links'
       required:
       - data
       - links
@@ -290,6 +313,7 @@ components:
       required:
       - attributes
       - id
+      - relationships
       - type
       type: object
     ParticipantCreate_data_attributes:
@@ -387,21 +411,6 @@ components:
       - attributes
       - id
       - type
-      type: object
-    ParticipantsCollection_links:
-      properties:
-        self:
-          description: Link to the current page
-          type: string
-        next:
-          description: Link to the next page
-          type: string
-      type: object
-    ParticipantsCollection_meta:
-      properties:
-        total:
-          description: Total number of participant
-          type: integer
       type: object
     OrganizationCreate_data_attributes_owner:
       properties:
@@ -512,7 +521,7 @@ components:
           - organization_link_update
           type: string
         attributes:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/OrganizationLinks'
       required:
       - attributes
       - id
@@ -542,7 +551,7 @@ components:
           description: City of HQ
           type: string
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/OrganizationLinks'
         complicated_status:
           $ref: '#/components/schemas/ComplicatedStatus'
         created_at:
@@ -558,6 +567,32 @@ components:
       - sort
       - verified
       type: object
+    Organization_data_relationships_participants_links:
+      properties:
+        self:
+          description: Link to participants
+          type: string
+        related:
+          description: Link to participants
+          type: string
+      required:
+      - related
+      - self
+      type: object
+    Organization_data_relationships_participants:
+      properties:
+        links:
+          $ref: '#/components/schemas/Organization_data_relationships_participants_links'
+      required:
+      - links
+      type: object
+    Organization_data_relationships:
+      properties:
+        participants:
+          $ref: '#/components/schemas/Organization_data_relationships_participants'
+      required:
+      - participants
+      type: object
     Organization_data:
       properties:
         id:
@@ -569,8 +604,11 @@ components:
           type: string
         attributes:
           $ref: '#/components/schemas/Organization_data_attributes'
+        relationships:
+          $ref: '#/components/schemas/Organization_data_relationships'
       required:
       - attributes
       - id
+      - relationships
       - type
       type: object

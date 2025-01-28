@@ -4,14 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Twitter** | Pointer to **string** | Twitter profile link | [optional] 
-**Instagram** | Pointer to **string** | Instagram profile link | [optional] 
-**Facebook** | Pointer to **string** | Facebook profile link | [optional] 
-**Tiktok** | Pointer to **string** | TikTok profile link | [optional] 
-**Linkedin** | Pointer to **string** | LinkedIn profile link | [optional] 
-**Telegram** | Pointer to **string** | Telegram profile link | [optional] 
-**Discord** | Pointer to **string** | Discord profile link | [optional] 
-**Website** | Pointer to **string** | Companies website | [optional] 
+**Previous** | Pointer to **string** | Link to the previous page | [optional] 
+**Self** | Pointer to **string** | Link to the current page | [optional] 
+**Next** | Pointer to **string** | Link to the next page | [optional] 
 
 ## Methods
 
@@ -32,205 +27,80 @@ NewLinksWithDefaults instantiates a new Links object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetTwitter
+### GetPrevious
 
-`func (o *Links) GetTwitter() string`
+`func (o *Links) GetPrevious() string`
 
-GetTwitter returns the Twitter field if non-nil, zero value otherwise.
+GetPrevious returns the Previous field if non-nil, zero value otherwise.
 
-### GetTwitterOk
+### GetPreviousOk
 
-`func (o *Links) GetTwitterOk() (*string, bool)`
+`func (o *Links) GetPreviousOk() (*string, bool)`
 
-GetTwitterOk returns a tuple with the Twitter field if it's non-nil, zero value otherwise
+GetPreviousOk returns a tuple with the Previous field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTwitter
+### SetPrevious
 
-`func (o *Links) SetTwitter(v string)`
+`func (o *Links) SetPrevious(v string)`
 
-SetTwitter sets Twitter field to given value.
+SetPrevious sets Previous field to given value.
 
-### HasTwitter
+### HasPrevious
 
-`func (o *Links) HasTwitter() bool`
+`func (o *Links) HasPrevious() bool`
 
-HasTwitter returns a boolean if a field has been set.
+HasPrevious returns a boolean if a field has been set.
 
-### GetInstagram
+### GetSelf
 
-`func (o *Links) GetInstagram() string`
+`func (o *Links) GetSelf() string`
 
-GetInstagram returns the Instagram field if non-nil, zero value otherwise.
+GetSelf returns the Self field if non-nil, zero value otherwise.
 
-### GetInstagramOk
+### GetSelfOk
 
-`func (o *Links) GetInstagramOk() (*string, bool)`
+`func (o *Links) GetSelfOk() (*string, bool)`
 
-GetInstagramOk returns a tuple with the Instagram field if it's non-nil, zero value otherwise
+GetSelfOk returns a tuple with the Self field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetInstagram
+### SetSelf
 
-`func (o *Links) SetInstagram(v string)`
+`func (o *Links) SetSelf(v string)`
 
-SetInstagram sets Instagram field to given value.
+SetSelf sets Self field to given value.
 
-### HasInstagram
+### HasSelf
 
-`func (o *Links) HasInstagram() bool`
+`func (o *Links) HasSelf() bool`
 
-HasInstagram returns a boolean if a field has been set.
+HasSelf returns a boolean if a field has been set.
 
-### GetFacebook
+### GetNext
 
-`func (o *Links) GetFacebook() string`
+`func (o *Links) GetNext() string`
 
-GetFacebook returns the Facebook field if non-nil, zero value otherwise.
+GetNext returns the Next field if non-nil, zero value otherwise.
 
-### GetFacebookOk
+### GetNextOk
 
-`func (o *Links) GetFacebookOk() (*string, bool)`
+`func (o *Links) GetNextOk() (*string, bool)`
 
-GetFacebookOk returns a tuple with the Facebook field if it's non-nil, zero value otherwise
+GetNextOk returns a tuple with the Next field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetFacebook
+### SetNext
 
-`func (o *Links) SetFacebook(v string)`
+`func (o *Links) SetNext(v string)`
 
-SetFacebook sets Facebook field to given value.
+SetNext sets Next field to given value.
 
-### HasFacebook
+### HasNext
 
-`func (o *Links) HasFacebook() bool`
+`func (o *Links) HasNext() bool`
 
-HasFacebook returns a boolean if a field has been set.
-
-### GetTiktok
-
-`func (o *Links) GetTiktok() string`
-
-GetTiktok returns the Tiktok field if non-nil, zero value otherwise.
-
-### GetTiktokOk
-
-`func (o *Links) GetTiktokOk() (*string, bool)`
-
-GetTiktokOk returns a tuple with the Tiktok field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTiktok
-
-`func (o *Links) SetTiktok(v string)`
-
-SetTiktok sets Tiktok field to given value.
-
-### HasTiktok
-
-`func (o *Links) HasTiktok() bool`
-
-HasTiktok returns a boolean if a field has been set.
-
-### GetLinkedin
-
-`func (o *Links) GetLinkedin() string`
-
-GetLinkedin returns the Linkedin field if non-nil, zero value otherwise.
-
-### GetLinkedinOk
-
-`func (o *Links) GetLinkedinOk() (*string, bool)`
-
-GetLinkedinOk returns a tuple with the Linkedin field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLinkedin
-
-`func (o *Links) SetLinkedin(v string)`
-
-SetLinkedin sets Linkedin field to given value.
-
-### HasLinkedin
-
-`func (o *Links) HasLinkedin() bool`
-
-HasLinkedin returns a boolean if a field has been set.
-
-### GetTelegram
-
-`func (o *Links) GetTelegram() string`
-
-GetTelegram returns the Telegram field if non-nil, zero value otherwise.
-
-### GetTelegramOk
-
-`func (o *Links) GetTelegramOk() (*string, bool)`
-
-GetTelegramOk returns a tuple with the Telegram field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetTelegram
-
-`func (o *Links) SetTelegram(v string)`
-
-SetTelegram sets Telegram field to given value.
-
-### HasTelegram
-
-`func (o *Links) HasTelegram() bool`
-
-HasTelegram returns a boolean if a field has been set.
-
-### GetDiscord
-
-`func (o *Links) GetDiscord() string`
-
-GetDiscord returns the Discord field if non-nil, zero value otherwise.
-
-### GetDiscordOk
-
-`func (o *Links) GetDiscordOk() (*string, bool)`
-
-GetDiscordOk returns a tuple with the Discord field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetDiscord
-
-`func (o *Links) SetDiscord(v string)`
-
-SetDiscord sets Discord field to given value.
-
-### HasDiscord
-
-`func (o *Links) HasDiscord() bool`
-
-HasDiscord returns a boolean if a field has been set.
-
-### GetWebsite
-
-`func (o *Links) GetWebsite() string`
-
-GetWebsite returns the Website field if non-nil, zero value otherwise.
-
-### GetWebsiteOk
-
-`func (o *Links) GetWebsiteOk() (*string, bool)`
-
-GetWebsiteOk returns a tuple with the Website field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetWebsite
-
-`func (o *Links) SetWebsite(v string)`
-
-SetWebsite sets Website field to given value.
-
-### HasWebsite
-
-`func (o *Links) HasWebsite() bool`
-
-HasWebsite returns a boolean if a field has been set.
+HasNext returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

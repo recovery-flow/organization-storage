@@ -21,9 +21,8 @@ var _ MappedNullable = &ParticipantsCollection{}
 
 // ParticipantsCollection struct for ParticipantsCollection
 type ParticipantsCollection struct {
-	Data []Participant `json:"data"`
-	Links ParticipantsCollectionLinks `json:"links"`
-	Meta ParticipantsCollectionMeta `json:"meta"`
+	Data []ParticipantData `json:"data"`
+	Links Links `json:"links"`
 }
 
 type _ParticipantsCollection ParticipantsCollection
@@ -32,11 +31,10 @@ type _ParticipantsCollection ParticipantsCollection
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewParticipantsCollection(data []Participant, links ParticipantsCollectionLinks, meta ParticipantsCollectionMeta) *ParticipantsCollection {
+func NewParticipantsCollection(data []ParticipantData, links Links) *ParticipantsCollection {
 	this := ParticipantsCollection{}
 	this.Data = data
 	this.Links = links
-	this.Meta = meta
 	return &this
 }
 
@@ -49,9 +47,9 @@ func NewParticipantsCollectionWithDefaults() *ParticipantsCollection {
 }
 
 // GetData returns the Data field value
-func (o *ParticipantsCollection) GetData() []Participant {
+func (o *ParticipantsCollection) GetData() []ParticipantData {
 	if o == nil {
-		var ret []Participant
+		var ret []ParticipantData
 		return ret
 	}
 
@@ -60,7 +58,7 @@ func (o *ParticipantsCollection) GetData() []Participant {
 
 // GetDataOk returns a tuple with the Data field value
 // and a boolean to check if the value has been set.
-func (o *ParticipantsCollection) GetDataOk() ([]Participant, bool) {
+func (o *ParticipantsCollection) GetDataOk() ([]ParticipantData, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -68,14 +66,14 @@ func (o *ParticipantsCollection) GetDataOk() ([]Participant, bool) {
 }
 
 // SetData sets field value
-func (o *ParticipantsCollection) SetData(v []Participant) {
+func (o *ParticipantsCollection) SetData(v []ParticipantData) {
 	o.Data = v
 }
 
 // GetLinks returns the Links field value
-func (o *ParticipantsCollection) GetLinks() ParticipantsCollectionLinks {
+func (o *ParticipantsCollection) GetLinks() Links {
 	if o == nil {
-		var ret ParticipantsCollectionLinks
+		var ret Links
 		return ret
 	}
 
@@ -84,7 +82,7 @@ func (o *ParticipantsCollection) GetLinks() ParticipantsCollectionLinks {
 
 // GetLinksOk returns a tuple with the Links field value
 // and a boolean to check if the value has been set.
-func (o *ParticipantsCollection) GetLinksOk() (*ParticipantsCollectionLinks, bool) {
+func (o *ParticipantsCollection) GetLinksOk() (*Links, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -92,32 +90,8 @@ func (o *ParticipantsCollection) GetLinksOk() (*ParticipantsCollectionLinks, boo
 }
 
 // SetLinks sets field value
-func (o *ParticipantsCollection) SetLinks(v ParticipantsCollectionLinks) {
+func (o *ParticipantsCollection) SetLinks(v Links) {
 	o.Links = v
-}
-
-// GetMeta returns the Meta field value
-func (o *ParticipantsCollection) GetMeta() ParticipantsCollectionMeta {
-	if o == nil {
-		var ret ParticipantsCollectionMeta
-		return ret
-	}
-
-	return o.Meta
-}
-
-// GetMetaOk returns a tuple with the Meta field value
-// and a boolean to check if the value has been set.
-func (o *ParticipantsCollection) GetMetaOk() (*ParticipantsCollectionMeta, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Meta, true
-}
-
-// SetMeta sets field value
-func (o *ParticipantsCollection) SetMeta(v ParticipantsCollectionMeta) {
-	o.Meta = v
 }
 
 func (o ParticipantsCollection) MarshalJSON() ([]byte, error) {
@@ -132,7 +106,6 @@ func (o ParticipantsCollection) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["data"] = o.Data
 	toSerialize["links"] = o.Links
-	toSerialize["meta"] = o.Meta
 	return toSerialize, nil
 }
 
@@ -143,7 +116,6 @@ func (o *ParticipantsCollection) UnmarshalJSON(data []byte) (err error) {
 	requiredProperties := []string{
 		"data",
 		"links",
-		"meta",
 	}
 
 	allProperties := make(map[string]interface{})

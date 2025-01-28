@@ -1,0 +1,73 @@
+type: object
+required:
+  - id
+  - type
+  - attributes
+  - relationships
+properties:
+  id:
+    type: string
+    description: "user id"
+  type:
+    type: string
+    enum: [ participant ]
+  attributes:
+    type: object
+    required:
+      - first_name
+      - second_name
+      - display_name
+      - position
+      - verified
+      - desc
+      - role
+      - created_at
+    properties:
+      first_name:
+        type: string
+        description: "first name of participant"
+      second_name:
+        type: string
+        description: "second name of participant"
+      third_name:
+        type: string
+        description: "third name of participant"
+      display_name:
+        type: string
+        description: "name of participant"
+      position:
+        type: string
+        description: "position in the company"
+      verified:
+        type: string
+        description: "verified status"
+      desc:
+        type: string
+        description: "description of participant"
+      role:
+        type: string
+        description: "User role"
+      updated_at:
+        type: string
+        format: date-time
+        description: "User updated at"
+        example: "2021-01-01T00:00:00Z"
+      created_at:
+        type: string
+        format: date-time
+        description: "User created at"
+        example: "2021-01-01T00:00:00Z"
+  relationships:
+    type : object
+    required:
+      - user
+    properties:
+      user:
+        type: object
+        required:
+          - links
+        properties:
+          links:
+            type: string
+            description: "Link to user"
+            example: "https://api.example.com/v1/users/1"

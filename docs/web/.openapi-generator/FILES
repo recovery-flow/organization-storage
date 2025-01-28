@@ -15,6 +15,10 @@ docs/OrganizationCreateDataAttributes.md
 docs/OrganizationCreateDataAttributesOwner.md
 docs/OrganizationData.md
 docs/OrganizationDataAttributes.md
+docs/OrganizationDataRelationships.md
+docs/OrganizationDataRelationshipsParticipants.md
+docs/OrganizationDataRelationshipsParticipantsLinks.md
+docs/OrganizationLinks.md
 docs/OrganizationLinksUpdate.md
 docs/OrganizationLinksUpdateData.md
 docs/OrganizationUpdate.md
@@ -33,8 +37,6 @@ docs/ParticipantUpdate.md
 docs/ParticipantUpdateData.md
 docs/ParticipantUpdateDataAttributes.md
 docs/ParticipantsCollection.md
-docs/ParticipantsCollectionLinks.md
-docs/ParticipantsCollectionMeta.md
 git_push.sh
 go.mod
 go.sum
@@ -47,6 +49,10 @@ model_organization_create_data_attributes.go
 model_organization_create_data_attributes_owner.go
 model_organization_data.go
 model_organization_data_attributes.go
+model_organization_data_relationships.go
+model_organization_data_relationships_participants.go
+model_organization_data_relationships_participants_links.go
+model_organization_links.go
 model_organization_links_update.go
 model_organization_links_update_data.go
 model_organization_update.go
@@ -65,8 +71,6 @@ model_participant_update.go
 model_participant_update_data.go
 model_participant_update_data_attributes.go
 model_participants_collection.go
-model_participants_collection_links.go
-model_participants_collection_meta.go
 response.go
 test/api_default_test.go
 utils.go
