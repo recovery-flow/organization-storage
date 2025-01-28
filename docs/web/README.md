@@ -104,6 +104,8 @@ Class | Method | HTTP request | Description
  - [ParticipantCreateDataAttributes](docs/ParticipantCreateDataAttributes.md)
  - [ParticipantData](docs/ParticipantData.md)
  - [ParticipantDataAttributes](docs/ParticipantDataAttributes.md)
+ - [ParticipantDataRelationships](docs/ParticipantDataRelationships.md)
+ - [ParticipantDataRelationshipsUser](docs/ParticipantDataRelationshipsUser.md)
  - [ParticipantUpdate](docs/ParticipantUpdate.md)
  - [ParticipantUpdateData](docs/ParticipantUpdateData.md)
  - [ParticipantUpdateDataAttributes](docs/ParticipantUpdateDataAttributes.md)

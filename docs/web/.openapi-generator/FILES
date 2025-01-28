@@ -27,6 +27,8 @@ docs/ParticipantCreateData.md
 docs/ParticipantCreateDataAttributes.md
 docs/ParticipantData.md
 docs/ParticipantDataAttributes.md
+docs/ParticipantDataRelationships.md
+docs/ParticipantDataRelationshipsUser.md
 docs/ParticipantUpdate.md
 docs/ParticipantUpdateData.md
 docs/ParticipantUpdateDataAttributes.md
@@ -57,6 +59,8 @@ model_participant_create_data.go
 model_participant_create_data_attributes.go
 model_participant_data.go
 model_participant_data_attributes.go
+model_participant_data_relationships.go
+model_participant_data_relationships_user.go
 model_participant_update.go
 model_participant_update_data.go
 model_participant_update_data_attributes.go

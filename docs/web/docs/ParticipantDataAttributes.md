@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**FirstName** | **string** | first name of employee | 
-**SecondName** | **string** | second name of employee | 
-**ThirdName** | Pointer to **string** | third name of employee | [optional] 
-**DisplayName** | **string** | name of employee | 
+**FirstName** | **string** | first name of participant | 
+**SecondName** | **string** | second name of participant | 
+**ThirdName** | Pointer to **string** | third name of participant | [optional] 
+**DisplayName** | **string** | name of participant | 
 **Position** | **string** | position in the company | 
 **Verified** | **string** | verified status | 
-**Desc** | **string** | Description | 
+**Desc** | **string** | description of participant | 
 **Role** | **string** | User role | 
-**UpdatedAt** | Pointer to **string** | User updated at | [optional] 
+**UpdatedAt** | Pointer to **time.Time** | User updated at | [optional] 
 **CreatedAt** | **time.Time** | User created at | 
 
 ## Methods
@@ -201,20 +201,20 @@ SetRole sets Role field to given value.
 
 ### GetUpdatedAt
 
-`func (o *ParticipantDataAttributes) GetUpdatedAt() string`
+`func (o *ParticipantDataAttributes) GetUpdatedAt() time.Time`
 
 GetUpdatedAt returns the UpdatedAt field if non-nil, zero value otherwise.
 
 ### GetUpdatedAtOk
 
-`func (o *ParticipantDataAttributes) GetUpdatedAtOk() (*string, bool)`
+`func (o *ParticipantDataAttributes) GetUpdatedAtOk() (*time.Time, bool)`
 
 GetUpdatedAtOk returns a tuple with the UpdatedAt field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetUpdatedAt
 
-`func (o *ParticipantDataAttributes) SetUpdatedAt(v string)`
+`func (o *ParticipantDataAttributes) SetUpdatedAt(v time.Time)`
 
 SetUpdatedAt sets UpdatedAt field to given value.
 

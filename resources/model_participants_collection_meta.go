@@ -19,7 +19,7 @@ var _ MappedNullable = &ParticipantsCollectionMeta{}
 
 // ParticipantsCollectionMeta struct for ParticipantsCollectionMeta
 type ParticipantsCollectionMeta struct {
-	// Total number of participants
+	// Total number of participant
 	Total *int32 `json:"total,omitempty"`
 }
 

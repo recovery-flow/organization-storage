@@ -21,23 +21,23 @@ var _ MappedNullable = &ParticipantCreateDataAttributes{}
 
 // ParticipantCreateDataAttributes struct for ParticipantCreateDataAttributes
 type ParticipantCreateDataAttributes struct {
-	// Organization ID
+	// organization ID
 	OrgId string `json:"org_id"`
-	// User ID
+	// user ID
 	UserId string `json:"user_id"`
-	// first name of employee
+	// first name of participant
 	FirstName string `json:"first_name"`
-	// second name of employee
+	// second name of participant
 	SecondName string `json:"second_name"`
-	// third name of employee
+	// third name of participant
 	ThirdName *string `json:"third_name,omitempty"`
-	// name of employee
+	// name of participant
 	DisplayName string `json:"display_name"`
 	// position in the company
 	Position string `json:"position"`
-	// Description
+	// description of participant
 	Desc string `json:"desc"`
-	// User role
+	// participant role
 	Role string `json:"role"`
 }
 

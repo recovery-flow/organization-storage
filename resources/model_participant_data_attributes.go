@@ -34,7 +34,7 @@ type ParticipantDataAttributes struct {
 	Position string `json:"position"`
 	// verified status
 	Verified string `json:"verified"`
-	// Description
+	// description of participant
 	Desc string `json:"desc"`
 	// User role
 	Role string `json:"role"`
@@ -298,7 +298,7 @@ func (o *ParticipantDataAttributes) HasUpdatedAt() bool {
 	return false
 }
 
-// SetUpdatedAt gets a reference to the given string and assigns it to the UpdatedAt field.
+// SetUpdatedAt gets a reference to the given time.Time and assigns it to the UpdatedAt field.
 func (o *ParticipantDataAttributes) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = &v
 }

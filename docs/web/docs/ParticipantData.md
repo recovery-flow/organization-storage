@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Id** | **string** | user id | 
 **Type** | **string** |  | 
 **Attributes** | [**ParticipantDataAttributes**](ParticipantDataAttributes.md) |  | 
+**Relationships** | Pointer to [**ParticipantDataRelationships**](ParticipantDataRelationships.md) |  | [optional] 
 
 ## Methods
 
@@ -86,6 +87,31 @@ and a boolean to check if the value has been set.
 
 SetAttributes sets Attributes field to given value.
 
+
+### GetRelationships
+
+`func (o *ParticipantData) GetRelationships() ParticipantDataRelationships`
+
+GetRelationships returns the Relationships field if non-nil, zero value otherwise.
+
+### GetRelationshipsOk
+
+`func (o *ParticipantData) GetRelationshipsOk() (*ParticipantDataRelationships, bool)`
+
+GetRelationshipsOk returns a tuple with the Relationships field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRelationships
+
+`func (o *ParticipantData) SetRelationships(v ParticipantDataRelationships)`
+
+SetRelationships sets Relationships field to given value.
+
+### HasRelationships
+
+`func (o *ParticipantData) HasRelationships() bool`
+
+HasRelationships returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

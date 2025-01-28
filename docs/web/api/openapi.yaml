@@ -22,6 +22,9 @@ components:
     Participant:
       example:
         data:
+          relationships:
+            user:
+              links: https://api.example.com/v1/users/1
           attributes:
             role: role
             updated_at: 2021-01-01T00:00:00Z
@@ -208,7 +211,7 @@ components:
           description: verified status
           type: string
         desc:
-          description: Description
+          description: description of participant
           type: string
         role:
           description: User role
@@ -216,7 +219,7 @@ components:
         updated_at:
           description: User updated at
           example: 2021-01-01T00:00:00Z
-          format: data-time
+          format: date-time
           type: string
         created_at:
           description: User created at
@@ -233,8 +236,32 @@ components:
       - second_name
       - verified
       type: object
+    Participant_data_relationships_user:
+      example:
+        links: https://api.example.com/v1/users/1
+      properties:
+        links:
+          description: Link to user
+          example: https://api.example.com/v1/users/1
+          type: string
+      required:
+      - links
+      type: object
+    Participant_data_relationships:
+      example:
+        user:
+          links: https://api.example.com/v1/users/1
+      properties:
+        user:
+          $ref: '#/components/schemas/Participant_data_relationships_user'
+      required:
+      - user
+      type: object
     Participant_data:
       example:
+        relationships:
+          user:
+            links: https://api.example.com/v1/users/1
         attributes:
           role: role
           updated_at: 2021-01-01T00:00:00Z
@@ -258,6 +285,8 @@ components:
           type: string
         attributes:
           $ref: '#/components/schemas/Participant_data_attributes'
+        relationships:
+          $ref: '#/components/schemas/Participant_data_relationships'
       required:
       - attributes
       - id
@@ -266,10 +295,10 @@ components:
     ParticipantCreate_data_attributes:
       properties:
         org_id:
-          description: Organization ID
+          description: organization ID
           type: string
         user_id:
-          description: User ID
+          description: user ID
           type: string
         first_name:
           description: first name of participant
@@ -287,10 +316,10 @@ components:
           description: position in the company
           type: string
         desc:
-          description: Description
+          description: description of participant
           type: string
         role:
-          description: User role
+          description: participant role
           type: string
       required:
       - desc
@@ -335,7 +364,7 @@ components:
           description: position in the company
           type: string
         desc:
-          description: description of participant
+          description: Description
           type: string
         role:
           description: User role
@@ -392,7 +421,7 @@ components:
           description: position in the company
           type: string
         desc:
-          description: Description
+          description: description of participant
           type: string
       required:
       - desc

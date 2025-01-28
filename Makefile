@@ -3,7 +3,7 @@ OPENAPI_GENERATOR := java -jar ./openapi-generator-cli.jar
 CONFIG_FILE := ./config_local.yaml
 
 generate-models:
-	find resources -type f ! -name "resources_types.go" -delete
+	find resources -type f ! \( -name "resources_types.go" -o -name "links.go" \) -delete
 	$(OPENAPI_GENERATOR) generate \
  	-i ./docs/api.yaml -g go \
  	-o ./docs/web \

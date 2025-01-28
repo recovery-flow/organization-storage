@@ -5,10 +5,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **OrgId** | **string** | Organization id | 
-**FirstName** | Pointer to **string** | first name of employee | [optional] 
-**SecondName** | Pointer to **string** | second name of employee | [optional] 
-**ThirdName** | Pointer to **string** | third name of employee | [optional] 
-**DisplayName** | Pointer to **string** | name of employee | [optional] 
+**FirstName** | Pointer to **string** | first name of participant | [optional] 
+**SecondName** | Pointer to **string** | second name of participant | [optional] 
+**ThirdName** | Pointer to **string** | third name of participant | [optional] 
+**DisplayName** | Pointer to **string** | name of participant | [optional] 
 **Position** | Pointer to **string** | position in the company | [optional] 
 **Desc** | Pointer to **string** | Description | [optional] 
 **Role** | Pointer to **string** | User role | [optional] 

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Total** | Pointer to **int32** | Total number of employees | [optional] 
+**Total** | Pointer to **int32** | Total number of participant | [optional] 
 
 ## Methods
 

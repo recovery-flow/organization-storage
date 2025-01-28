@@ -31,7 +31,7 @@ type OrganizationCreateDataAttributesOwner struct {
 	DisplayName string `json:"display_name"`
 	// position in the company
 	Position string `json:"position"`
-	// Description
+	// description of participant
 	Desc string `json:"desc"`
 }
 

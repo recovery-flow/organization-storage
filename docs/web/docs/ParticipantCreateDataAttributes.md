@@ -4,15 +4,15 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**OrgId** | **string** | Organization ID | 
-**UserId** | **string** | User ID | 
-**FirstName** | **string** | first name of employee | 
-**SecondName** | **string** | second name of employee | 
-**ThirdName** | Pointer to **string** | third name of employee | [optional] 
-**DisplayName** | **string** | name of employee | 
+**OrgId** | **string** | organization ID | 
+**UserId** | **string** | user ID | 
+**FirstName** | **string** | first name of participant | 
+**SecondName** | **string** | second name of participant | 
+**ThirdName** | Pointer to **string** | third name of participant | [optional] 
+**DisplayName** | **string** | name of participant | 
 **Position** | **string** | position in the company | 
-**Desc** | **string** | Description | 
-**Role** | **string** | User role | 
+**Desc** | **string** | description of participant | 
+**Role** | **string** | participant role | 
 
 ## Methods
 

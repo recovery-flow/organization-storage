@@ -25,6 +25,11 @@ func Participant(participant models.Participant) resources.Participant {
 				Role:        string(participant.Role),
 				CreatedAt:   participant.CreatedAt,
 			},
+			Relationships: &resources.ParticipantDataRelationships{
+				User: resources.ParticipantDataRelationshipsUser{
+					Links: resources.LinkUserStorageBase + resources.LinkGetUser + participant.UserID.String(),
+				},
+			},
 		},
 	}
 }
