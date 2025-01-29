@@ -58,25 +58,18 @@ func OrganizationLinksUpdate(w http.ResponseWriter, r *http.Request) {
 	filters := make(map[string]any)
 	filters["_id"] = orgId
 
-	organization, err := server.MongoDB.Organization.New().Filter(filters).Get(r.Context())
+	participant, err := server.MongoDB.Organization.New().Filter(filters).Participants().Filter(map[string]any{
+		"user_id": initiatorId,
+	}).Get(r.Context())
 	if err != nil {
-		log.WithError(err).Error("Failed to get organization")
-		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))
+		log.WithError(err).Error("Failed to update initiative")
+		httpkit.RenderErr(w, problems.InternalError())
 		return
 	}
 
-	for _, emp := range organization.Participants {
-		if emp.UserID == initiatorId {
-			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgModer) < 0 {
-				err = roles.ErrorNoPermission
-			}
-			break
-		}
-	}
-
-	if err != nil {
-		log.WithError(err).Error("Failed to find initiator user")
-		httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
+	if roles.CompareRolesOrg(participant.Role, roles.RoleOrgModer) < 0 {
+		log.Error("User has no rights to update initiative")
+		httpkit.RenderErr(w, problems.Forbidden("User has no rights to update initiative"))
 		return
 	}
 
@@ -99,7 +92,7 @@ func OrganizationLinksUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	organization, err = server.MongoDB.Organization.New().Filter(filters).Get(r.Context())
+	organization, err := server.MongoDB.Organization.New().Filter(filters).Get(r.Context())
 	if err != nil {
 		log.WithError(err).Error("Failed to get organization")
 		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))

@@ -3,6 +3,8 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
+	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/google/uuid"
 	"github.com/recovery-flow/comtools/cifractx"
 	"github.com/recovery-flow/comtools/httpkit"
@@ -32,18 +34,13 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	initiatorId, ok := r.Context().Value(tokens.UserIDKey).(uuid.UUID)
-	if !ok {
-		log.Warn("UserID not found in context")
-		httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
+	if chi.URLParam(r, "organization_id") != req.Data.Id {
+		log.Error("Request id does not match URL id")
+		httpkit.RenderErr(w, problems.BadRequest(validation.Errors{
+			"id": validation.NewError("id", "Request id does not match URL id"),
+		})...)
 		return
 	}
-
-	name := req.Data.Attributes.Name
-	desc := req.Data.Attributes.Desc
-	sort := req.Data.Attributes.Sort
-	country := req.Data.Attributes.Country
-	city := req.Data.Attributes.City
 
 	orgId, err := primitive.ObjectIDFromHex(req.Data.Id)
 	if err != nil {
@@ -52,51 +49,50 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	filters := make(map[string]any)
-	filters["_id"] = orgId
-
-	organization, err := server.MongoDB.Organization.New().Filter(filters).Get(r.Context())
-
-	if err != nil {
-		log.WithError(err).Error("Failed to get organization")
-		httpkit.RenderErr(w, problems.InternalError("Failed to get organization"))
-		return
-	}
-
-	for _, emp := range organization.Participants {
-		if emp.UserID == initiatorId {
-			if roles.CompareRolesOrg(emp.Role, roles.RoleOrgAdmin) < 0 {
-				err = roles.ErrorNoPermission
-			}
-			break
-		}
-	}
-
-	if err != nil {
-		log.WithError(err).Error("User does not have permission to update organization")
+	initiatorId, ok := r.Context().Value(tokens.UserIDKey).(uuid.UUID)
+	if !ok {
+		log.Warn("UserID not found in context")
 		httpkit.RenderErr(w, problems.Unauthorized("User not authenticated"))
 		return
 	}
 
+	filters := make(map[string]any)
+	filters["_id"] = orgId
+
+	participant, err := server.MongoDB.Organization.New().Filter(filters).Participants().Filter(map[string]any{
+		"user_id": initiatorId,
+	}).Get(r.Context())
+	if err != nil {
+		log.WithError(err).Error("Failed to update initiative")
+		httpkit.RenderErr(w, problems.InternalError())
+		return
+	}
+
+	if roles.CompareRolesOrg(participant.Role, roles.RoleOrgModer) <= 0 {
+		log.Error("User has no rights to update initiative")
+		httpkit.RenderErr(w, problems.Forbidden("User has no rights to update initiative"))
+		return
+	}
+
 	stmt := make(map[string]any)
-	if name != nil {
-		stmt["name"] = *name
+	if req.Data.Attributes.Name != nil {
+		stmt["name"] = *req.Data.Attributes.Name
 		stmt["verified"] = false
 	}
-	if sort != nil {
-		stmt["sort"] = *sort
+	if req.Data.Attributes.Sort != nil {
+		stmt["sort"] = *req.Data.Attributes.Sort
 		stmt["verified"] = false
 	}
-	if country != nil {
-		stmt["country"] = *country
+	if req.Data.Attributes.Country != nil {
+		stmt["country"] = *req.Data.Attributes.Country
 		stmt["verified"] = false
 	}
-	if city != nil {
-		stmt["city"] = *city
+	if req.Data.Attributes.City != nil {
+		stmt["city"] = *req.Data.Attributes.City
 		stmt["verified"] = false
 	}
-	if desc != nil {
-		stmt["desc"] = *desc
+	if req.Data.Attributes.Desc != nil {
+		stmt["desc"] = *req.Data.Attributes.Desc
 	}
 
 	res, err := server.MongoDB.Organization.New().Filter(filters).UpdateOne(r.Context(), stmt)
@@ -105,8 +101,6 @@ func OrganizationUpdate(w http.ResponseWriter, r *http.Request) {
 		httpkit.RenderErr(w, problems.InternalError("Failed to update organization"))
 		return
 	}
-
-	log.Infof("Organization update test")
 
 	log.Infof("Organization updated %s", initiatorId)
 	httpkit.Render(w, responses.Organization(*res))

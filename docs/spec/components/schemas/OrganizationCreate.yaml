@@ -33,32 +33,7 @@ properties:
             type: string
             description: "Country of registration"
           owner:
-            type: object
-            required:
-              - first_name
-              - second_name
-              - display_name
-              - position
-              - desc
-            properties:
-              first_name:
-                type: string
-                description: "first name of participant"
-              second_name:
-                type: string
-                description: "second name of participant"
-              third_name:
-                type: string
-                description: "third name of participant"
-              display_name:
-                type: string
-                description: "name of participant"
-              position:
-                type: string
-                description: "position in the company"
-              desc:
-                type: string
-                description: "description of participant"
+            $ref: "./Owner.yaml"
           city:
             type: string
             description: "City of HQ"
